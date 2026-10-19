@@ -1,5 +1,10 @@
 
-function Navbar({ onLoginClick, onHomeClick, onDashboardClick }) {
+function Navbar({
+  onLoginClick,
+  onRegisterClick,
+  onHomeClick,
+  onDashboardClick,
+}) {
   return (
     <nav className="navbar">
       <button className="logo" type="button" onClick={onHomeClick}>
@@ -21,7 +26,7 @@ function Navbar({ onLoginClick, onHomeClick, onDashboardClick }) {
           Log in
         </button>
 
-        <button className="btn-gold" onClick={onLoginClick}>
+        <button className="btn-gold" onClick={onRegisterClick}>
           Create account
         </button>
       </div>

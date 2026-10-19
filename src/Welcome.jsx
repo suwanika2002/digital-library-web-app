@@ -3,7 +3,7 @@ import "./App.css";
 import heroImage from "./images/WhatsApp Image 2026-10-06 at 14.02.50.jpeg";
 import Navbar from "./components/Navbar";
 
-function Welcome({ goToLogin, goToDashboard }) {
+function Welcome({ goToLogin, goToRegister, goToDashboard }) {
   const steps = [
     {
       number: "01",
@@ -40,6 +40,7 @@ function Welcome({ goToLogin, goToDashboard }) {
       <header className="hero">
         <Navbar
           onLoginClick={goToLogin}
+          onRegisterClick={goToRegister}
           onHomeClick={handleHomeClick}
           onDashboardClick={goToDashboard}
         />

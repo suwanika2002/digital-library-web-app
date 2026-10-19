@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Login.css";
 import sideImage from "./images/image.png";
 
-function Login({ goBack, onLogin }) {
+function Login({ goBack, onLogin, onRegister }) {
   const [role, setRole] = useState("member");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -166,12 +166,9 @@ function Login({ goBack, onLogin }) {
               <button
                 type="button"
                 className="text-action"
-                onClick={() => {
-                  setError("");
-                  setMessage("To create an account, please contact your librarian.")
-                }}
+                onClick={onRegister}
               >
-                Ask about an account
+                Create an account
               </button>
             </p>
           )}

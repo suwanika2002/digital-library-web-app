@@ -4,7 +4,7 @@ import DashboardCardArt from "../components/DashboardCardArt";
 function LibrarianDashboard({ onNavigate, onLogout }) {
   const destinations = [
     {
-      page: "books",
+      page: "manageBooks",
       number: "01",
       title: "Manage books",
       description: "Browse the collection and review book availability.",
@@ -53,7 +53,7 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
           <button
             type="button"
             className="sidebar-link"
-            onClick={() => onNavigate("books")}
+            onClick={() => onNavigate("manageBooks")}
           >
             <span aria-hidden="true">▤</span> Manage books
           </button>
@@ -97,7 +97,7 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
             <button
               type="button"
               className="dashboard-primary-action"
-              onClick={() => onNavigate("books")}
+              onClick={() => onNavigate("manageBooks")}
             >
               <span aria-hidden="true">＋</span> Browse collection
             </button>
@@ -116,7 +116,7 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
               <button
                 type="button"
                 className="feature-link"
-                onClick={() => onNavigate("books")}
+                onClick={() => onNavigate("manageBooks")}
               >
                 Manage the collection <span aria-hidden="true">→</span>
               </button>
