@@ -1,0 +1,440 @@
+/* ---------- Colors used ---------- */
+/* Dark brown: #1c140f   Cream: #f7f1e6   Gold: #d4ae5c   Green: #2f4a2a */
+/* Desktop layout: content is 1200px wide and centred on the screen */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7f1e6;
+  color: #241a13;
+}
+
+/* Undo Vite's default #root styles from index.css */
+#root {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-align: left;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: normal;
+  color: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* ---------- Buttons ---------- */
+.btn-gold {
+  background: #d4ae5c;
+  color: #1c140f;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #f5ede0;
+  border: 1px solid #6b5845;
+  padding: 11px 20px;
+  border-radius: 30px;
+  margin-left: 10px;
+}
+
+.btn-green {
+  background: #2f4a2a;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: #1c140f;
+  color: #f5ede0;
+  padding: 25px calc((100% - 1200px) / 2);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #f5ede0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  font-weight: normal;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dashboard-logo-icon {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+  font-size: 23px;
+  line-height: 1;
+}
+
+.logo .brand-light {
+  color: #d4ae5c;
+}
+
+.logo:hover {
+  background: transparent;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: #e6dac6;
+}
+
+.hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 0 100px;
+}
+
+.hero-text {
+  width: 620px;
+}
+
+.small-title {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #d4ae5c;
+}
+
+.small-title.dark {
+  color: #6b5320;
+}
+
+.small-title.green {
+  color: #3f5236;
+}
+
+.hero-text h1 {
+  font-size: 68px;
+  line-height: 1.08;
+  margin: 15px 0;
+}
+
+.hero-text h1 span {
+  color: #e9d3a3;
+  font-style: italic;
+}
+
+.hero-desc {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #d8cbb6;
+  width: 520px;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  gap: 10px;
+  background: #2a1f18;
+  padding: 10px;
+  border-radius: 14px;
+  width: 560px;
+  margin-top: 30px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-box button {
+  background: #d4ae5c;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.try-words {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #b9a88f;
+}
+
+.chip {
+  background: transparent;
+  color: #f5ede0;
+  border: 1px solid #4a3a2c;
+  padding: 8px 14px;
+  border-radius: 20px;
+}
+
+/* Image with arch shape */
+.hero-image {
+  width: 440px;
+  position: relative;
+}
+
+.hero-image img {
+  width: 440px;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 220px 220px 20px 20px;
+  border: 6px solid #3a2c20;
+}
+
+/* Floating book card */
+.book-card {
+  position: absolute;
+  bottom: -30px;
+  left: -60px;
+  width: 290px;
+  background: #f7f1e6;
+  color: #241a13;
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.book-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-card h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.badge {
+  background: #dce6d2;
+  color: #2f4a2a;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.book-card p {
+  color: #5c4d3e;
+  font-size: 14px;
+}
+
+.book-card button {
+  width: 100%;
+  background: #1c140f;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 90px 0;
+}
+
+.section-title {
+  font-size: 46px;
+  margin: 10px 0 40px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.step-card {
+  background: #fffbf4;
+  border: 1px solid #e5d9c5;
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.step-number {
+  font-family: Georgia, serif;
+  font-size: 40px;
+  color: #8a6a2a;
+}
+
+.step-card p {
+  color: #5c4d3e;
+  line-height: 1.5;
+}
+
+/* Members & librarians */
+.roles {
+  display: flex;
+  gap: 24px;
+  padding-top: 0;
+}
+
+.role-card {
+  flex: 1;
+  padding: 44px;
+  border-radius: 22px;
+}
+
+.role-card h2 {
+  font-size: 36px;
+}
+
+.role-card ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2;
+  font-size: 16px;
+}
+
+.member {
+  background: #e9eee2;
+}
+
+.librarian {
+  background: #2a1f18;
+  color: #f5ede0;
+}
+/* ---------- Make buttons feel like buttons ---------- */
+
+/* Shared look for all buttons */
+.btn-gold,
+.btn-outline,
+.btn-green,
+.chip,
+.search-box button,
+.book-card button {
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Gold button */
+.btn-gold {
+  box-shadow: 0 4px 0 #a8853a;
+}
+
+.btn-gold:hover {
+  background: #e2c06e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #a8853a;
+}
+
+/* Green button */
+.btn-green {
+  box-shadow: 0 4px 0 #1b2d18;
+}
+
+.btn-green:hover {
+  background: #3b5c35;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #1b2d18;
+}
+
+/* Outline button */
+.btn-outline:hover {
+  background: #f5ede0;
+  color: #1c140f;
+  border-color: #f5ede0;
+}
+
+/* Search button */
+.search-box button {
+  box-shadow: 0 3px 0 #a8853a;
+}
+
+.search-box button:hover {
+  background: #e2c06e;
+}
+
+/* "Reserve a copy" button */
+.book-card button:hover {
+  background: #3a2c20;
+}
+
+/* Chips (Try: ...) */
+.chip:hover {
+  background: #d4ae5c;
+  color: #1c140f;
+  border-color: #d4ae5c;
+}
+
+/* Pressed-down effect when clicked */
+.btn-gold:active,
+.btn-green:active,
+.search-box button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #a8853a;
+}
+
+.book-card button:active,
+.chip:active,
+.btn-outline:active {
+  transform: scale(0.96);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  background: #1c140f;
+  padding: 25px calc((100% - 1200px) / 2);
+}
+.footer-top h2 {
+  color: #d6b05d;
+}
+
+.footer-top h2 span {
+  color: #d6b05d;
+  font-style: italic;
+}
+
+.footer-bottom {
+  margin: 0;
+  color: #b9a88f;
+  font-size: 14px;
+}
