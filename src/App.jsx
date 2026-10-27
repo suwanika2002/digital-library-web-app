@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Welcome from "./Welcome";
 import Login from "./Login";
 import MemberDashboard from "./pages/MemberDashboard";
@@ -14,8 +14,33 @@ function App() {
   const [page, setPage] = useState("welcome");
   const [role, setRole] = useState("member");
   const [selectedBook, setSelectedBook] = useState(null);
-  const [books, setBooks] = useState(initialBooks);
+  const [books, setBooks] = useState([]);
+  const [booksLoading, setBooksLoading] = useState(false);
+  const [booksError, setBooksError] = useState("");
+useEffect(() => {
+  const fetchBooks = async () => {
+    setBooksLoading(true);
+    setBooksError("");
 
+    try {
+      const response = await fetch("http://localhost:5000/api/books");
+
+      if (!response.ok) {
+        throw new Error("Unable to load books.");
+      }
+
+      const data = await response.json();
+      setBooks(data);
+    } catch (error) {
+      console.error("Error loading books:", error);
+      setBooksError("Unable to load books. Please try again.");
+    } finally {
+      setBooksLoading(false);
+    }
+  };
+
+  fetchBooks();
+}, []);
   const openDashboard = (user, token) => {
   localStorage.setItem("authToken", token);
   localStorage.setItem("authUser", JSON.stringify(user));
@@ -45,18 +70,33 @@ function App() {
     );
   }
 
-  if (page === "books") {
+ if (page === "books") {
+  if (booksLoading) {
+    return <p>Loading books...</p>;
+  }
+
+  if (booksError) {
     return (
-      <Books
-        onNavigate={setPage}
-        books={books}
-        onSelectBook={(book) => {
-          setSelectedBook(book);
-          setPage("bookDetails");
-        }}
-      />
+      <section>
+        <p>{booksError}</p>
+        <button onClick={() => window.location.reload()}>
+          Try again
+        </button>
+      </section>
     );
   }
+
+  return (
+    <Books
+      onNavigate={setPage}
+      books={books}
+      onSelectBook={(book) => {
+        setSelectedBook(book);
+        setPage("bookDetails");
+      }}
+    />
+  );
+}
 
   if (page === "manageBooks") {
     return (
@@ -68,11 +108,22 @@ function App() {
     );
   }
 
-  if (page === "bookDetails") {
-    const currentBook =
-      books.find((book) => book.id === selectedBook?.id) ?? null;
-    return <BookDetails book={currentBook} onNavigate={setPage} />;
-  }
+  
+if (page === "bookDetails") {
+  const currentBook =
+    books.find(
+      (book) =>
+        String(book.id ?? book._id) ===
+        String(selectedBook?.id ?? selectedBook?._id)
+    ) ?? null;
+
+  return (
+    <BookDetails
+      book={currentBook}
+      onNavigate={setPage}
+    />
+  );
+}
 
   if (page === "reservations") {
     return <MyReservations onNavigate={setPage} />;

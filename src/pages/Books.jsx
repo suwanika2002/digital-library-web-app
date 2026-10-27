@@ -1,7 +1,16 @@
 import { useMemo, useState } from "react";
 import "./Dashboard.css";
-
-function Books({ books, onNavigate, onSelectBook }) {
+function normalizeBook(book) {
+  return {
+    ...book,
+    id: book._id || book.id,
+    copies: book.availableCopies ?? book.copies ?? 0,
+    palette: book.palette || "classic",
+    mark: book.mark || "✦",
+  };
+}
+function Books({ books: rawBooks, onNavigate, onSelectBook }) {
+  const books = rawBooks.map(normalizeBook);
   const categories = [
     "All books",
     ...new Set(books.map((book) => book.category)),
