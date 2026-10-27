@@ -22,30 +22,75 @@ function Register({ onNavigate }) {
     setMessage("");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setError("");
-    setMessage("");
+  
 
-    if (form.password.length < 8) {
-      setError("Choose a password with at least 8 characters.");
-      return;
-    }
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    if (form.password !== form.confirmPassword) {
-      setError("The passwords do not match.");
-      return;
-    }
+  setError("");
+  setMessage("");
 
-    if (!form.agreeToTerms) {
-      setError("Please agree to the library account terms to continue.");
-      return;
+  console.log("Registration form submitted");
+
+  if (form.password.length < 8) {
+    setError("Choose a password with at least 8 characters.");
+    return;
+  }
+
+  if (form.password !== form.confirmPassword) {
+    setError("The passwords do not match.");
+    return;
+  }
+
+  if (!form.agreeToTerms) {
+    setError("Please agree to the library account terms to continue.");
+    return;
+  }
+
+  setMessage("Creating your account...");
+
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          password: form.password,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Registration failed.");
     }
 
     setMessage(
-      "Your form is valid, but account creation is not connected yet. Your information has not been saved.",
+      data.message || "Account created successfully! You can now log in."
     );
-  };
+
+    setForm({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      agreeToTerms: false,
+    });
+  } catch (error) {
+    console.error("Registration error:", error);
+    setError(
+      error.message || "Unable to connect to the server. Please try again."
+    );
+    setMessage("");
+  }
+};
+
 
   return (
     <section className="library-page registration-page">

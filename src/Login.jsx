@@ -6,27 +6,65 @@ function Login({ goBack, onLogin, onRegister }) {
   const [role, setRole] = useState("member");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+ 
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    if (email === "" || password === "") {
-      setError("Please enter your email and password.");
-      setMessage("");
+  if (!email.trim() || !password) {
+    setError("Please enter your email and password.");
+    setMessage("");
+    return;
+  }
+
+  setError("");
+  setMessage("");
+  setLoading(true);
+
+  try {
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.trim().toLowerCase(),
+        password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Login failed. Please try again.");
+    }
+
+    // Do not let the selected tab override the role from the server.
+    if (data.user.role !== role) {
+      setError(`This account is not registered as a ${role}.`);
       return;
     }
-    if (!email.includes("@")) {
-      setError("Please enter a valid email address.");
-      setMessage("");
-      return;
+
+    if (!data.token || !data.user) {
+      throw new Error("The server returned an incomplete login response.");
     }
 
-    setError("");
-    onLogin(role);
-  };
+    onLogin(data.user, data.token);
+  } catch (err) {
+    setError(
+      err instanceof TypeError
+        ? "Cannot connect to the server. Please check that the backend is running."
+        : err.message
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="login-page">
@@ -154,10 +192,15 @@ function Login({ goBack, onLogin, onRegister }) {
                 {message}
               </p>
             )}
-
-            <button type="submit" className="login-btn">
-              Log in as {role === "member" ? "Member" : "Librarian"}
-            </button>
+          <button
+            type="submit"
+            className="login-btn"
+            disabled={loading}
+          >
+            {loading
+              ? "Logging in..."
+              : `Log in as ${role === "member" ? "Member" : "Librarian"}`}
+          </button>
           </form>
 
           {role === "member" && (

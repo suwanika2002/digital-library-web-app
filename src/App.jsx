@@ -16,10 +16,13 @@ function App() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [books, setBooks] = useState(initialBooks);
 
-  const openDashboard = (selectedRole = role) => {
-    setRole(selectedRole);
-    setPage("dashboard");
-  };
+  const openDashboard = (user, token) => {
+  localStorage.setItem("authToken", token);
+  localStorage.setItem("authUser", JSON.stringify(user));
+
+  setRole(user.role);
+  setPage("dashboard");
+};
 
   if (page === "login") {
     return (
