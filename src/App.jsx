@@ -5,6 +5,7 @@ import MemberDashboard from "./pages/MemberDashboard";
 import LibrarianDashboard from "./pages/LibrarianDashboard";
 import Books from "./pages/Books";
 import MyReservations from "./pages/MyReservations";
+import LibrarianReservations from "./pages/LibrarianReservations";
 import Register from "./pages/Register";
 import BookDetails from "./pages/BookDetails";
 import ManageBooks from "./pages/ManageBooks";
@@ -126,8 +127,14 @@ if (page === "bookDetails") {
 }
 
   if (page === "reservations") {
-    return <MyReservations onNavigate={setPage} />;
+  if (role === "librarian") {
+    return (
+      <LibrarianReservations onNavigate={setPage} />
+    );
   }
+
+  return <MyReservations onNavigate={setPage} />;
+}
 
   if (page === "account") {
     return <Register onNavigate={setPage} />;

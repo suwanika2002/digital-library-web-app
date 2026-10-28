@@ -7,11 +7,9 @@
   text-align: left;
   color-scheme: light;
 }
-
 .dashboard-page {
   display: flex;
 }
-
 .dashboard-sidebar {
   position: sticky;
   top: 0;
@@ -24,7 +22,6 @@
   background: #211812;
   color: #f5ede0;
 }
-
 .dashboard-brand,
 .library-brand {
   display: inline-flex;
@@ -39,11 +36,9 @@
   font-size: 19px;
   cursor: pointer;
 }
-
 .brand-light {
   color: #d4ae5c;
 }
-
 .sidebar-label {
   margin: 52px 12px 12px;
   color: #a99985;
@@ -51,12 +46,10 @@
   font-weight: 700;
   letter-spacing: 1.8px;
 }
-
 .sidebar-nav {
   display: grid;
   gap: 6px;
 }
-
 .sidebar-link,
 .sidebar-logout {
   display: flex;
@@ -74,7 +67,6 @@
   cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease;
 }
-
 .sidebar-link > span:first-child,
 .sidebar-logout > span:first-child {
   display: inline-grid;
@@ -83,19 +75,16 @@
   color: #c5ad7c;
   font-size: 17px;
 }
-
 .sidebar-link:hover,
 .sidebar-logout:hover {
   background: #33271e;
   color: #fffaf0;
 }
-
 .sidebar-link.active {
   background: #3a2b20;
   color: #f4d68f;
   font-weight: 600;
 }
-
 .sidebar-bottom {
   display: grid;
   gap: 12px;
@@ -103,14 +92,12 @@
   padding-top: 18px;
   border-top: 1px solid #49392c;
 }
-
 .sidebar-profile {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 2px 4px 8px;
 }
-
 .profile-avatar {
   display: grid;
   width: 36px;
@@ -123,17 +110,14 @@
   font-family: Georgia, serif;
   font-weight: 700;
 }
-
 .librarian-avatar {
   background: #bac9ad;
 }
-
 .profile-copy {
   display: grid;
   gap: 3px;
   min-width: 0;
 }
-
 .profile-copy strong {
   overflow: hidden;
   color: #f5ede0;
@@ -142,16 +126,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .profile-copy > span {
   color: #ad9e8a;
   font-size: 11px;
 }
-
 .sidebar-logout {
   color: #e2d8ca;
 }
-
 .dashboard-main {
   display: flex;
   min-width: 0;
@@ -159,7 +140,6 @@
   flex: 1;
   flex-direction: column;
 }
-
 .dashboard-topbar {
   display: flex;
   min-height: 66px;
@@ -2647,4 +2627,70 @@
     width: 100%;
     justify-content: center;
   }
+
+
+/* Librarian dashboard statistics */
+.librarian-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin: 24px 0;
+}
+
+.librarian-stats .librarian-stat-card {
+  box-sizing: border-box;
+  display: block;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e7ddcc;
+  border-radius: 12px;
+  background: #fffdf9;
+}
+
+.librarian-stats .librarian-stat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: #f2e8d5;
+  color: #89621e;
+  font-size: 20px;
+}
+
+.librarian-stats .librarian-stat-card p {
+  margin: 14px 0 8px;
+  color: #796b5c;
+  font-size: 13px;
+}
+
+.librarian-stats .librarian-stat-card strong {
+  display: block;
+  color: #24180f;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.librarian-stats .librarian-stats-error {
+  grid-column: 1 / -1;
+  color: #a43d30;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .librarian-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .librarian-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
 }

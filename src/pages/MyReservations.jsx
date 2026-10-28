@@ -1,66 +1,98 @@
-import { useMemo, useState } from "react";
-import "./Dashboard.css";
 
-const initialReservations = [
-  {
-    id: "DL-1042",
-    title: "The Secret Garden",
-    author: "Frances Hodgson Burnett",
-    palette: "sage",
-    reservedOn: "Oct 14, 2026",
-    pickupBy: "Oct 22, 2026",
-    status: "Ready for pickup",
-  },
-  {
-    id: "DL-1038",
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    palette: "rose",
-    reservedOn: "Oct 12, 2026",
-    pickupBy: "Oct 21, 2026",
-    status: "Reserved",
-  },
-  {
-    id: "DL-0981",
-    title: "Little Women",
-    author: "Louisa May Alcott",
-    palette: "ochre",
-    reservedOn: "Sep 02, 2026",
-    pickupBy: "Returned Sep 18",
-    status: "Returned",
-  },
-];
+import { useEffect, useMemo, useState } from "react";
+import "./Dashboard.css";
 
 const reservationFilters = ["All", "Active", "History"];
 
 function MyReservations({ onNavigate }) {
-  const [reservations, setReservations] = useState(initialReservations);
+  const [reservations, setReservations] = useState([]);
   const [filter, setFilter] = useState("All");
-  const [cancelledId, setCancelledId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const loadReservations = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const token = localStorage.getItem("authToken");
+
+      if (!token) {
+        throw new Error("Please log in to view your reservations.");
+      }
+
+      const response = await fetch(
+        "http://localhost:5000/api/reservations/my",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Unable to load your reservations."
+        );
+      }
+
+      if (!Array.isArray(data)) {
+        throw new Error("The server returned an unexpected response.");
+      }
+
+      setReservations(data);
+    } catch (err) {
+      setError(err.message || "Unable to load reservations.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadReservations();
+  }, []);
+
+  const getStatus = (status) => {
+    const labels = {
+      pending: "Pending approval",
+      approved: "Approved",
+      rejected: "Rejected",
+      cancelled: "Cancelled",
+    };
+
+    return labels[status] || status || "Unknown";
+  };
+
+  const isActive = (status) =>
+    ["pending", "approved"].includes(status);
+
+  const isHistory = (status) =>
+    ["rejected", "cancelled"].includes(status);
 
   const filteredReservations = useMemo(
     () =>
       reservations.filter((reservation) => {
-        if (filter === "Active") {
-          return ["Reserved", "Ready for pickup"].includes(reservation.status);
-        }
-        if (filter === "History") {
-          return ["Returned", "Cancelled"].includes(reservation.status);
-        }
+        if (filter === "Active") return isActive(reservation.status);
+        if (filter === "History") return isHistory(reservation.status);
         return true;
       }),
-    [filter, reservations],
+    [filter, reservations]
   );
 
-  const confirmCancellation = () => {
-    setReservations((currentReservations) =>
-      currentReservations.map((reservation) =>
-        reservation.id === cancelledId
-          ? { ...reservation, status: "Cancelled" }
-          : reservation,
-      ),
-    );
-    setCancelledId(null);
+  const formatDate = (date) => {
+    if (!date) return "—";
+
+    const parsedDate = new Date(date);
+
+    if (Number.isNaN(parsedDate.getTime())) return "—";
+
+    return parsedDate.toLocaleDateString("en", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    });
   };
 
   return (
@@ -71,9 +103,14 @@ function MyReservations({ onNavigate }) {
           className="library-brand"
           onClick={() => onNavigate("dashboard")}
         >
-          <span className="reservations-brand-icon" aria-hidden="true">📚</span>
-          <span>Digital <span className="brand-light">Library</span></span>
+          <span className="reservations-brand-icon" aria-hidden="true">
+            📚
+          </span>
+          <span>
+            Digital <span className="brand-light">Library</span>
+          </span>
         </button>
+
         <button
           type="button"
           className="library-nav-button"
@@ -90,6 +127,7 @@ function MyReservations({ onNavigate }) {
             <h1>My reservations</h1>
             <p>Keep an eye on the books you have set aside.</p>
           </div>
+
           <button
             type="button"
             className="dashboard-primary-action"
@@ -99,39 +137,35 @@ function MyReservations({ onNavigate }) {
           </button>
         </section>
 
-        <div className="reservations-demo-note">
-          <span className="notice-dot" aria-hidden="true">i</span>
-          Sample reservations for preview — changes are only saved in this
-          session.
-        </div>
-
-        <section className="reservations-summary" aria-label="Reservation summary">
+        <section
+          className="reservations-summary"
+          aria-label="Reservation summary"
+        >
           <div>
             <span>Active reservations</span>
             <strong>
-              {reservations.filter((item) =>
-                ["Reserved", "Ready for pickup"].includes(item.status),
-              ).length}
+              {reservations.filter((item) => isActive(item.status)).length}
             </strong>
           </div>
+
           <div>
-            <span>Ready for pickup</span>
+            <span>Pending approval</span>
             <strong>
-              {reservations.filter((item) => item.status === "Ready for pickup").length}
+              {reservations.filter((item) => item.status === "pending").length}
             </strong>
           </div>
+
           <div>
-            <span>Reading history</span>
+            <span>History</span>
             <strong>
-              {reservations.filter((item) =>
-                ["Returned", "Cancelled"].includes(item.status),
-              ).length}
+              {reservations.filter((item) => isHistory(item.status)).length}
             </strong>
           </div>
         </section>
 
         <div className="reservations-toolbar">
           <h2>Your books</h2>
+
           <div
             className="reservation-filters"
             role="group"
@@ -141,7 +175,11 @@ function MyReservations({ onNavigate }) {
               <button
                 key={item}
                 type="button"
-                className={filter === item ? "reservation-filter active" : "reservation-filter"}
+                className={
+                  filter === item
+                    ? "reservation-filter active"
+                    : "reservation-filter"
+                }
                 aria-pressed={filter === item}
                 onClick={() => setFilter(item)}
               >
@@ -151,111 +189,110 @@ function MyReservations({ onNavigate }) {
           </div>
         </div>
 
-        <section className="reservation-list" aria-label="Reservations">
-          {filteredReservations.length > 0 ? (
-            filteredReservations.map((reservation) => (
-              <article className="reservation-item" key={reservation.id}>
-                <div
-                  className={`reservation-mini-cover catalog-cover-${reservation.palette}`}
-                  aria-hidden="true"
-                >
-                  <span>✳</span>
-                  <strong>{reservation.title}</strong>
-                  <small>{reservation.author}</small>
-                </div>
-                <div className="reservation-book-info">
-                  <span className="reservation-id">RESERVATION {reservation.id}</span>
-                  <h3>{reservation.title}</h3>
-                  <p>By {reservation.author}</p>
-                  <div className="reservation-dates">
-                    <span>
-                      <small>Reserved</small>
-                      {reservation.reservedOn}
-                    </span>
-                    <span>
-                      <small>
-                        {reservation.status === "Returned" ? "Return date" : "Pickup by"}
-                      </small>
-                      {reservation.pickupBy}
-                    </span>
-                  </div>
-                </div>
-                <div className="reservation-item-actions">
-                  <span
-                    className={`reservation-status reservation-status-${reservation.status
-                      .toLowerCase()
-                      .replaceAll(" ", "-")}`}
-                  >
-                    <span aria-hidden="true">●</span> {reservation.status}
-                  </span>
-                  {["Reserved", "Ready for pickup"].includes(reservation.status) && (
-                    <button
-                      type="button"
-                      className="reservation-cancel"
-                      onClick={() => setCancelledId(reservation.id)}
-                    >
-                      Cancel reservation
-                    </button>
-                  )}
-                </div>
-              </article>
-            ))
-          ) : (
-            <div className="reservation-empty">
-              <span aria-hidden="true">▤</span>
-              <h3>No reservations in this list</h3>
-              <p>Browse the collection to find your next book.</p>
-              <button
-                type="button"
-                className="catalog-view-button"
-                onClick={() => onNavigate("books")}
-              >
-                Browse books <span aria-hidden="true">→</span>
-              </button>
-            </div>
-          )}
-        </section>
-      </main>
+        {loading ? (
+          <div className="reservation-empty">
+            <p>Loading your reservations...</p>
+          </div>
+        ) : error ? (
+          <div className="reservation-empty">
+            <h3>Unable to load reservations</h3>
+            <p>{error}</p>
+            <button
+              type="button"
+              className="catalog-view-button"
+              onClick={loadReservations}
+            >
+              Try again
+            </button>
+          </div>
+        ) : (
+          <section className="reservation-list" aria-label="Reservations">
+            {filteredReservations.length > 0 ? (
+              filteredReservations.map((reservation) => {
+                const book =
+                  reservation.book &&
+                  typeof reservation.book === "object"
+                    ? reservation.book
+                    : {};
 
-      {cancelledId && (
-        <div
-          className="reservation-dialog-backdrop"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setCancelledId(null);
-          }}
-        >
-          <section
-            className="reservation-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="cancel-reservation-title"
-          >
-            <span className="dialog-icon" aria-hidden="true">!</span>
-            <h2 id="cancel-reservation-title">Cancel this reservation?</h2>
-            <p>
-              This demo will mark the reservation as cancelled in the current
-              session.
-            </p>
-            <div className="reservation-dialog-actions">
-              <button
-                type="button"
-                className="library-back-button"
-                onClick={() => setCancelledId(null)}
-              >
-                Keep reservation
-              </button>
-              <button
-                type="button"
-                className="reservation-confirm-cancel"
-                onClick={confirmCancellation}
-              >
-                Cancel reservation
-              </button>
-            </div>
+                const title = book.title || "Book details unavailable";
+                const author = book.author || "Unknown author";
+                const statusLabel = getStatus(reservation.status);
+                const palette = book.palette || "classic";
+
+                return (
+                  <article
+                    className="reservation-item"
+                    key={reservation._id}
+                  >
+                    <div
+                      className={`reservation-mini-cover catalog-cover-${palette}`}
+                      aria-hidden="true"
+                    >
+                      <span>✳</span>
+                      <strong>{title}</strong>
+                      <small>{author}</small>
+                    </div>
+
+                    <div className="reservation-book-info">
+                      <span className="reservation-id">
+                        RESERVATION{" "}
+                        {reservation._id
+                          ? reservation._id.slice(-8).toUpperCase()
+                          : ""}
+                      </span>
+
+                      <h3>{title}</h3>
+                      <p>By {author}</p>
+
+                      <div className="reservation-dates">
+                        <span>
+                          <small>Reserved</small>
+                          {formatDate(
+                            reservation.reservationDate ||
+                              reservation.createdAt
+                          )}
+                        </span>
+
+                        <span>
+                          <small>Status</small>
+                          {statusLabel}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="reservation-item-actions">
+                      <span
+                        className={`reservation-status reservation-status-${statusLabel
+                          .toLowerCase()
+                          .replaceAll(" ", "-")}`}
+                      >
+                        <span aria-hidden="true">●</span>{" "}
+                        {statusLabel}
+                      </span>
+                    </div>
+                  </article>
+                );
+              })
+            ) : (
+              <div className="reservation-empty">
+                <span aria-hidden="true">▤</span>
+                <h3>No reservations in this list</h3>
+                <p>
+                  Browse the collection to find your next book.
+                </p>
+                <button
+                  type="button"
+                  className="catalog-view-button"
+                  onClick={() => onNavigate("books")}
+                >
+                  Browse books <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            )}
           </section>
-        </div>
-      )}
+        )}
+      </main>
     </section>
   );
 }
