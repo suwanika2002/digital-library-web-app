@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookCover from "../components/BookCover";
 import "./Dashboard.css";
 
@@ -7,14 +7,95 @@ function BookDetails({ book, onNavigate, onBookReserved }) {
   const [notice, setNotice] = useState("");
   const [noticeType, setNoticeType] = useState("info");
   const [reserving, setReserving] = useState(false);
+  const [hasReserved, setHasReserved] = useState(false);
+  const [reservationCheck, setReservationCheck] = useState({
+    bookId: "",
+    active: false,
+  });
 
   const bookId = book?._id ?? book?.id;
+  const normalizedBookId = bookId ? String(bookId) : "";
   const copies = Math.max(
     0,
     Number(book?.availableCopies ?? book?.copies ?? 0) || 0
   );
 
   const available = copies > 0;
+  const isCheckingReservation =
+    Boolean(localStorage.getItem("authToken")) &&
+    reservationCheck.bookId !== normalizedBookId;
+  const alreadyReserved =
+    hasReserved ||
+    (reservationCheck.bookId === normalizedBookId && reservationCheck.active);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token || !normalizedBookId) return undefined;
+
+    let cancelled = false;
+
+    const checkExistingReservation = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/reservations/my",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.message || "Unable to check your existing reservations."
+          );
+        }
+
+        if (!Array.isArray(data)) {
+          throw new Error("The server returned an unexpected response.");
+        }
+
+        const activeReservation = data.some((reservation) => {
+          const reservedBookId =
+            reservation.book?._id ?? reservation.book?.id ?? reservation.book;
+
+          return (
+            String(reservedBookId) === normalizedBookId &&
+            ["pending", "approved"].includes(reservation.status)
+          );
+        });
+
+        if (!cancelled) {
+          setReservationCheck({
+            bookId: normalizedBookId,
+            active: activeReservation,
+          });
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error("Error checking existing reservation:", error);
+          setNotice(
+            error instanceof TypeError
+              ? "Unable to check your reservations. Please try again."
+              : error.message
+          );
+          setNoticeType("error");
+          setReservationCheck({
+            bookId: normalizedBookId,
+            active: false,
+          });
+        }
+      }
+    };
+
+    checkExistingReservation();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [normalizedBookId]);
 
   const showNotice = (message, type = "info") => {
     setNotice(message);
@@ -37,7 +118,9 @@ function BookDetails({ book, onNavigate, onBookReserved }) {
       return;
     }
 
-    if (!available || reserving) return;
+    if (!available || reserving || isCheckingReservation || alreadyReserved) {
+      return;
+    }
 
     setReserving(true);
     setNotice("");
@@ -58,9 +141,16 @@ function BookDetails({ book, onNavigate, onBookReserved }) {
       const data = await response.json();
 
       if (!response.ok) {
+        if (
+          response.status === 409 &&
+          data.message?.includes("active reservation for this book")
+        ) {
+          setHasReserved(true);
+        }
         throw new Error(data.message || "Unable to reserve this book.");
       }
 
+      setHasReserved(true);
       showNotice(
         data.message ||
           "Book reserved successfully! Your reservation is pending approval.",
@@ -238,8 +328,8 @@ function BookDetails({ book, onNavigate, onBookReserved }) {
               {notice && (
                 <p
                   className={`catalog-notice book-detail-notice ${noticeType}`}
-                  role="status"
-                  aria-live="polite"
+                  role={noticeType === "error" ? "alert" : "status"}
+                  aria-live={noticeType === "error" ? "assertive" : "polite"}
                 >
                   {notice}
                 </p>
@@ -248,15 +338,27 @@ function BookDetails({ book, onNavigate, onBookReserved }) {
               <button
                 type="button"
                 className="dashboard-primary-action book-detail-reserve"
-                disabled={!available || reserving}
+                disabled={
+                  !available ||
+                  reserving ||
+                  isCheckingReservation ||
+                  alreadyReserved
+                }
                 onClick={handleReserve}
               >
-                {reserving
+                {isCheckingReservation
+                  ? "Checking reservation..."
+                  : alreadyReserved
+                  ? "Already reserved"
+                  : reserving
                   ? "Reserving your copy..."
                   : available
                     ? "Reserve this book"
                     : "Currently unavailable"}
-                {!reserving && available && (
+                {!reserving &&
+                  !isCheckingReservation &&
+                  !alreadyReserved &&
+                  available && (
                   <span aria-hidden="true">→</span>
                 )}
               </button>

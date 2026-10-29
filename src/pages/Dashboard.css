@@ -610,6 +610,13 @@
   background: #1c140f;
 }
 
+.library-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .library-nav-button {
   padding: 10px 18px;
   border: 1px solid #6b5845;
@@ -4513,6 +4520,210 @@
   color: #d0d7cc;
 }
 
+.borrowing-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.borrowing-summary > div {
+  display: grid;
+  gap: 7px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(36, 54, 43, 0.98), rgba(26, 41, 32, 0.98));
+}
+
+.borrowing-summary span,
+.borrowing-book-info > span,
+.borrowing-book-info small {
+  color: var(--text-secondary);
+}
+
+.borrowing-summary strong {
+  color: var(--text-primary);
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.borrowing-toolbar {
+  flex-wrap: wrap;
+}
+
+.borrowing-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.borrowing-filters button {
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.borrowing-filters button.active {
+  border-color: #d3ad60;
+  background: #d3ad60;
+  color: #1c2119;
+}
+
+.borrowing-member + .borrowing-member {
+  border-top: 1px solid var(--line);
+}
+
+.borrowing-member-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 20px 12px;
+}
+
+.borrowing-member-heading h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-weight: normal;
+}
+
+.borrowing-member-heading p {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.borrowing-member-heading > span {
+  color: #e0c274;
+  font-size: 11px;
+}
+
+.borrowing-book-list {
+  margin: 0;
+  padding: 0 20px 8px;
+  list-style: none;
+}
+
+.borrowing-book {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 0;
+  border-top: 1px solid rgba(211, 173, 96, 0.12);
+}
+
+.borrowing-book-info {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.borrowing-book-info strong {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-weight: normal;
+  text-overflow: ellipsis;
+}
+
+.borrowing-book-info > span {
+  font-size: 11px;
+}
+
+.borrowing-book-info small {
+  font-size: 10px;
+}
+
+.borrowing-status {
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.borrowing-status.ready {
+  color: #e6ca82;
+}
+
+.borrowing-status.borrowed {
+  color: #b5d4a3;
+}
+
+.borrowing-action,
+.borrowing-error button {
+  padding: 8px 11px;
+  border: 1px solid #d3ad60;
+  border-radius: 7px;
+  background: #d3ad60;
+  color: #1c2119;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.borrowing-action.return {
+  border-color: #829b74;
+  background: #829b74;
+}
+
+.borrowing-action:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.borrowing-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(226, 145, 128, 0.38);
+  border-radius: 8px;
+  background: rgba(91, 48, 41, 0.24);
+  color: #f0c1b2;
+  font-size: 12px;
+}
+
+.borrowing-error p {
+  margin: 0;
+}
+
+.borrowing-error button {
+  border-color: #c48978;
+  background: #c48978;
+}
+
+@media (max-width: 680px) {
+  .borrowing-book {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+
+  .borrowing-book-info {
+    grid-column: 1 / -1;
+  }
+
+  .borrowing-status {
+    white-space: normal;
+  }
+
+  .borrowing-action {
+    justify-self: end;
+  }
+}
+
 .manage-book-category {
   background: rgba(211, 173, 96, 0.13);
   color: #e3c77f;
@@ -5042,7 +5253,7 @@
 .book-detail-card .catalog-detail-layout {
   position: relative;
   z-index: 1;
-  grid-template-columns: minmax(245px, 340px) minmax(0, 1fr);
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
   align-items: start;
   gap: clamp(34px, 6vw, 78px);
 }
@@ -5053,7 +5264,7 @@
 }
 
 .book-detail-cover-wrap {
-  padding: 18px;
+  padding: 14px;
   border: 1px solid rgba(227, 204, 151, 0.25);
   border-radius: 20px;
   background:
@@ -5063,7 +5274,7 @@
 }
 
 .book-detail-cover-wrap .catalog-detail-cover {
-  max-width: 280px;
+  max-width: 250px;
   border: 1px solid rgba(255, 245, 220, 0.18);
   border-radius: 10px;
   box-shadow: 0 24px 44px rgba(0, 0, 0, 0.42);
@@ -5285,7 +5496,53 @@
   .book-detail-cover-wrap .catalog-detail-cover {
     max-width: 225px;
   }
+}
 
+.reservation-notice {
+  margin: 0 0 16px;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.reservation-notice.success {
+  border-color: rgba(159, 184, 145, 0.3);
+  background: rgba(82, 117, 83, 0.2);
+  color: #d3e2c4;
+}
+
+.reservation-notice.error {
+  border-color: rgba(196, 133, 113, 0.35);
+  background: rgba(111, 54, 43, 0.24);
+  color: #f0c2ae;
+}
+
+.reservation-cancel {
+  color: #e2a99a;
+}
+
+.reservation-cancel:hover {
+  color: #ffc2b4;
+}
+
+.reservation-cancel:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+@media (max-width: 480px) {
+  .catalog-header-actions {
+    gap: 6px;
+  }
+
+  .catalog-header-actions .library-nav-button {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
   .book-detail-description-block {
     margin-top: 25px;
     padding-top: 21px;
@@ -5294,6 +5551,512 @@
 
 .catalog-cover {
   height: 150px;
+}
+
+.manage-books-search select {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text-primary);
+  color-scheme: dark;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.manage-books-search select option {
+  background: #19251d;
+  color: var(--text-primary);
+}
+
+.manage-books-search select:focus-visible {
+  outline: 2px solid #d3ad60;
+  outline-offset: 2px;
+}
+
+/* Midnight slate and warm copper palette */
+.dashboard-page,
+.library-page {
+  --surface: #111821;
+  --surface-raised: #1b2532;
+  --surface-card: #273344;
+  --line: rgba(206, 184, 159, 0.18);
+  --text-primary: #f3eee7;
+  --text-secondary: #bec7d2;
+  --brass: #d99a68;
+  background:
+    linear-gradient(rgba(13, 19, 28, 0.94), rgba(14, 21, 31, 0.96)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover fixed;
+  color: var(--text-primary);
+}
+
+.dashboard-sidebar {
+  border-color: var(--line);
+  background: linear-gradient(180deg, #1d2938, #111821);
+}
+
+.dashboard-brand,
+.library-brand,
+.dashboard-content h1,
+.dashboard-content h2,
+.dashboard-content h3,
+.reservations-content h1,
+.manage-books-content h1,
+.catalog-heading h1,
+.catalog-detail-copy h1,
+.library-page-content h1,
+.reservations-toolbar h2,
+.manage-books-toolbar h2 {
+  color: var(--text-primary);
+}
+
+.brand-light,
+.dashboard-eyebrow,
+.catalog-category,
+.library-eyebrow,
+.catalog-count strong {
+  color: #e7ae80;
+}
+
+.dashboard-topbar,
+.dashboard-footer,
+.library-page-header {
+  border-color: var(--line);
+  background: rgba(15, 22, 32, 0.94);
+  color: var(--text-secondary);
+}
+
+.dashboard-intro,
+.reservations-heading > div > p:last-child,
+.manage-books-heading > div > p:last-child,
+.catalog-heading > div:first-child > p:last-child,
+.library-page-content > p:not(.library-eyebrow) {
+  color: var(--text-secondary);
+}
+
+.dashboard-feature {
+  border-color: rgba(217, 154, 104, 0.21);
+  background:
+    linear-gradient(95deg, rgba(23, 33, 47, 0.97), rgba(23, 33, 47, 0.84)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 48% / cover;
+}
+
+.dashboard-card,
+.reservations-summary > div,
+.reservation-item,
+.manage-books-panel {
+  border-color: var(--line);
+  background: linear-gradient(145deg, rgba(39, 51, 68, 0.98), rgba(27, 37, 51, 0.98));
+  color: var(--text-primary);
+}
+
+.dashboard-card-title,
+.reservation-book-info h3,
+.manage-book-title strong,
+.reservations-summary strong {
+  color: var(--text-primary);
+}
+
+.dashboard-card-description,
+.reservation-book-info > p,
+.reservation-dates,
+.manage-book-title small,
+.reservations-summary span {
+  color: var(--text-secondary);
+}
+
+.dashboard-card-link,
+.feature-link,
+.catalog-view-button,
+.show-btn,
+.text-action,
+.borrowing-member-heading > span {
+  color: #e7ae80;
+}
+
+.dashboard-card-link:hover,
+.feature-link:hover,
+.catalog-view-button:hover {
+  color: #f2c39f;
+}
+
+.dashboard-primary-action,
+.catalog-filter.active,
+.reservation-filter.active,
+.role-btn.active {
+  border-color: #d99a68;
+  background: #d99a68;
+  color: #1a2028;
+}
+
+.sidebar-link.active {
+  background: rgba(217, 154, 104, 0.16);
+  color: #f0bf99;
+}
+
+.sidebar-link:hover,
+.sidebar-logout:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #f3eee7;
+}
+
+.catalog-search,
+.manage-books-search {
+  border-color: var(--line);
+  background: rgba(23, 32, 44, 0.97);
+  color: var(--text-secondary);
+}
+
+.catalog-search input,
+.manage-books-search input,
+.manage-books-search select {
+  color: var(--text-primary);
+}
+
+.catalog-search input::placeholder,
+.manage-books-search input::placeholder {
+  color: #9da9b8;
+}
+
+.catalog-language-filter select,
+.catalog-filter,
+.reservation-filter {
+  border-color: var(--line);
+  background: #1a2532;
+  color: #d5dce4;
+}
+
+.catalog-filter:hover,
+.reservation-filter:hover {
+  border-color: #d99a68;
+  color: #f2c39f;
+}
+
+.catalog-book {
+  border-color: var(--line);
+  background: #1a2532;
+}
+
+.catalog-book-info h2 {
+  color: var(--text-primary);
+}
+
+.catalog-book-info > p,
+.catalog-detail-author,
+.book-detail-facts > div > span {
+  color: var(--text-secondary);
+}
+
+.catalog-book-footer,
+.book-detail-facts,
+.book-detail-facts > div,
+.manage-books-table td {
+  border-color: var(--line);
+}
+
+.book-detail-facts strong {
+  color: var(--text-primary);
+}
+
+.catalog-empty,
+.reservation-empty,
+.manage-books-empty {
+  border-color: var(--line);
+  background: rgba(23, 32, 44, 0.9);
+  color: var(--text-secondary);
+}
+
+.catalog-availability.available,
+.borrowing-status.borrowed {
+  color: #a9d2d3;
+}
+
+.catalog-availability.unavailable {
+  color: #e2b9a7;
+}
+
+.reservation-status-ready-for-pickup,
+.reservation-status-reserved,
+.borrowing-status.ready {
+  background: rgba(217, 154, 104, 0.14);
+  color: #edb58c;
+}
+
+.manage-books-table th {
+  background: #273344;
+  color: #e7ae80;
+}
+
+.manage-books-table td {
+  color: #d2d9e1;
+}
+
+.borrowing-summary > div {
+  border-color: var(--line);
+  background: linear-gradient(145deg, rgba(39, 51, 68, 0.98), rgba(27, 37, 51, 0.98));
+}
+
+.borrowing-filters button.active {
+  border-color: #d99a68;
+  background: #d99a68;
+  color: #1a2028;
+}
+
+.borrowing-book {
+  border-color: rgba(217, 154, 104, 0.15);
+}
+
+.borrowing-action {
+  border-color: #d99a68;
+  background: #d99a68;
+  color: #1a2028;
+}
+
+.borrowing-action.return {
+  border-color: #789caa;
+  background: #789caa;
+  color: #101a20;
+}
+
+.manage-book-category {
+  background: rgba(217, 154, 104, 0.13);
+  color: #edb58c;
+}
+
+.manage-book-dialog,
+.reservation-dialog {
+  border-color: var(--line);
+  background: #1a2532;
+  color: var(--text-primary);
+}
+
+.manage-book-dialog h2,
+.reservation-dialog h2,
+.manage-book-dialog label,
+.reservation-dialog label {
+  color: var(--text-primary);
+}
+
+.manage-book-form input,
+.manage-book-form select,
+.manage-book-form textarea {
+  border-color: #49576a;
+  background: #131c27;
+  color: var(--text-primary);
+}
+
+.manage-book-form input::placeholder,
+.manage-book-form textarea::placeholder {
+  color: #9da9b8;
+}
+
+.manage-book-form input:focus-visible,
+.manage-book-form select:focus-visible,
+.manage-book-form textarea:focus-visible,
+.catalog-language-filter select:focus-visible,
+.manage-books-search select:focus-visible {
+  border-color: #d99a68;
+  box-shadow: 0 0 0 3px rgba(217, 154, 104, 0.2);
+}
+
+.dashboard-demo-notice,
+.reservations-demo-note,
+.manage-books-demo-note,
+.catalog-demo-note,
+.library-page-content .demo-notice {
+  border-color: rgba(217, 154, 104, 0.22);
+  background: rgba(217, 154, 104, 0.08);
+  color: #dfc1a8;
+}
+
+.library-nav-button {
+  border-color: rgba(206, 184, 159, 0.28);
+  color: var(--text-primary);
+}
+
+.library-nav-button:hover {
+  border-color: #d99a68;
+  background: #d99a68;
+  color: #1a2028;
+}
+
+.dashboard-page button:focus-visible,
+.library-page button:focus-visible,
+.dashboard-page a:focus-visible,
+.library-page a:focus-visible {
+  outline-color: rgba(242, 195, 159, 0.85);
+}
+
+.member-notifications {
+  background: rgba(23, 32, 44, 0.91);
+}
+
+.member-notification {
+  border-color: rgba(217, 154, 104, 0.24);
+  background: rgba(217, 154, 104, 0.08);
+}
+
+.member-notification strong,
+.member-notification button,
+.catalog-reservations-button {
+  color: #edb58c;
+}
+
+.member-notification button:hover,
+.catalog-reservations-button:hover {
+  background: rgba(217, 154, 104, 0.13);
+}
+
+.catalog-reservations-button:hover {
+  border-color: #d99a68;
+  color: #f2c39f;
+}
+
+.library-page .catalog-empty {
+  border-color: rgba(217, 154, 104, 0.24);
+  background:
+    linear-gradient(145deg, rgba(39, 51, 68, 0.96), rgba(15, 23, 34, 0.97)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover;
+  color: var(--text-secondary);
+}
+
+.library-page .catalog-empty > span,
+.book-detail-heading .library-eyebrow {
+  color: #e7ae80;
+}
+
+.library-page .catalog-empty h2 {
+  color: var(--text-primary);
+}
+
+.library-page .catalog-empty p {
+  color: var(--text-secondary);
+}
+
+.book-detail-heading h1 {
+  color: var(--text-primary);
+}
+
+.book-detail-heading > p:last-child,
+.book-detail-cover-caption,
+.book-detail-information .catalog-detail-author,
+.book-detail-description-block .catalog-detail-description,
+.book-detail-availability-copy p,
+.book-detail-reservation-note {
+  color: var(--text-secondary);
+}
+
+.book-detail-heading::before {
+  background: linear-gradient(#e7ae80, rgba(217, 154, 104, 0.16));
+}
+
+.book-detail-card {
+  border-color: var(--line);
+  background:
+    radial-gradient(ellipse at 2% 5%, rgba(217, 154, 104, 0.1), transparent 34%),
+    linear-gradient(135deg, rgba(39, 51, 68, 0.98), rgba(20, 29, 41, 0.98));
+}
+
+.book-detail-cover-wrap {
+  border-color: rgba(206, 184, 159, 0.25);
+  background:
+    radial-gradient(ellipse at 50% 12%, rgba(255, 245, 220, 0.12), transparent 64%),
+    linear-gradient(150deg, #344154, #1a2533);
+}
+
+.book-detail-category,
+.book-detail-language {
+  border-color: rgba(169, 210, 211, 0.27);
+  background: rgba(120, 156, 170, 0.12);
+  color: #c4dfe2;
+}
+
+.book-detail-language {
+  border-color: rgba(217, 154, 104, 0.32);
+  background: rgba(217, 154, 104, 0.12);
+  color: #f0bf99;
+}
+
+.catalog-detail-copy.book-detail-information h2 {
+  color: var(--text-primary);
+}
+
+.catalog-detail-author strong {
+  color: #f0bf99;
+}
+
+.book-detail-description-block h3 {
+  color: var(--text-primary);
+}
+
+.book-detail-availability {
+  border-color: rgba(120, 156, 170, 0.3);
+  background: linear-gradient(110deg, rgba(79, 125, 143, 0.17), rgba(79, 125, 143, 0.07));
+}
+
+.book-detail-availability-icon {
+  background: rgba(120, 156, 170, 0.2);
+  color: #b6dce1;
+}
+
+.book-detail-availability-copy > span,
+.book-detail-facts > div > span {
+  color: #b6c1ce;
+}
+
+.book-detail-availability-copy .is-available {
+  color: #a9d2d3;
+}
+
+.book-detail-availability-copy .is-unavailable {
+  color: #e2b9a7;
+}
+
+.book-detail-facts,
+.book-detail-facts > div,
+.book-detail-description-block {
+  border-color: var(--line);
+}
+
+.book-detail-facts strong {
+  color: var(--text-primary);
+}
+
+.book-detail-reserve {
+  border-color: #d99a68;
+  background: linear-gradient(130deg, #e7ae80, #c47e50);
+  box-shadow: 0 4px 0 #865539, 0 12px 24px rgba(0, 0, 0, 0.18);
+  color: #1a2028;
+}
+
+.book-detail-reserve:hover:not(:disabled) {
+  background: linear-gradient(130deg, #f0bf99, #d18e60);
+  box-shadow: 0 6px 0 #865539, 0 16px 28px rgba(0, 0, 0, 0.24);
+}
+
+.book-detail-reserve:disabled {
+  background: #4a5868;
+  color: #d2d9e1;
+}
+
+.book-detail-notice.success {
+  border-color: rgba(120, 156, 170, 0.35);
+  background: rgba(79, 125, 143, 0.2);
+  color: #c4dfe2;
+}
+
+@media (max-width: 720px) {
+  .dashboard-page,
+  .library-page {
+    background-attachment: scroll;
+  }
+
+  .dashboard-sidebar {
+    background: linear-gradient(105deg, #1d2938, #111821);
+  }
 }
 
 .catalog-book-info {
@@ -5317,5 +6080,369 @@
 @media (max-width: 480px) {
   .catalog-cover {
     height: 130px;
+  }
+}
+
+.member-notifications {
+  margin: 20px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(25, 37, 29, 0.88);
+  color: var(--text-primary);
+}
+
+.member-notifications-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.member-notifications-heading h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 17px;
+}
+
+.member-notifications-heading > span,
+.member-notification small {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.member-notification-list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.member-notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  border: 1px solid rgba(211, 173, 96, 0.24);
+  border-radius: 9px;
+  background: rgba(211, 173, 96, 0.08);
+}
+
+.member-notification.read {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.member-notification strong {
+  color: #e2c47e;
+  font-size: 13px;
+}
+
+.member-notification p,
+.member-notifications-empty,
+.member-notification-error {
+  margin: 4px 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.member-notification button {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: transparent;
+  color: #e2c47e;
+  cursor: pointer;
+}
+
+.member-notification button:hover {
+  background: rgba(211, 173, 96, 0.12);
+}
+
+.member-notification-error {
+  color: #f0c2ae;
+}
+
+.manage-book-actions button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.catalog-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.catalog-reservations-button {
+  border-color: rgba(211, 173, 96, 0.45);
+  color: #e2c47e;
+}
+
+.catalog-reservations-button:hover {
+  border-color: #d3ad60;
+  background: rgba(211, 173, 96, 0.12);
+  color: #f1d99c;
+}
+
+.library-page .catalog-empty {
+  border: 1px solid rgba(211, 173, 96, 0.24);
+  background:
+    linear-gradient(145deg, rgba(29, 46, 35, 0.96), rgba(15, 25, 19, 0.97)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.25);
+  color: #c3cabe;
+}
+
+.library-page .catalog-empty > span {
+  color: #dfc17a;
+}
+
+.library-page .catalog-empty h2 {
+  color: #f5f0e5;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.library-page .catalog-empty p {
+  color: #c3cabe;
+}
+
+.book-detail-card {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: clamp(22px, 3vw, 38px);
+}
+
+@media (max-width: 760px) {
+  .book-detail-card {
+    max-width: none;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-detail-card {
+    padding: 18px;
+  }
+}
+
+.manage-books-search select option {
+  background: #1a2532;
+  color: #f3eee7;
+}
+
+.member-notifications {
+  background: rgba(23, 32, 44, 0.91);
+}
+
+.member-notification {
+  border-color: rgba(217, 154, 104, 0.24);
+  background: rgba(217, 154, 104, 0.08);
+}
+
+.member-notification strong,
+.member-notification button,
+.catalog-reservations-button {
+  color: #edb58c;
+}
+
+.member-notification button:hover,
+.catalog-reservations-button:hover {
+  background: rgba(217, 154, 104, 0.13);
+}
+
+.catalog-reservations-button {
+  border-color: rgba(217, 154, 104, 0.45);
+}
+
+.catalog-reservations-button:hover {
+  border-color: #d99a68;
+  color: #f2c39f;
+}
+
+.library-page .catalog-empty {
+  border-color: rgba(217, 154, 104, 0.24);
+  background:
+    linear-gradient(145deg, rgba(39, 51, 68, 0.96), rgba(15, 23, 34, 0.97)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover;
+  color: #bec7d2;
+}
+
+.library-page .catalog-empty > span {
+  color: #e7ae80;
+}
+
+.library-page .catalog-empty h2 {
+  color: #f3eee7;
+}
+
+.library-page .catalog-empty p {
+  color: #bec7d2;
+}
+
+.catalog-list {
+  display: grid;
+  gap: 0;
+  margin-top: 24px;
+}
+
+.catalog-list-item {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  align-items: start;
+  gap: 18px;
+  padding: 18px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.catalog-list-item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.catalog-list-cover-trigger {
+  display: block;
+  width: 100px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.catalog-cover.catalog-list-cover {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  min-height: 0;
+  padding: 12px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.catalog-cover.catalog-list-cover::before {
+  inset: 7px;
+  border-radius: 6px;
+}
+
+.catalog-cover.catalog-list-cover::after {
+  left: 10px;
+  width: 4px;
+}
+
+.catalog-cover.catalog-list-cover .cover-ornament {
+  top: 15px;
+  font-size: 15px;
+}
+
+.catalog-cover.catalog-list-cover .cover-title {
+  max-height: 48px;
+  overflow: hidden;
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.catalog-cover.catalog-list-cover .cover-author {
+  max-height: 26px;
+  overflow: hidden;
+  font-size: 8px;
+  line-height: 1.2;
+}
+
+.catalog-list-info {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  padding: 2px 0;
+}
+
+.catalog-list-info h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--text-primary);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.catalog-list-info > p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.catalog-list-info > .catalog-category {
+  font-size: 9px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.catalog-list-description {
+  max-width: 780px;
+  line-height: 1.6;
+}
+
+.catalog-list-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 4px;
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+}
+
+.catalog-list-footer .catalog-view-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.catalog-list-footer .catalog-view-button span {
+  font-size: 15px;
+  transition: transform 0.18s ease;
+}
+
+.catalog-list-footer .catalog-view-button:hover span {
+  transform: translateX(3px);
+}
+
+@media (max-width: 520px) {
+  .catalog-list-item {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 13px;
+    padding: 14px 2px;
+  }
+
+  .catalog-list-cover-trigger {
+    width: 76px;
+  }
+
+  .catalog-list-info h2 {
+    font-size: 15px;
+  }
+
+  .catalog-list-info > p {
+    font-size: 11px;
+  }
+
+  .catalog-list-description {
+    font-size: 10px !important;
   }
 }

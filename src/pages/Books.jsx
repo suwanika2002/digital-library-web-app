@@ -61,13 +61,22 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
           <span className="catalog-brand-icon" aria-hidden="true">📚</span>
           <span>Digital <span className="brand-light">Library</span></span>
         </button>
-        <button
-          type="button"
-          className="library-nav-button"
-          onClick={() => onNavigate("dashboard")}
-        >
-          Back to dashboard
-        </button>
+        <nav className="catalog-header-actions" aria-label="Library navigation">
+          <button
+            type="button"
+            className="library-nav-button catalog-reservations-button"
+            onClick={() => onNavigate("reservations")}
+          >
+            My reservations
+          </button>
+          <button
+            type="button"
+            className="library-nav-button"
+            onClick={() => onNavigate("dashboard")}
+          >
+            Back to dashboard
+          </button>
+        </nav>
       </header>
 
       <main className="catalog-content">
@@ -137,22 +146,30 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
         </div>
 
         {filteredBooks.length > 0 ? (
-          <section className="catalog-grid" aria-label="Books">
+          <section className="catalog-list" aria-label="Books">
             {filteredBooks.map((book) => (
-              <article className="catalog-book" key={book.id}>
+              <article className="catalog-list-item" key={book.id}>
                 <button
                   type="button"
-                  className="catalog-cover-trigger"
+                  className="catalog-list-cover-trigger"
                   onClick={() => onSelectBook(book)}
                   aria-label={`View ${book.title} by ${book.author}`}
                 >
-                  <BookCover book={book} />
+                  <BookCover
+                    book={book}
+                    className="catalog-list-cover"
+                  />
                 </button>
-                <div className="catalog-book-info">
+                <div className="catalog-list-info">
                   <span className="catalog-category">{book.category}</span>
                   <h2>{book.title}</h2>
                   <p>By {book.author}</p>
-                  <div className="catalog-book-footer">
+                  {book.description && (
+                    <p className="catalog-list-description">
+                      {book.description}
+                    </p>
+                  )}
+                  <div className="catalog-list-footer">
                     <span
                       className={
                         book.copies > 0

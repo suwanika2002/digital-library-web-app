@@ -27,8 +27,24 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
       page: "reservations",
       number: "02",
       title: "Reservations",
-      description: "Review the library's reservation page.",
+      description: "Approve or reject member book requests.",
       icon: "↗",
+      art: "reservations",
+    },
+    {
+      page: "borrowing",
+      number: "03",
+      title: "Borrowing & returns",
+      description: "Record book collection and return for each member.",
+      icon: "↔",
+      art: "reservations",
+    },
+    {
+      page: "librarianHistory",
+      number: "04",
+      title: "History",
+      description: "Review returned books and closed requests.",
+      icon: "◷",
       art: "reservations",
     },
   ];
@@ -158,6 +174,20 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
           >
             <span aria-hidden="true">↗</span> Reservations
           </button>
+          <button
+            type="button"
+            className="sidebar-link"
+            onClick={() => onNavigate("borrowing")}
+          >
+            <span aria-hidden="true">↔</span> Borrowing & returns
+          </button>
+          <button
+            type="button"
+            className="sidebar-link"
+            onClick={() => onNavigate("librarianHistory")}
+          >
+            <span aria-hidden="true">◷</span> History
+          </button>
         </nav>
 
         <div className="sidebar-bottom">
@@ -254,9 +284,10 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
         boxSizing: "border-box",
         minWidth: 0,
         padding: "22px",
-        border: "1px solid #e7ddcc",
+        border: "1px solid rgba(206, 184, 159, 0.19)",
         borderRadius: "12px",
-        background: "#fffdf9",
+        background:
+          "linear-gradient(145deg, rgba(39, 51, 68, 0.98), rgba(27, 37, 51, 0.98))",
       }}
     >
       <span
@@ -268,22 +299,22 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
           width: "38px",
           height: "38px",
           borderRadius: "9px",
-          background: "#f2e8d5",
-          color: "#89621e",
+          background: "rgba(217, 154, 104, 0.16)",
+          color: "#e7ae80",
           fontSize: "20px",
         }}
       >
         {item.icon}
       </span>
 
-      <p style={{ margin: "14px 0 8px", color: "#796b5c", fontSize: "13px" }}>
+      <p style={{ margin: "14px 0 8px", color: "#bec7d2", fontSize: "13px" }}>
         {item.label}
       </p>
 
       <strong
         style={{
           display: "block",
-          color: "#24180f",
+          color: "#f3eee7",
           fontFamily: "Georgia, serif",
           fontSize: "30px",
           fontWeight: 500,

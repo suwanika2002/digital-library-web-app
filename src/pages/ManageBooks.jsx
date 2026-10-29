@@ -494,13 +494,6 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
 
         </section>
 
-        <div className="manage-books-demo-note">
-          <span className="notice-dot" aria-hidden="true">
-            i
-          </span>
-          Changes are saved to the library database and shared with Browse Books.
-        </div>
-
         {notice && (
           <p className="manage-books-notice" role="status">
             {notice}

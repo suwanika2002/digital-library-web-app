@@ -1309,3 +1309,156 @@
   background-position: center;
   background-size: cover;
 }
+
+/* Match the image-led midnight slate and copper application theme. */
+.login-page {
+  --login-bg: #111821;
+  --login-panel: #1b2532;
+  --login-field: #141d29;
+  --login-text: #f3eee7;
+  --login-muted: #bec7d2;
+  --login-accent: #d99a68;
+  background: var(--login-bg);
+  color: var(--login-text);
+}
+
+.login-left img {
+  filter: saturate(0.78) brightness(0.58);
+}
+
+.login-left::after {
+  background:
+    linear-gradient(180deg, rgba(13, 19, 28, 0.02) 8%, rgba(13, 19, 28, 0.44) 48%, rgba(13, 19, 28, 0.98)),
+    linear-gradient(90deg, rgba(13, 19, 28, 0.03), rgba(13, 19, 28, 0.2));
+}
+
+.login-right {
+  background:
+    radial-gradient(ellipse at 92% 8%, rgba(217, 154, 104, 0.12), transparent 34%),
+    linear-gradient(145deg, #1b2532, #111821);
+}
+
+.login-box {
+  border-color: rgba(206, 184, 159, 0.19);
+  background: rgba(27, 37, 50, 0.97);
+}
+
+.login-logo,
+.login-left-text h2 span,
+.show-btn,
+.text-action,
+.back-link {
+  color: #f0bf99;
+}
+
+.login-box h1,
+.login-box form > label,
+.login-left-text h2 {
+  color: #f3eee7;
+}
+
+.login-subtitle,
+.signup-text,
+.login-left-text p,
+.login-box .remember,
+.role-btn {
+  color: #bec7d2;
+}
+
+.role-switch,
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: rgba(206, 184, 159, 0.19);
+  background: #141d29;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  color: #f3eee7;
+}
+
+.login-box input::placeholder {
+  color: #9da9b8;
+}
+
+.login-box input:focus-visible {
+  border-color: #d99a68;
+  box-shadow: 0 0 0 3px rgba(217, 154, 104, 0.2);
+}
+
+.role-btn.active {
+  background: #d99a68;
+  color: #1a2028;
+}
+
+.show-btn:hover {
+  background: rgba(217, 154, 104, 0.12);
+}
+
+.form-message.notice {
+  background: #263d49;
+  color: #c4dfe2;
+}
+
+.login-btn {
+  background: linear-gradient(130deg, #e7ae80, #c47e50);
+  color: #1a2028;
+}
+
+.login-btn:hover {
+  background: linear-gradient(130deg, #f0bf99, #d18e60);
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      linear-gradient(rgba(13, 19, 28, 0.91), rgba(17, 24, 33, 0.96)),
+      url("./images/login-library.jpg") center / cover;
+  }
+}
+
+.login-right {
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px clamp(28px, 5vw, 72px) 32px;
+}
+
+.back-link {
+  position: static;
+  z-index: 1;
+  align-self: flex-start;
+  flex: 0 0 auto;
+  margin-bottom: 20px;
+}
+
+.login-box {
+  flex: 0 0 auto;
+  margin: auto;
+}
+
+@media (max-width: 760px) {
+  .login-right {
+    width: 100%;
+    min-height: 100svh;
+    padding: 20px 24px 28px;
+  }
+
+  .back-link {
+    margin-bottom: 20px;
+  }
+
+  .login-box {
+    width: min(100%, 450px);
+    padding: 30px 24px;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-right {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}

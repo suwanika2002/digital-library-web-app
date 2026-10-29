@@ -910,6 +910,302 @@ button {
   }
 }
 
+/* Final welcome-page colors matching the midnight slate and copper app theme. */
+.welcome-page {
+  --night: #111821;
+  --night-raised: #1b2532;
+  --night-panel: #273344;
+  --brass: #d99a68;
+  background: #111821;
+  color: #f3eee7;
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse at 87% 22%, rgba(217, 154, 104, 0.16), transparent 25%),
+    linear-gradient(118deg, rgba(17, 24, 33, 0.95), rgba(27, 37, 50, 0.89) 60%, rgba(30, 39, 51, 0.84)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 43% / cover;
+}
+
+.hero > .navbar {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: rgba(15, 22, 32, 0.78);
+}
+
+.hero-text h1,
+.section-title,
+.step-card h3,
+.role-card h2,
+.librarian h2 {
+  color: #f3eee7;
+}
+
+.hero-desc,
+.step-card p,
+.role-card ul,
+.librarian ul {
+  color: #bec7d2;
+}
+
+.section {
+  background:
+    linear-gradient(rgba(17, 24, 33, 0.92), rgba(17, 24, 33, 0.96)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 42% / cover fixed;
+}
+
+.section > .small-title,
+.section > .small-title.dark,
+.section > .small-title.green,
+.librarian .small-title,
+.member .small-title.green {
+  color: #e7ae80;
+}
+
+.step-card {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: linear-gradient(145deg, rgba(39, 51, 68, 0.97), rgba(27, 37, 51, 0.97));
+}
+
+.step-number {
+  border-color: rgba(217, 154, 104, 0.5);
+  background: rgba(217, 154, 104, 0.13);
+  color: #f0bf99;
+}
+
+.role-card.member,
+.librarian.role-card {
+  border-color: rgba(206, 184, 159, 0.22);
+  background:
+    linear-gradient(110deg, rgba(27, 37, 51, 0.96), rgba(17, 24, 33, 0.91)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 48% / cover;
+}
+
+.nav-links .btn-gold,
+.hero-text > .btn-gold,
+.librarian .btn-gold {
+  border-color: #d99a68;
+  background: linear-gradient(130deg, #e7ae80, #c47e50);
+  color: #1a2028;
+}
+
+.nav-links .btn-gold:hover,
+.hero-text > .btn-gold:hover,
+.librarian .btn-gold:hover {
+  background: linear-gradient(130deg, #f0bf99, #d18e60);
+}
+
+.member .btn-green {
+  background: #789caa;
+  color: #101a20;
+}
+
+.member .btn-green:hover {
+  background: #91b3c0;
+}
+
+.footer {
+  border-color: rgba(206, 184, 159, 0.18);
+  background:
+    linear-gradient(110deg, rgba(15, 22, 32, 0.97), rgba(27, 37, 50, 0.94)),
+    url("./images/image.png") center 63% / cover;
+}
+
+@media (max-width: 620px) {
+  .section {
+    background-attachment: scroll;
+  }
+}
+
+/* Keep the welcome page aligned with the midnight slate and copper app theme. */
+.welcome-page {
+  --night: #111821;
+  --night-raised: #1b2532;
+  --night-panel: #273344;
+  --brass: #d99a68;
+  background: #111821;
+  color: #f3eee7;
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse at 87% 22%, rgba(217, 154, 104, 0.16), transparent 25%),
+    linear-gradient(118deg, rgba(17, 24, 33, 0.95), rgba(27, 37, 50, 0.89) 60%, rgba(30, 39, 51, 0.84)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 43% / cover;
+}
+
+.hero > .navbar {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: rgba(15, 22, 32, 0.78);
+}
+
+.hero-text h1,
+.section-title,
+.step-card h3,
+.role-card h2,
+.librarian h2 {
+  color: #f3eee7;
+}
+
+.hero-desc,
+.step-card p,
+.role-card ul,
+.librarian ul {
+  color: #bec7d2;
+}
+
+.section {
+  background:
+    linear-gradient(rgba(17, 24, 33, 0.92), rgba(17, 24, 33, 0.96)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 42% / cover fixed;
+}
+
+.section > .small-title,
+.section > .small-title.dark,
+.section > .small-title.green,
+.librarian .small-title,
+.member .small-title.green {
+  color: #e7ae80;
+}
+
+.step-card {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: linear-gradient(145deg, rgba(39, 51, 68, 0.97), rgba(27, 37, 51, 0.97));
+}
+
+.step-number {
+  border-color: rgba(217, 154, 104, 0.5);
+  background: rgba(217, 154, 104, 0.13);
+  color: #f0bf99;
+}
+
+.role-card.member,
+.librarian.role-card {
+  border-color: rgba(206, 184, 159, 0.22);
+  background:
+    linear-gradient(110deg, rgba(27, 37, 51, 0.96), rgba(17, 24, 33, 0.91)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 48% / cover;
+}
+
+.nav-links .btn-gold,
+.hero-text > .btn-gold,
+.librarian .btn-gold {
+  border-color: #d99a68;
+  background: linear-gradient(130deg, #e7ae80, #c47e50);
+  color: #1a2028;
+}
+
+.nav-links .btn-gold:hover,
+.hero-text > .btn-gold:hover,
+.librarian .btn-gold:hover {
+  background: linear-gradient(130deg, #f0bf99, #d18e60);
+}
+
+.member .btn-green {
+  background: #789caa;
+  color: #101a20;
+}
+
+.member .btn-green:hover {
+  background: #91b3c0;
+}
+
+.footer {
+  border-color: rgba(206, 184, 159, 0.18);
+  background:
+    linear-gradient(110deg, rgba(15, 22, 32, 0.97), rgba(27, 37, 50, 0.94)),
+    url("./images/image.png") center 63% / cover;
+}
+
+@media (max-width: 620px) {
+  .section {
+    background-attachment: scroll;
+  }
+}
+
+/* Midnight slate and warm copper palette for the image-led welcome page */
+.welcome-page {
+  --night: #111821;
+  --night-raised: #1b2532;
+  --night-panel: #273344;
+  --brass: #d99a68;
+  background: #111821;
+  color: #f3eee7;
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse at 87% 22%, rgba(217, 154, 104, 0.16), transparent 25%),
+    linear-gradient(118deg, rgba(17, 24, 33, 0.96), rgba(27, 37, 50, 0.9) 60%, rgba(30, 39, 51, 0.84)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 43% / cover;
+}
+
+.hero > .navbar {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: rgba(15, 22, 32, 0.76);
+}
+
+.hero-text h1,
+.section-title,
+.step-card h3,
+.role-card h2 {
+  color: #f3eee7;
+}
+
+.hero-desc,
+.step-card p,
+.role-card ul {
+  color: #bec7d2;
+}
+
+.section {
+  background:
+    linear-gradient(rgba(17, 24, 33, 0.93), rgba(17, 24, 33, 0.96)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 42% / cover fixed;
+}
+
+.section > .small-title,
+.section > .small-title.dark,
+.section > .small-title.green,
+.librarian .small-title,
+.member .small-title.green {
+  color: #e7ae80;
+}
+
+.step-card {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: linear-gradient(145deg, rgba(39, 51, 68, 0.97), rgba(27, 37, 51, 0.97));
+}
+
+.step-number {
+  border-color: rgba(217, 154, 104, 0.5);
+  background: rgba(217, 154, 104, 0.13);
+  color: #f0bf99;
+}
+
+.role-card.member,
+.librarian.role-card {
+  border-color: rgba(206, 184, 159, 0.22);
+  background:
+    linear-gradient(110deg, rgba(27, 37, 51, 0.96), rgba(17, 24, 33, 0.91)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 48% / cover;
+}
+
+.member .btn-green {
+  background: #789caa;
+  color: #101a20;
+}
+
+.member .btn-green:hover {
+  background: #91b3c0;
+}
+
+.footer {
+  border-color: rgba(206, 184, 159, 0.18);
+  background:
+    linear-gradient(110deg, rgba(15, 22, 32, 0.97), rgba(27, 37, 50, 0.94)),
+    url("./images/image.png") center 63% / cover;
+}
+
 /* Contemporary reading-room direction: forest green, aged brass, warm paper */
 .welcome-page {
   --forest-950: #14211b;
@@ -1572,6 +1868,108 @@ button {
   border-color: rgba(225, 198, 139, 0.18);
   background:
     linear-gradient(110deg, rgba(9, 15, 12, 0.96), rgba(17, 29, 22, 0.94)),
+    url("./images/image.png") center 63% / cover;
+}
+
+@media (max-width: 620px) {
+  .section {
+    background-attachment: scroll;
+  }
+}
+
+/* Keep the final welcome-page surfaces aligned with the application theme. */
+.welcome-page {
+  background: #111821;
+  color: #f3eee7;
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse at 87% 22%, rgba(217, 154, 104, 0.16), transparent 25%),
+    linear-gradient(118deg, rgba(17, 24, 33, 0.95), rgba(27, 37, 50, 0.89) 60%, rgba(30, 39, 51, 0.84)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 43% / cover;
+}
+
+.hero > .navbar {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: rgba(15, 22, 32, 0.78);
+}
+
+.hero-text h1,
+.section-title,
+.step-card h3,
+.role-card h2,
+.librarian h2 {
+  color: #f3eee7;
+}
+
+.hero-desc,
+.step-card p,
+.role-card ul,
+.librarian ul {
+  color: #bec7d2;
+}
+
+.section {
+  background:
+    linear-gradient(rgba(17, 24, 33, 0.92), rgba(17, 24, 33, 0.96)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 42% / cover fixed;
+}
+
+.section > .small-title,
+.section > .small-title.dark,
+.section > .small-title.green,
+.librarian .small-title,
+.member .small-title.green {
+  color: #e7ae80;
+}
+
+.step-card {
+  border-color: rgba(206, 184, 159, 0.2);
+  background: linear-gradient(145deg, rgba(39, 51, 68, 0.97), rgba(27, 37, 51, 0.97));
+}
+
+.step-number {
+  border-color: rgba(217, 154, 104, 0.5);
+  background: rgba(217, 154, 104, 0.13);
+  color: #f0bf99;
+}
+
+.role-card.member,
+.librarian.role-card {
+  border-color: rgba(206, 184, 159, 0.22);
+  background:
+    linear-gradient(110deg, rgba(27, 37, 51, 0.96), rgba(17, 24, 33, 0.91)),
+    url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 48% / cover;
+}
+
+.nav-links .btn-gold,
+.hero-text > .btn-gold,
+.librarian .btn-gold {
+  border-color: #d99a68;
+  background: linear-gradient(130deg, #e7ae80, #c47e50);
+  color: #1a2028;
+}
+
+.nav-links .btn-gold:hover,
+.hero-text > .btn-gold:hover,
+.librarian .btn-gold:hover {
+  background: linear-gradient(130deg, #f0bf99, #d18e60);
+}
+
+.member .btn-green {
+  background: #789caa;
+  color: #101a20;
+}
+
+.member .btn-green:hover {
+  background: #91b3c0;
+}
+
+.footer {
+  border-color: rgba(206, 184, 159, 0.18);
+  background:
+    linear-gradient(110deg, rgba(15, 22, 32, 0.97), rgba(27, 37, 50, 0.94)),
     url("./images/image.png") center 63% / cover;
 }
 

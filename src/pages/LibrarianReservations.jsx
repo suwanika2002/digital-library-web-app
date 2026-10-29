@@ -8,7 +8,6 @@ function LibrarianReservations({ onNavigate }) {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [filter, setFilter] = useState("all");
   const [processingId, setProcessingId] = useState("");
 
@@ -58,8 +57,6 @@ function LibrarianReservations({ onNavigate }) {
 
     setProcessingId(reservationId);
     setError("");
-    setNotice("");
-
     try {
       const token = localStorage.getItem("authToken");
 
@@ -67,15 +64,18 @@ function LibrarianReservations({ onNavigate }) {
         throw new Error("Please log in again.");
       }
 
+      const lifecycleAction = ["borrow", "return"].includes(status);
       const response = await fetch(
-        `${API_URL}/${reservationId}/status`,
+        `${API_URL}/${reservationId}/${lifecycleAction ? status : "status"}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ status }),
+          ...(!lifecycleAction && {
+            body: JSON.stringify({ status }),
+          }),
         }
       );
 
@@ -90,10 +90,6 @@ function LibrarianReservations({ onNavigate }) {
       // Reload from the server to show the latest status.
       await loadReservations();
 
-      setNotice(
-        data.message ||
-          `Reservation ${status} successfully.`
-      );
     } catch (err) {
       setError(
         err instanceof TypeError
@@ -105,28 +101,32 @@ function LibrarianReservations({ onNavigate }) {
     }
   };
 
-  const visibleReservations = reservations.filter((reservation) => {
+  const activeReservations = reservations.filter((reservation) =>
+    ["pending", "approved", "borrowed"].includes(reservation.status)
+  );
+  const visibleReservations = activeReservations.filter((reservation) => {
     if (filter === "pending") {
       return reservation.status === "pending";
     }
 
     if (filter === "processed") {
-      return reservation.status !== "pending";
+      return ["approved", "borrowed"].includes(reservation.status);
     }
 
     return true;
   });
 
-  const pendingCount = reservations.filter(
-    (reservation) => reservation.status === "pending"
-  ).length;
-
   const statusLabel = {
     pending: "Pending approval",
     approved: "Approved",
+    borrowed: "Borrowed",
+    returned: "Returned",
     rejected: "Rejected",
     cancelled: "Cancelled",
   };
+
+  const formatDate = (date) =>
+    date ? new Date(date).toLocaleDateString() : "—";
 
   return (
     <section className="library-page">
@@ -144,13 +144,22 @@ function LibrarianReservations({ onNavigate }) {
           </span>
         </button>
 
-        <button
-          type="button"
-          className="library-nav-button"
-          onClick={() => onNavigate("dashboard")}
-        >
-          Back to dashboard
-        </button>
+        <div className="library-header-actions">
+          <button
+            type="button"
+            className="library-nav-button"
+            onClick={() => onNavigate("librarianHistory")}
+          >
+            History
+          </button>
+          <button
+            type="button"
+            className="library-nav-button"
+            onClick={() => onNavigate("dashboard")}
+          >
+            Back to dashboard
+          </button>
+        </div>
       </header>
 
       <main className="manage-books-content">
@@ -172,17 +181,6 @@ function LibrarianReservations({ onNavigate }) {
             {loading ? "Refreshing..." : "Refresh"}
           </button>
         </section>
-
-        <div className="manage-books-demo-note">
-          <span className="notice-dot" aria-hidden="true">i</span>
-          {reservations.length} total reservations · {pendingCount} awaiting approval
-        </div>
-
-        {notice && (
-          <p className="manage-books-notice" role="status">
-            {notice}
-          </p>
-        )}
 
         {error && (
           <div role="alert" className="registration-message registration-error">
@@ -233,6 +231,8 @@ function LibrarianReservations({ onNavigate }) {
                     <th>Member</th>
                     <th>Book</th>
                     <th>Reservation date</th>
+                    <th>Borrowed date</th>
+                    <th>Due date</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -272,17 +272,13 @@ function LibrarianReservations({ onNavigate }) {
                         </td>
 
                         <td>
-                          {reservation.reservationDate
-                            ? new Date(
-                                reservation.reservationDate
-                              ).toLocaleDateString()
-                            : reservation.createdAt
-                              ? new Date(
-                                  reservation.createdAt
-                                ).toLocaleDateString()
-                              : "—"}
+                          {formatDate(
+                            reservation.reservationDate || reservation.createdAt
+                          )}
                         </td>
 
+                        <td>{formatDate(reservation.borrowedAt)}</td>
+                        <td>{formatDate(reservation.dueDate)}</td>
                         <td>
                           <span
                             className={
@@ -327,7 +323,7 @@ function LibrarianReservations({ onNavigate }) {
                               </button>
                             </div>
                           ) : (
-                            <span>Completed</span>
+                            <span aria-label="No action required">—</span>
                           )}
                         </td>
                       </tr>

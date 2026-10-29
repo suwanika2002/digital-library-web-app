@@ -7,6 +7,8 @@ import LibrarianDashboard from "./pages/LibrarianDashboard";
 import Books from "./pages/Books";
 import MyReservations from "./pages/MyReservations";
 import LibrarianReservations from "./pages/LibrarianReservations";
+import LibrarianHistory from "./pages/LibrarianHistory";
+import BorrowingManagement from "./pages/BorrowingManagement";
 import Register from "./pages/Register";
 import BookDetails from "./pages/BookDetails";
 import ManageBooks from "./pages/ManageBooks";
@@ -51,9 +53,9 @@ function App() {
     fetchBooks();
   }, [fetchBooks]);
 
-  // Refresh the catalogue whenever the Books page is opened.
+  // Refresh book availability whenever the catalogue or a detail page opens.
   useEffect(() => {
-    if (page === "books") {
+    if (page === "books" || page === "bookDetails") {
       fetchBooks();
     }
   }, [page, fetchBooks]);
@@ -165,6 +167,22 @@ if (page === "bookDetails") {
   if (page === "reservations") {
     if (role === "librarian") {
       return <LibrarianReservations onNavigate={setPage} />;
+    }
+
+    return <MyReservations onNavigate={setPage} />;
+  }
+
+  if (page === "borrowing") {
+    if (role === "librarian") {
+      return <BorrowingManagement onNavigate={setPage} />;
+    }
+
+    return <MyReservations onNavigate={setPage} />;
+  }
+
+  if (page === "librarianHistory") {
+    if (role === "librarian") {
+      return <LibrarianHistory onNavigate={setPage} />;
     }
 
     return <MyReservations onNavigate={setPage} />;

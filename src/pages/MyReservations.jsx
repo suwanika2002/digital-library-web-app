@@ -2,13 +2,17 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Dashboard.css";
 
-const reservationFilters = ["All", "Active", "History"];
+const reservationFilters = ["Reserved books", "History"];
 
 function MyReservations({ onNavigate }) {
   const [reservations, setReservations] = useState([]);
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState("Reserved books");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState(null);
+  const [cancellingId, setCancellingId] = useState("");
+  const [notifications, setNotifications] = useState([]);
+  const [notificationError, setNotificationError] = useState("");
 
   const loadReservations = async () => {
     setLoading(true);
@@ -43,6 +47,33 @@ function MyReservations({ onNavigate }) {
       }
 
       setReservations(data);
+
+      try {
+        const notificationResponse = await fetch(
+          "http://localhost:5000/api/notifications/my",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const notificationData = await notificationResponse.json();
+
+        if (!notificationResponse.ok || !Array.isArray(notificationData)) {
+          throw new Error(
+            notificationData.message || "Unable to load notifications."
+          );
+        }
+
+        setNotifications(notificationData);
+        setNotificationError("");
+      } catch (notificationLoadError) {
+        setNotificationError(
+          notificationLoadError instanceof TypeError
+            ? "Unable to connect to the server to load notifications."
+            : notificationLoadError.message
+        );
+      }
     } catch (err) {
       setError(err.message || "Unable to load reservations.");
     } finally {
@@ -54,10 +85,98 @@ function MyReservations({ onNavigate }) {
     loadReservations();
   }, []);
 
+  const markNotificationRead = async (notificationId) => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/notifications/${notificationId}/read`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Unable to update notification.");
+      }
+
+      setNotifications((current) =>
+        current.map((notification) =>
+          notification._id === notificationId
+            ? data.notification
+            : notification
+        )
+      );
+      setNotificationError("");
+    } catch (notificationUpdateError) {
+      setNotificationError(
+        notificationUpdateError instanceof TypeError
+          ? "Unable to connect to the server to update the notification."
+          : notificationUpdateError.message
+      );
+    }
+  };
+
+  const cancelReservation = async (reservationId) => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token || cancellingId) return;
+
+    setCancellingId(reservationId);
+    setNotice(null);
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/reservations/${reservationId}/cancel`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Unable to cancel this reservation.");
+      }
+
+      setReservations((currentReservations) =>
+        currentReservations.map((reservation) =>
+          reservation._id === reservationId
+            ? { ...reservation, status: "cancelled" }
+            : reservation
+        )
+      );
+      setNotice({
+        type: "success",
+        message: data.message || "Reservation cancelled successfully.",
+      });
+    } catch (cancelError) {
+      setNotice({
+        type: "error",
+        message:
+          cancelError instanceof TypeError
+            ? "Unable to connect to the server. Please try again."
+            : cancelError.message,
+      });
+    } finally {
+      setCancellingId("");
+    }
+  };
+
   const getStatus = (status) => {
     const labels = {
       pending: "Pending approval",
       approved: "Approved",
+      borrowed: "Borrowed",
+      returned: "Returned",
       rejected: "Rejected",
       cancelled: "Cancelled",
     };
@@ -66,17 +185,16 @@ function MyReservations({ onNavigate }) {
   };
 
   const isActive = (status) =>
-    ["pending", "approved"].includes(status);
+    ["pending", "approved", "borrowed"].includes(status);
 
   const isHistory = (status) =>
-    ["rejected", "cancelled"].includes(status);
+    ["returned", "rejected", "cancelled"].includes(status);
 
   const filteredReservations = useMemo(
     () =>
       reservations.filter((reservation) => {
-        if (filter === "Active") return isActive(reservation.status);
-        if (filter === "History") return isHistory(reservation.status);
-        return true;
+        if (filter === "Reserved books") return isActive(reservation.status);
+        return isHistory(reservation.status);
       }),
     [filter, reservations]
   );
@@ -189,6 +307,64 @@ function MyReservations({ onNavigate }) {
           </div>
         </div>
 
+        {notice && (
+          <p
+            className={`reservation-notice ${notice.type}`}
+            role={notice.type === "error" ? "alert" : "status"}
+            aria-live={notice.type === "error" ? "assertive" : "polite"}
+          >
+            {notice.message}
+          </p>
+        )}
+
+        <section className="member-notifications" aria-label="Notifications">
+          <div className="member-notifications-heading">
+            <h2>Notifications</h2>
+            <span>
+              {notifications.filter((notification) => !notification.readAt).length} unread
+            </span>
+          </div>
+          {notificationError && (
+            <p className="member-notification-error" role="alert">
+              {notificationError}
+            </p>
+          )}
+          {notifications.length > 0 ? (
+            <ul className="member-notification-list">
+              {notifications.map((notification) => (
+                <li
+                  className={
+                    notification.readAt
+                      ? "member-notification read"
+                      : "member-notification"
+                  }
+                  key={notification._id}
+                >
+                  <div>
+                    <strong>{notification.title}</strong>
+                    <p>{notification.message}</p>
+                    <small>{formatDate(notification.createdAt)}</small>
+                  </div>
+                  {!notification.readAt && (
+                    <button
+                      type="button"
+                      onClick={() => markNotificationRead(notification._id)}
+                    >
+                      Mark read
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            !notificationError && (
+              <p className="member-notifications-empty">
+                You have no notifications.
+              </p>
+            )
+          )}
+        </section>
+
         {loading ? (
           <div className="reservation-empty">
             <p>Loading your reservations...</p>
@@ -258,6 +434,24 @@ function MyReservations({ onNavigate }) {
                           <small>Status</small>
                           {statusLabel}
                         </span>
+                        {reservation.borrowedAt && (
+                          <span>
+                            <small>Borrowed</small>
+                            {formatDate(reservation.borrowedAt)}
+                          </span>
+                        )}
+                        {reservation.dueDate && (
+                          <span>
+                            <small>Due date</small>
+                            {formatDate(reservation.dueDate)}
+                          </span>
+                        )}
+                        {reservation.returnedAt && (
+                          <span>
+                            <small>Returned</small>
+                            {formatDate(reservation.returnedAt)}
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -270,6 +464,18 @@ function MyReservations({ onNavigate }) {
                         <span aria-hidden="true">●</span>{" "}
                         {statusLabel}
                       </span>
+                      {["pending", "approved"].includes(reservation.status) && (
+                        <button
+                          type="button"
+                          className="reservation-cancel"
+                          disabled={Boolean(cancellingId)}
+                          onClick={() => cancelReservation(reservation._id)}
+                        >
+                          {cancellingId === reservation._id
+                            ? "Removing..."
+                            : "Remove reservation"}
+                        </button>
+                      )}
                     </div>
                   </article>
                 );
