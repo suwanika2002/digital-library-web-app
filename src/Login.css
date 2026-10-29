@@ -329,6 +329,618 @@
   }
 }
 
+/* Dark sign-in surfaces with the existing library photograph */
+.login-page {
+  --login-bg: #101813;
+  --login-panel: #19241d;
+  --login-raised: #202e25;
+  --login-text: #f2ecdf;
+  --login-muted: #bdc5b9;
+  --login-brass: #d3ad60;
+  background: var(--login-bg);
+  color: var(--login-text);
+  color-scheme: dark;
+}
+
+.login-left {
+  background: #101813;
+}
+
+.login-left img {
+  filter: saturate(0.7) brightness(0.55);
+}
+
+.login-left::after {
+  background:
+    linear-gradient(180deg, rgba(10, 17, 13, 0.08) 8%, rgba(10, 17, 13, 0.42) 48%, rgba(10, 17, 13, 0.98)),
+    linear-gradient(90deg, rgba(10, 17, 13, 0.08), rgba(10, 17, 13, 0.18));
+}
+
+.login-left-text h2 {
+  color: #f2ecdf;
+}
+
+.login-left-text h2 span {
+  color: #e1c47c;
+}
+
+.login-left-text p {
+  color: #c3cabe;
+}
+
+.login-right {
+  background:
+    linear-gradient(rgba(13, 21, 16, 0.94), rgba(17, 27, 21, 0.97)),
+    url("./images/image.png") center / cover;
+}
+
+.login-right::after {
+  border-color: rgba(211, 173, 96, 0.18);
+  box-shadow: 0 0 0 34px rgba(211, 173, 96, 0.035);
+}
+
+.login-box {
+  border-color: rgba(221, 207, 174, 0.18);
+  background: rgba(26, 38, 30, 0.94);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.38);
+}
+
+.login-logo {
+  color: #e4c77f;
+}
+
+.login-logo > span {
+  border-color: rgba(211, 173, 96, 0.35);
+  background: rgba(211, 173, 96, 0.13);
+}
+
+.login-box h1,
+.login-box form > label {
+  color: #f2ecdf;
+}
+
+.login-subtitle,
+.signup-text {
+  color: #bdc5b9;
+}
+
+.role-switch {
+  border-color: rgba(222, 211, 187, 0.16);
+  background: #111b15;
+}
+
+.role-btn {
+  color: #c0c8bc;
+}
+
+.role-btn.active {
+  background: #d3ad60;
+  color: #182017;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: #46564a;
+  background: #111a14;
+  color: #f2ecdf;
+}
+
+.login-box input::placeholder {
+  color: #899589;
+}
+
+.login-box input:focus-visible {
+  border-color: #d3ad60;
+  box-shadow: 0 0 0 3px rgba(211, 173, 96, 0.19);
+}
+
+.show-btn,
+.text-action,
+.back-link {
+  color: #dfc17a;
+}
+
+.show-btn:hover {
+  background: rgba(211, 173, 96, 0.13);
+}
+
+.back-link:hover,
+.back-link:focus-visible,
+.text-action:hover,
+.text-action:focus-visible {
+  color: #f1d99c;
+}
+
+.login-box .remember {
+  color: #c0c8bc;
+}
+
+.remember input {
+  accent-color: #d3ad60;
+}
+
+.form-message.error {
+  background: #472722;
+  color: #ffc2b4;
+}
+
+.form-message.notice {
+  background: #263a2b;
+  color: #c8dfbf;
+}
+
+.login-btn {
+  background: linear-gradient(130deg, #e0c274, #bd9144);
+  color: #172017;
+}
+
+.login-btn:hover {
+  background: linear-gradient(130deg, #ecd28a, #cda550);
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      linear-gradient(rgba(13, 22, 32, 0.91), rgba(17, 29, 40, 0.96)),
+      url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover;
+  }
+
+  .login-right {
+    background: transparent;
+  }
+}
+
+.login-page {
+  --login-bg: #101923;
+  --login-panel: #1a2835;
+  --login-field: #111d28;
+  --login-text: #eaf0f2;
+  --login-muted: #aebdc4;
+  --login-accent: #65b8ad;
+  --login-brass: #d7ad68;
+  background: var(--login-bg);
+  color: var(--login-text);
+  color-scheme: dark;
+}
+
+.login-left img {
+  filter: saturate(0.72) brightness(0.58);
+}
+
+.login-left::after {
+  background:
+    linear-gradient(180deg, rgba(10, 19, 28, 0.02) 8%, rgba(10, 19, 28, 0.42) 48%, rgba(10, 19, 28, 0.98)),
+    linear-gradient(90deg, rgba(10, 19, 28, 0.03), rgba(10, 19, 28, 0.18));
+}
+
+.login-right {
+  background:
+    linear-gradient(rgba(13, 22, 32, 0.94), rgba(17, 29, 40, 0.97)),
+    url("./images/image.png") center / cover;
+}
+
+.login-box {
+  border-color: rgba(174, 211, 207, 0.19);
+  background: rgba(26, 40, 52, 0.96);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.38);
+}
+
+.login-logo,
+.login-left-text h2 span {
+  color: #83d0c3;
+}
+
+.login-box h1,
+.login-box form > label,
+.login-left-text h2 {
+  color: #eaf0f2;
+}
+
+.login-subtitle,
+.signup-text,
+.login-left-text p,
+.login-box .remember {
+  color: #aebdc4;
+}
+
+.role-switch {
+  border-color: rgba(174, 211, 207, 0.14);
+  background: #111d28;
+}
+
+.role-btn {
+  color: #bdc9cd;
+}
+
+.role-btn.active {
+  background: #65b8ad;
+  color: #102121;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: #405563;
+  background: #111d28;
+  color: #eaf0f2;
+}
+
+.login-box input::placeholder {
+  color: #80939c;
+}
+
+.login-box input:focus-visible {
+  border-color: #65b8ad;
+  box-shadow: 0 0 0 3px rgba(101, 184, 173, 0.2);
+}
+
+.show-btn,
+.text-action,
+.back-link {
+  color: #83d0c3;
+}
+
+.show-btn:hover {
+  background: rgba(101, 184, 173, 0.12);
+}
+
+.form-message.error {
+  background: #482b31;
+  color: #ffc2c4;
+}
+
+.form-message.notice {
+  background: #203d3a;
+  color: #b8e4d7;
+}
+
+.login-btn {
+  background: linear-gradient(130deg, #e2bd78, #c18d4d);
+  color: #1d2022;
+}
+
+.login-btn:hover {
+  background: linear-gradient(130deg, #efd08e, #d09b59);
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      linear-gradient(rgba(13, 22, 32, 0.91), rgba(17, 29, 40, 0.96)),
+      url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover;
+  }
+}
+
+/* Final dark palette overrides */
+.login-page {
+  background: #101813;
+  color: #f2ecdf;
+  color-scheme: dark;
+}
+
+.login-left img {
+  filter: saturate(0.7) brightness(0.55);
+}
+
+.login-left::after {
+  background: linear-gradient(180deg, rgba(10, 17, 13, 0.08) 8%, rgba(10, 17, 13, 0.42) 48%, rgba(10, 17, 13, 0.98));
+}
+
+.login-left-text h2,
+.login-box h1,
+.login-box form > label {
+  color: #f2ecdf;
+}
+
+.login-left-text h2 span,
+.login-logo,
+.show-btn,
+.text-action,
+.back-link {
+  color: #dfc17a;
+}
+
+.login-left-text p,
+.login-subtitle,
+.signup-text,
+.login-box .remember {
+  color: #bdc5b9;
+}
+
+.login-right {
+  background:
+    linear-gradient(rgba(13, 21, 16, 0.94), rgba(17, 27, 21, 0.97)),
+    url("./images/image.png") center / cover;
+}
+
+.login-box {
+  border-color: rgba(221, 207, 174, 0.18);
+  background: rgba(26, 38, 30, 0.94);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.38);
+}
+
+.login-logo > span {
+  border-color: rgba(211, 173, 96, 0.35);
+  background: rgba(211, 173, 96, 0.13);
+}
+
+.role-switch {
+  border-color: rgba(222, 211, 187, 0.16);
+  background: #111b15;
+}
+
+.role-btn {
+  color: #c0c8bc;
+}
+
+.role-btn.active {
+  background: #d3ad60;
+  color: #182017;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: #46564a;
+  background: #111a14;
+  color: #f2ecdf;
+}
+
+.login-box input::placeholder {
+  color: #899589;
+}
+
+.form-message.error {
+  background: #472722;
+  color: #ffc2b4;
+}
+
+.form-message.notice {
+  background: #263a2b;
+  color: #c8dfbf;
+}
+
+.login-btn {
+  background: linear-gradient(130deg, #e0c274, #bd9144);
+  color: #172017;
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      linear-gradient(rgba(13, 21, 16, 0.9), rgba(17, 27, 21, 0.95)),
+      url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover;
+  }
+
+  .login-right {
+    background: transparent;
+  }
+}
+
+.login-page {
+  --forest-950: #14211b;
+  --forest-800: #294334;
+  --brass: #bd9144;
+  --paper: #f5f0e5;
+  background: var(--paper);
+}
+
+.login-left {
+  width: 54%;
+  background: var(--forest-950);
+}
+
+.login-left img {
+  filter: saturate(0.72) brightness(0.67);
+  transform: scale(1.015);
+}
+
+.login-left::after {
+  inset: 20% 0 0;
+  background:
+    linear-gradient(180deg, transparent 10%, rgba(20, 33, 27, 0.42) 48%, #14211b 100%),
+    linear-gradient(90deg, rgba(20, 33, 27, 0.05), rgba(20, 33, 27, 0.22));
+}
+
+.login-left-text {
+  padding: 54px clamp(36px, 6vw, 90px);
+}
+
+.login-left-text::before {
+  display: block;
+  width: fit-content;
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  border: 1px solid rgba(211, 173, 96, 0.36);
+  border-radius: 99px;
+  background: rgba(211, 173, 96, 0.1);
+  color: #e3c67e;
+  content: "A LIBRARY FOR EVERY CHAPTER";
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.login-left-text h2 {
+  max-width: 480px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(35px, 4.1vw, 55px);
+  font-weight: 600;
+  letter-spacing: -1.8px;
+}
+
+.login-left-text h2 span {
+  color: #dfc17a;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.login-left-text p {
+  max-width: 390px;
+  color: #c6d0c3;
+  font-size: 14px;
+}
+
+.login-right {
+  position: relative;
+  width: 46%;
+  justify-content: center;
+  overflow: hidden;
+  padding: 42px clamp(28px, 5vw, 76px);
+  background:
+    radial-gradient(ellipse at 92% 8%, rgba(188, 148, 71, 0.13), transparent 34%),
+    radial-gradient(ellipse at 0% 95%, rgba(79, 111, 82, 0.08), transparent 38%),
+    #f5f0e5;
+}
+
+.login-right::after {
+  position: absolute;
+  right: -165px;
+  bottom: -210px;
+  width: 390px;
+  height: 390px;
+  border: 1px solid rgba(122, 102, 61, 0.13);
+  border-radius: 50%;
+  box-shadow: 0 0 0 34px rgba(122, 102, 61, 0.035);
+  content: "";
+  pointer-events: none;
+}
+
+.back-link {
+  position: absolute;
+  top: 26px;
+  left: clamp(28px, 5vw, 72px);
+  z-index: 1;
+  color: #49624c;
+}
+
+.login-box {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 450px);
+  padding: clamp(28px, 3.2vw, 44px);
+  border: 1px solid #ded5c4;
+  border-radius: 19px;
+  background: rgba(255, 253, 248, 0.92);
+  box-shadow:
+    0 28px 70px rgba(43, 48, 36, 0.12),
+    0 4px 12px rgba(43, 48, 36, 0.04);
+  backdrop-filter: blur(14px);
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 29px;
+  color: #304b37;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.login-logo > span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid #d2c19a;
+  border-radius: 10px;
+  background: #efe7d5;
+}
+
+.login-box h1 {
+  color: #1f2c23;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(35px, 3.4vw, 45px);
+  font-weight: 650;
+  letter-spacing: -1.8px;
+}
+
+.login-subtitle {
+  color: #6b6d60;
+}
+
+.role-switch {
+  border-color: #d9d3c4;
+  background: #eae6da;
+}
+
+.role-btn {
+  color: #5d675b;
+}
+
+.role-btn.active {
+  background: #294334;
+  color: #f4f0e5;
+}
+
+.login-box form > label {
+  color: #29392c;
+  font-size: 12px;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: #d7d2c4;
+  border-radius: 10px;
+  background: #fbfaf6;
+}
+
+.login-box input:focus-visible {
+  border-color: #71866a;
+  box-shadow: 0 0 0 3px rgba(76, 110, 79, 0.14);
+}
+
+.show-btn,
+.text-action,
+.back-link {
+  color: #49694e;
+}
+
+.show-btn:hover {
+  background: #e9eee4;
+}
+
+.login-btn {
+  border-radius: 10px;
+  background: linear-gradient(130deg, #d7b86c, #bd9144);
+  box-shadow: 0 4px 0 #8e6d34;
+}
+
+.login-btn:hover {
+  background: linear-gradient(130deg, #e5ca83, #cba153);
+}
+
+.form-message.notice {
+  background: #e3ecdf;
+  color: #36553b;
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      radial-gradient(ellipse at 92% 5%, rgba(188, 148, 71, 0.15), transparent 34%),
+      #f1ecdf;
+  }
+
+  .login-right {
+    width: 100%;
+    padding: 76px 20px 30px;
+  }
+
+  .back-link {
+    top: 22px;
+    left: 22px;
+  }
+
+  .login-box {
+    width: min(100%, 450px);
+    padding: 30px 24px;
+  }
+}
+
 @media (max-width: 380px) {
   .login-right {
     padding-right: 18px;
@@ -346,5 +958,346 @@
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+.login-page {
+  background:
+    radial-gradient(ellipse at 82% 9%, rgba(185, 143, 65, 0.1), transparent 34%),
+    #eee8dc;
+}
+
+.login-left {
+  background: #1a1c16;
+}
+
+.login-left img {
+  filter: saturate(0.82) brightness(0.78);
+}
+
+.login-left::after {
+  background: linear-gradient(
+    transparent 18%,
+    rgba(24, 23, 18, 0.38) 48%,
+    rgba(24, 23, 18, 0.96)
+  );
+}
+
+.login-left-text {
+  padding-bottom: clamp(54px, 8vh, 90px);
+}
+
+.login-left-text h2 span {
+  color: #e2c47e;
+}
+
+.login-right {
+  background: rgba(249, 246, 239, 0.68);
+}
+
+.login-box {
+  max-width: 440px;
+  padding: 38px;
+  border: 1px solid #ded3c1;
+  border-radius: 18px;
+  background: rgba(255, 253, 248, 0.86);
+  box-shadow: 0 22px 55px rgba(45, 33, 18, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #6c4b1a;
+  font-size: 19px;
+}
+
+.login-box h1 {
+  color: #261c12;
+}
+
+.role-switch {
+  border-color: #ded3c1;
+  background: #e9e1d3;
+}
+
+.role-btn {
+  color: #5c4d3e;
+}
+
+.role-btn.active {
+  background: #282219;
+  box-shadow: 0 2px 6px rgba(36, 27, 17, 0.18);
+  color: #f5ede0;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: #d6c9b4;
+  background: #fffdf8;
+}
+
+.login-box input:focus-visible {
+  border-color: #98702f;
+  box-shadow: 0 0 0 3px rgba(152, 112, 47, 0.16);
+}
+
+.login-btn {
+  background: #bd9144;
+  box-shadow: 0 3px 0 #88662f;
+}
+
+.login-btn:hover {
+  background: #d0a956;
+}
+
+.back-link,
+.text-action,
+.show-btn {
+  color: #76531b;
+}
+
+.back-link:hover,
+.back-link:focus-visible,
+.text-action:hover,
+.text-action:focus-visible {
+  color: #39280d;
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba(185, 143, 65, 0.12), transparent 36%),
+      #eee8dc;
+  }
+
+  .login-right {
+    background: transparent;
+  }
+
+  .login-box {
+    padding: 30px 24px;
+  }
+}
+
+.login-page {
+  background: #101813;
+  color: #f2ecdf;
+  color-scheme: dark;
+}
+
+.login-left img {
+  filter: saturate(0.7) brightness(0.55);
+}
+
+.login-left::after {
+  background: linear-gradient(180deg, rgba(10, 17, 13, 0.08) 8%, rgba(10, 17, 13, 0.42) 48%, rgba(10, 17, 13, 0.98));
+}
+
+.login-right {
+  background:
+    linear-gradient(rgba(13, 21, 16, 0.94), rgba(17, 27, 21, 0.97)),
+    url("./images/image.png") center / cover;
+}
+
+.login-box {
+  border-color: rgba(221, 207, 174, 0.18);
+  background: rgba(26, 38, 30, 0.94);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.38);
+}
+
+.login-logo,
+.login-left-text h2 span,
+.show-btn,
+.text-action,
+.back-link {
+  color: #dfc17a;
+}
+
+.login-box h1,
+.login-box form > label,
+.login-left-text h2 {
+  color: #f2ecdf;
+}
+
+.login-subtitle,
+.signup-text,
+.login-left-text p,
+.login-box .remember {
+  color: #bdc5b9;
+}
+
+.role-switch {
+  border-color: rgba(222, 211, 187, 0.16);
+  background: #111b15;
+}
+
+.role-btn {
+  color: #c0c8bc;
+}
+
+.role-btn.active {
+  background: #d3ad60;
+  color: #182017;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: #46564a;
+  background: #111a14;
+  color: #f2ecdf;
+}
+
+.login-box input::placeholder {
+  color: #899589;
+}
+
+.form-message.error {
+  background: #472722;
+  color: #ffc2b4;
+}
+
+.form-message.notice {
+  background: #263a2b;
+  color: #c8dfbf;
+}
+
+.login-btn {
+  background: linear-gradient(130deg, #e0c274, #bd9144);
+  color: #172017;
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      linear-gradient(rgba(13, 21, 16, 0.9), rgba(17, 27, 21, 0.95)),
+      url("./images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover;
+  }
+
+  .login-right {
+    background: transparent;
+  }
+}
+/* Match the forest-green and brass welcome-page palette. */
+.login-page {
+  --login-bg: #101914;
+  --login-panel: #1b2b23;
+  --login-field: #14211b;
+  --login-text: #f5f0e5;
+  --login-muted: #c3cabe;
+  --login-accent: #d3ad60;
+  background: var(--login-bg);
+  color: var(--login-text);
+  color-scheme: dark;
+}
+
+.login-left img {
+  filter: saturate(0.7) brightness(0.58);
+}
+
+.login-left::after {
+  background:
+    linear-gradient(180deg, rgba(10, 17, 13, 0.02) 8%, rgba(10, 17, 13, 0.42) 48%, rgba(10, 17, 13, 0.98)),
+    linear-gradient(90deg, rgba(10, 17, 13, 0.03), rgba(10, 17, 13, 0.18));
+}
+
+.login-right {
+  background:
+    radial-gradient(ellipse at 92% 8%, rgba(188, 148, 71, 0.12), transparent 34%),
+    linear-gradient(145deg, #14211b, #101914);
+}
+
+.login-box {
+  border-color: rgba(233, 218, 183, 0.19);
+  background: rgba(27, 43, 35, 0.96);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.38);
+}
+
+.login-logo,
+.login-left-text h2 span {
+  color: #e2c47e;
+}
+
+.login-box h1,
+.login-box form > label,
+.login-left-text h2 {
+  color: #f5f0e5;
+}
+
+.login-subtitle,
+.signup-text,
+.login-left-text p,
+.login-box .remember {
+  color: #c3cabe;
+}
+
+.role-switch {
+  border-color: rgba(233, 218, 183, 0.15);
+  background: #14211b;
+}
+
+.role-btn {
+  color: #c3cabe;
+}
+
+.role-btn.active {
+  background: #d3ad60;
+  color: #1c2119;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  border-color: #465447;
+  background: #14211b;
+  color: #f5f0e5;
+}
+
+.login-box input::placeholder {
+  color: #9da99c;
+}
+
+.login-box input:focus-visible {
+  border-color: #d3ad60;
+  box-shadow: 0 0 0 3px rgba(211, 173, 96, 0.2);
+}
+
+.show-btn,
+.text-action,
+.back-link {
+  color: #e2c47e;
+}
+
+.show-btn:hover {
+  background: rgba(211, 173, 96, 0.12);
+}
+
+.form-message.error {
+  background: #492d25;
+  color: #f1d0b9;
+}
+
+.form-message.notice {
+  background: #263a2b;
+  color: #d5e2c8;
+}
+
+.login-btn {
+  background: linear-gradient(130deg, #e0c274, #bd9144);
+  color: #1c2119;
+}
+
+.login-btn:hover {
+  background: linear-gradient(130deg, #ecd28a, #cda550);
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    background:
+      linear-gradient(rgba(13, 21, 16, 0.91), rgba(17, 27, 21, 0.96)),
+      url("./images/login-library.jpg") center / cover;
   }
 }

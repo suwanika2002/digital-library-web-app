@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
+import BookCover from "../components/BookCover";
 import "./Dashboard.css";
 function normalizeBook(book) {
   return {
     ...book,
     id: book._id || book.id,
+    language: book.language || "English",
     copies: book.availableCopies ?? book.copies ?? 0,
     palette: book.palette || "classic",
     mark: book.mark || "✦",
@@ -11,29 +13,42 @@ function normalizeBook(book) {
 }
 function Books({ books: rawBooks, onNavigate, onSelectBook }) {
   const books = rawBooks.map(normalizeBook);
-  const categories = [
-    "All books",
-    ...new Set(books.map((book) => book.category)),
-  ];
-
+  const [language, setLanguage] = useState("All languages");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All books");
+
+  const languageFilteredBooks = useMemo(
+    () =>
+      books.filter(
+        (book) =>
+          language === "All languages" || book.language === language
+      ),
+    [books, language]
+  );
+
+  const categories = useMemo(
+    () => [
+      "All books",
+      ...new Set(languageFilteredBooks.map((book) => book.category)),
+    ],
+    [languageFilteredBooks]
+  );
 
   const filteredBooks = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return books.filter((book) => {
+    return languageFilteredBooks.filter((book) => {
       const matchesCategory =
         category === "All books" || book.category === category;
       const matchesQuery =
         normalizedQuery.length === 0 ||
-        `${book.title} ${book.author} ${book.category}`
+        `${book.title} ${book.author} ${book.category} ${book.language}`
           .toLowerCase()
           .includes(normalizedQuery);
 
       return matchesCategory && matchesQuery;
     });
-  }, [books, category, query]);
+  }, [languageFilteredBooks, category, query]);
 
   return (
     <section className="library-page catalog-page">
@@ -71,10 +86,6 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
           </div>
         </section>
 
-        <div className="catalog-demo-note">
-          Sample catalog for preview — book inventory is not connected yet.
-        </div>
-
         <label className="catalog-search">
           <span aria-hidden="true">⌕</span>
           <input
@@ -88,6 +99,22 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
         </label>
 
         <div className="catalog-filter-row">
+          <label className="catalog-language-filter">
+            <span>Language</span>
+            <select
+              value={language}
+              onChange={(event) => {
+                setLanguage(event.target.value);
+                setCategory("All books");
+              }}
+              aria-label="Filter by language"
+            >
+              <option value="All languages">All languages</option>
+              <option value="English">English</option>
+              <option value="Sinhala">Sinhala</option>
+            </select>
+          </label>
+
           <div
             className="catalog-filters"
             role="group"
@@ -115,15 +142,11 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
               <article className="catalog-book" key={book.id}>
                 <button
                   type="button"
-                  className={`catalog-cover catalog-cover-${book.palette}`}
+                  className="catalog-cover-trigger"
                   onClick={() => onSelectBook(book)}
                   aria-label={`View ${book.title} by ${book.author}`}
                 >
-                  <span className="cover-ornament" aria-hidden="true">✳</span>
-                  <span className="cover-rule" aria-hidden="true" />
-                  <span className="cover-title">{book.title}</span>
-                  <span className="cover-author">{book.author}</span>
-                  <span className="cover-mark">{book.mark}</span>
+                  <BookCover book={book} />
                 </button>
                 <div className="catalog-book-info">
                   <span className="catalog-category">{book.category}</span>
@@ -163,6 +186,7 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
               className="catalog-view-button"
               onClick={() => {
                 setQuery("");
+                setLanguage("All languages");
                 setCategory("All books");
               }}
             >

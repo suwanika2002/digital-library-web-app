@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Login.css";
-import sideImage from "./images/image.png";
+import sideImage from "./images/login-library.jpg";
 
 function Login({ goBack, onLogin, onRegister }) {
   const [role, setRole] = useState("member");

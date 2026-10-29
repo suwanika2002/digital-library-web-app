@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+
+import { useCallback, useEffect, useState } from "react";
 import Welcome from "./Welcome";
 import Login from "./Login";
 import MemberDashboard from "./pages/MemberDashboard";
@@ -9,7 +10,6 @@ import LibrarianReservations from "./pages/LibrarianReservations";
 import Register from "./pages/Register";
 import BookDetails from "./pages/BookDetails";
 import ManageBooks from "./pages/ManageBooks";
-import { books as initialBooks } from "./data/books";
 
 function App() {
   const [page, setPage] = useState("welcome");
@@ -18,8 +18,9 @@ function App() {
   const [books, setBooks] = useState([]);
   const [booksLoading, setBooksLoading] = useState(false);
   const [booksError, setBooksError] = useState("");
-useEffect(() => {
-  const fetchBooks = async () => {
+
+  // Fetch the latest books from the backend.
+  const fetchBooks = useCallback(async () => {
     setBooksLoading(true);
     setBooksError("");
 
@@ -31,6 +32,11 @@ useEffect(() => {
       }
 
       const data = await response.json();
+
+      if (!Array.isArray(data)) {
+        throw new Error("Invalid book data received.");
+      }
+
       setBooks(data);
     } catch (error) {
       console.error("Error loading books:", error);
@@ -38,18 +44,35 @@ useEffect(() => {
     } finally {
       setBooksLoading(false);
     }
+  }, []);
+
+  // Fetch books when the app first loads.
+  useEffect(() => {
+    fetchBooks();
+  }, [fetchBooks]);
+
+  // Refresh the catalogue whenever the Books page is opened.
+  useEffect(() => {
+    if (page === "books") {
+      fetchBooks();
+    }
+  }, [page, fetchBooks]);
+
+  // Save the logged-in user's information.
+  const openDashboard = (user, token) => {
+    if (!user || !token) {
+      console.error("A valid user and token are required to log in.");
+      return;
+    }
+
+    localStorage.setItem("authToken", token);
+    localStorage.setItem("authUser", JSON.stringify(user));
+
+    setRole(user.role);
+    setPage("dashboard");
   };
 
-  fetchBooks();
-}, []);
-  const openDashboard = (user, token) => {
-  localStorage.setItem("authToken", token);
-  localStorage.setItem("authUser", JSON.stringify(user));
-
-  setRole(user.role);
-  setPage("dashboard");
-};
-
+  // Login page.
   if (page === "login") {
     return (
       <Login
@@ -60,45 +83,54 @@ useEffect(() => {
     );
   }
 
+  // Member or librarian dashboard.
   if (page === "dashboard") {
-    const Dashboard = role === "member" ? MemberDashboard : LibrarianDashboard;
+    const Dashboard =
+      role === "librarian" ? LibrarianDashboard : MemberDashboard;
 
     return (
       <Dashboard
         onNavigate={setPage}
-        onLogout={() => setPage("welcome")}
+        onLogout={() => {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("authUser");
+          setRole("member");
+          setPage("welcome");
+        }}
       />
     );
   }
 
- if (page === "books") {
-  if (booksLoading) {
-    return <p>Loading books...</p>;
-  }
+  // Book catalogue.
+  if (page === "books") {
+    if (booksLoading && books.length === 0) {
+      return <p>Loading books...</p>;
+    }
 
-  if (booksError) {
+    if (booksError && books.length === 0) {
+      return (
+        <section>
+          <p>{booksError}</p>
+          <button type="button" onClick={fetchBooks}>
+            Try again
+          </button>
+        </section>
+      );
+    }
+
     return (
-      <section>
-        <p>{booksError}</p>
-        <button onClick={() => window.location.reload()}>
-          Try again
-        </button>
-      </section>
+      <Books
+        books={books}
+        onNavigate={setPage}
+        onSelectBook={(book) => {
+          setSelectedBook(book);
+          setPage("bookDetails");
+        }}
+      />
     );
   }
 
-  return (
-    <Books
-      onNavigate={setPage}
-      books={books}
-      onSelectBook={(book) => {
-        setSelectedBook(book);
-        setPage("bookDetails");
-      }}
-    />
-  );
-}
-
+  // Librarian book management.
   if (page === "manageBooks") {
     return (
       <ManageBooks
@@ -109,7 +141,8 @@ useEffect(() => {
     );
   }
 
-  
+  // Selected book details.
+ 
 if (page === "bookDetails") {
   const currentBook =
     books.find(
@@ -122,29 +155,32 @@ if (page === "bookDetails") {
     <BookDetails
       book={currentBook}
       onNavigate={setPage}
+      onBookReserved={fetchBooks}
     />
   );
 }
 
+
+  // Reservation pages.
   if (page === "reservations") {
-  if (role === "librarian") {
-    return (
-      <LibrarianReservations onNavigate={setPage} />
-    );
+    if (role === "librarian") {
+      return <LibrarianReservations onNavigate={setPage} />;
+    }
+
+    return <MyReservations onNavigate={setPage} />;
   }
 
-  return <MyReservations onNavigate={setPage} />;
-}
-
+  // Registration page.
   if (page === "account") {
     return <Register onNavigate={setPage} />;
   }
 
+  // Welcome page.
   return (
     <Welcome
       goToLogin={() => setPage("login")}
       goToRegister={() => setPage("account")}
-      goToDashboard={() => openDashboard("member")}
+      goToDashboard={() => setPage("login")}
     />
   );
 }

@@ -744,7 +744,33 @@
 }
 
 .catalog-filter-row {
+  display: grid;
+  gap: 14px;
   margin-top: 17px;
+}
+
+.catalog-language-filter {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 10px;
+  color: #766b5e;
+  font-size: 11px;
+}
+
+.catalog-language-filter select {
+  min-height: 34px;
+  padding: 0 30px 0 11px;
+  border: 1px solid #e4ddcf;
+  border-radius: 7px;
+  background: #fbfaf7;
+  color: #33261b;
+  font: inherit;
+}
+
+.catalog-language-filter select:focus-visible {
+  outline: 2px solid rgba(184, 145, 67, 0.55);
+  outline-offset: 2px;
 }
 
 .catalog-filters {
@@ -813,6 +839,33 @@
   color: #fff7e8;
   text-align: center;
   cursor: pointer;
+}
+
+.catalog-cover-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.catalog-cover.has-cover-image {
+  padding: 0;
+  background: #fffefa;
+}
+
+.catalog-cover.has-cover-image::before,
+.catalog-cover.has-cover-image::after {
+  display: none;
+}
+
+.catalog-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .catalog-cover::before {
@@ -1358,6 +1411,627 @@
     width: min(100%, 300px);
     height: 390px;
     justify-self: center;
+  }
+}
+
+/* Deep forest, warm paper, and brass accents across the library workspace */
+.dashboard-page,
+.library-page {
+  background:
+    radial-gradient(ellipse at 85% 4%, rgba(183, 151, 92, 0.1), transparent 28%),
+    #eee9dd;
+  color: #242a22;
+}
+
+.dashboard-sidebar {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(104, 132, 93, 0.16), transparent 34%),
+    linear-gradient(180deg, #14221b, #1d2b22 70%, #17231c);
+  box-shadow: 10px 0 34px rgba(20, 33, 25, 0.13);
+}
+
+.dashboard-brand,
+.library-brand {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 650;
+  letter-spacing: -0.3px;
+}
+
+.brand-light {
+  color: #ddbd72;
+}
+
+.sidebar-label {
+  color: #99ab95;
+  letter-spacing: 2px;
+}
+
+.sidebar-link,
+.sidebar-logout {
+  min-height: 47px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: #d3ddcf;
+}
+
+.sidebar-link > span:first-child,
+.sidebar-logout > span:first-child {
+  color: #d4b86e;
+}
+
+.sidebar-link:hover,
+.sidebar-logout:hover {
+  border-color: rgba(215, 195, 141, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.sidebar-link.active {
+  border-color: rgba(220, 191, 119, 0.27);
+  background: linear-gradient(100deg, rgba(196, 159, 87, 0.2), rgba(196, 159, 87, 0.07));
+  box-shadow: inset 3px 0 #d5b66c;
+  color: #f0d892;
+}
+
+.profile-avatar {
+  background: linear-gradient(145deg, #e0ca91, #bba06a);
+}
+
+.librarian-avatar {
+  background: linear-gradient(145deg, #c2d0b4, #829779);
+}
+
+.sidebar-bottom {
+  border-color: rgba(225, 233, 217, 0.16);
+}
+
+.dashboard-topbar {
+  border-color: #dbd3c4;
+  background: rgba(248, 245, 237, 0.91);
+  box-shadow: 0 4px 18px rgba(41, 47, 35, 0.035);
+  color: #60695c;
+  backdrop-filter: blur(12px);
+}
+
+.topbar-status > span {
+  color: #64865b;
+}
+
+.dashboard-content {
+  width: min(1190px, calc(100% - clamp(48px, 9vw, 130px)));
+  padding-top: clamp(42px, 6vw, 68px);
+}
+
+.dashboard-eyebrow,
+.library-eyebrow {
+  color: #7c612e;
+  letter-spacing: 2px;
+}
+
+.dashboard-content h1,
+.catalog-heading h1,
+.catalog-detail-copy h1,
+.reservations-heading h1,
+.manage-books-heading h1 {
+  color: #1e2b22;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 620;
+  letter-spacing: -1.6px;
+}
+
+.dashboard-intro,
+.catalog-heading > div:first-child > p:last-child,
+.reservations-heading > div > p:last-child,
+.manage-books-heading > div > p:last-child {
+  color: #60695b;
+  line-height: 1.75;
+}
+
+.dashboard-primary-action {
+  min-height: 46px;
+  border: 1px solid #9a783b;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #d6b66d, #bd9144);
+  box-shadow: 0 4px 0 #8e6e34, 0 8px 18px rgba(87, 63, 24, 0.12);
+  color: #252216;
+}
+
+.dashboard-primary-action:hover {
+  background: linear-gradient(135deg, #e1c77f, #caa253);
+}
+
+.dashboard-demo-notice,
+.demo-notice,
+.reservations-demo-note,
+.manage-books-demo-note,
+.catalog-demo-note,
+.catalog-notice {
+  border-color: #d8c9a8;
+  border-radius: 11px;
+  background: #e8dfcb;
+  color: #5a4c34;
+}
+
+.dashboard-feature {
+  min-height: 240px;
+  margin-top: 28px;
+  padding: 34px 40px;
+  border: 1px solid rgba(201, 178, 126, 0.24);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 78% 12%, rgba(191, 160, 94, 0.2), transparent 32%),
+    linear-gradient(117deg, #1b2c22, #22362a 58%, #30291c);
+  box-shadow: 0 22px 48px rgba(29, 42, 31, 0.19);
+}
+
+.feature-kicker {
+  color: #dfc27b;
+  letter-spacing: 2px;
+}
+
+.feature-copy h2 {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 550;
+  letter-spacing: -0.7px;
+}
+
+.feature-copy > p:not(.feature-kicker) {
+  color: #c7d1c4;
+}
+
+.feature-link {
+  color: #e7ca83;
+}
+
+.feature-art {
+  opacity: 0.82;
+}
+
+.art-book-one {
+  background: linear-gradient(160deg, #a56d4c, #694331);
+}
+
+.art-book-two {
+  background: linear-gradient(160deg, #d2ae62, #8e6d35);
+}
+
+.art-book-three {
+  background: linear-gradient(160deg, #829678, #4d614e);
+}
+
+.dashboard-section-heading {
+  margin-top: 42px;
+}
+
+.dashboard-section-heading h2 {
+  color: #203026;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 620;
+  letter-spacing: -0.55px;
+}
+
+.dashboard-cards {
+  gap: 16px;
+  margin-top: 19px;
+}
+
+.dashboard-card {
+  min-height: 274px;
+  border-color: #d5cebf;
+  border-radius: 15px;
+  background: var(--card-tint, #f8f5ed);
+  box-shadow: 0 8px 22px rgba(40, 47, 36, 0.065);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--card-accent, #9d7c3d);
+  box-shadow: 0 18px 34px rgba(38, 48, 36, 0.14);
+}
+
+.dashboard-card-books {
+  --card-tint: #e6ecdf;
+  --card-accent: #607850;
+  --card-art-bg: #d1ddc8;
+}
+
+.dashboard-card-reservations {
+  --card-tint: #efe6d4;
+  --card-accent: #92703a;
+  --card-art-bg: #e4d4b3;
+}
+
+.dashboard-card-details {
+  --card-tint: #e3ebe5;
+  --card-accent: #547462;
+  --card-art-bg: #d0ded4;
+}
+
+.dashboard-card-account {
+  --card-tint: #eee3d7;
+  --card-accent: #8d6249;
+  --card-art-bg: #e4d1bf;
+}
+
+.dashboard-card-art {
+  height: 118px;
+  flex-basis: 118px;
+}
+
+.dashboard-card-icon {
+  border: 1px solid rgba(74, 91, 64, 0.12);
+  background: rgba(250, 248, 239, 0.82);
+}
+
+.dashboard-card-title {
+  color: #243328;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.dashboard-card-description {
+  color: #596456;
+  font-size: 12px;
+}
+
+.dashboard-card-link {
+  color: #536b43;
+}
+
+.dashboard-footer {
+  border-color: #d8d0c0;
+  background: rgba(246, 243, 234, 0.68);
+  color: #687061;
+}
+
+.library-page-header {
+  padding-top: 19px;
+  padding-bottom: 19px;
+  border-color: rgba(228, 213, 181, 0.12);
+  background:
+    radial-gradient(ellipse at 78% -30%, rgba(185, 151, 83, 0.17), transparent 36%),
+    linear-gradient(110deg, #14221b, #203127);
+}
+
+.library-nav-button {
+  min-height: 40px;
+  border-color: rgba(225, 213, 185, 0.32);
+  border-radius: 9px;
+  color: #ece9dc;
+  font-size: 12px;
+}
+
+.library-nav-button:hover {
+  border-color: #d3b267;
+  background: #d3b267;
+}
+
+.catalog-content,
+.reservations-content,
+.manage-books-content {
+  width: min(1190px, calc(100% - 72px));
+  padding-top: 62px;
+}
+
+.catalog-heading h1,
+.catalog-detail-copy h1,
+.reservations-heading h1,
+.manage-books-heading h1 {
+  font-size: clamp(37px, 4vw, 52px);
+  line-height: 1.08;
+}
+
+.catalog-search,
+.manage-books-search {
+  min-height: 56px;
+  border-color: #d5cbb8;
+  border-radius: 12px;
+  background: #faf8f1;
+  box-shadow: 0 8px 22px rgba(38, 44, 34, 0.055);
+}
+
+.catalog-search:focus-within,
+.manage-books-search:focus-within {
+  border-color: #83916f;
+  box-shadow: 0 0 0 4px rgba(93, 121, 82, 0.13);
+}
+
+.catalog-language-filter {
+  color: #4f5c4d;
+  font-weight: 650;
+}
+
+.catalog-language-filter select {
+  min-height: 38px;
+  border-color: #d1c8b7;
+  border-radius: 9px;
+  background: #f8f5ed;
+}
+
+.catalog-filter {
+  min-height: 35px;
+  padding: 0 15px;
+  border-color: #d6cdbd;
+  border-radius: 99px;
+  background: #f7f4ec;
+  color: #596252;
+  font-size: 11px;
+}
+
+.catalog-filter.active {
+  border-color: #294434;
+  background: #294434;
+  color: #f2eedf;
+}
+
+.catalog-grid {
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.catalog-book {
+  border-color: #d8d0c1;
+  border-radius: 15px;
+  background: #faf8f2;
+  box-shadow: 0 8px 22px rgba(40, 46, 35, 0.065);
+}
+
+.catalog-book:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 38px rgba(33, 44, 34, 0.16);
+}
+
+.catalog-cover-trigger {
+  background: #1c2a22;
+}
+
+.catalog-cover {
+  height: 238px;
+}
+
+.catalog-book-info {
+  padding: 17px 17px 15px;
+}
+
+.catalog-category {
+  color: #78602f;
+}
+
+.catalog-book-info h2 {
+  color: #1d2b22;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.catalog-book-info > p {
+  color: #667061;
+}
+
+.catalog-book-footer {
+  border-color: #e0d9ca;
+}
+
+.catalog-availability.available {
+  color: #456549;
+}
+
+.catalog-view-button {
+  color: #765a24;
+}
+
+.catalog-detail-layout {
+  gap: clamp(36px, 7vw, 92px);
+  margin-top: 30px;
+}
+
+.catalog-detail-cover {
+  min-height: 440px;
+  border: 1px solid #c8bdab;
+  border-radius: 13px;
+  box-shadow: 0 26px 52px rgba(28, 38, 29, 0.22);
+}
+
+.catalog-detail-description {
+  color: #5d675a;
+  line-height: 1.8;
+}
+
+.book-detail-facts {
+  border-color: #d5ccbb;
+}
+
+.book-detail-facts > div {
+  border-color: #d5ccbb;
+}
+
+.book-detail-facts > div > span {
+  color: #687060;
+}
+
+.book-detail-facts strong {
+  color: #29362a;
+}
+
+.reservations-summary > div,
+.reservation-item,
+.manage-books-panel {
+  border-color: #d8d0c0;
+  border-radius: 14px;
+  background: #faf8f1;
+  box-shadow: 0 8px 22px rgba(40, 46, 35, 0.06);
+}
+
+.reservations-summary > div {
+  min-height: 88px;
+}
+
+.reservations-summary strong {
+  color: #6f5626;
+}
+
+.reservations-toolbar h2,
+.manage-books-toolbar h2 {
+  color: #223126;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 620;
+}
+
+.reservation-filters {
+  border-color: #d8cfbe;
+  border-radius: 11px;
+  background: #e7e1d4;
+}
+
+.reservation-filter.active {
+  border-radius: 8px;
+  background: #faf8f1;
+  box-shadow: 0 2px 6px rgba(39, 49, 37, 0.1);
+  color: #294434;
+}
+
+.reservation-item {
+  padding: 17px 19px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.reservation-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 28px rgba(39, 49, 37, 0.11);
+}
+
+.reservation-book-info h3 {
+  color: #243228;
+}
+
+.reservation-id {
+  color: #80642f;
+}
+
+.manage-books-table th {
+  background: #e9e4d8;
+  color: #5a624f;
+}
+
+.manage-books-table td {
+  border-color: #e5ddcd;
+  color: #4d584b;
+}
+
+.manage-book-title strong {
+  color: #243228;
+}
+
+.manage-book-title small {
+  color: #687060;
+}
+
+.manage-book-category {
+  background: #e7e2d4;
+  color: #5d5a40;
+}
+
+.manage-book-dialog,
+.reservation-dialog {
+  border-color: #d4cbb9;
+  border-radius: 18px;
+  background: #faf8f1;
+  box-shadow: 0 30px 80px rgba(17, 28, 21, 0.35);
+}
+
+.manage-book-form input,
+.manage-book-form select,
+.manage-book-form textarea {
+  border-color: #d6cebd;
+  border-radius: 9px;
+  background: #fffdf8;
+}
+
+.manage-book-form input:focus-visible,
+.manage-book-form select:focus-visible,
+.manage-book-form textarea:focus-visible {
+  border-color: #70876c;
+  box-shadow: 0 0 0 4px rgba(83, 117, 81, 0.13);
+}
+
+.reservation-dialog-backdrop {
+  background: rgba(16, 27, 21, 0.68);
+  backdrop-filter: blur(5px);
+}
+
+.dashboard-page button:focus-visible,
+.library-page button:focus-visible,
+.dashboard-page a:focus-visible,
+.library-page a:focus-visible {
+  outline: 3px solid rgba(177, 143, 72, 0.76);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .dashboard-sidebar {
+    background: linear-gradient(110deg, #14221b, #24382b);
+  }
+
+  .sidebar-link {
+    border-color: rgba(234, 231, 211, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .dashboard-content,
+  .catalog-content,
+  .reservations-content,
+  .manage-books-content {
+    width: calc(100% - 36px);
+    padding-top: 38px;
+  }
+
+  .dashboard-feature {
+    padding: 25px 22px;
+    border-radius: 16px;
+  }
+
+  .dashboard-cards {
+    gap: 12px;
+  }
+
+  .dashboard-card {
+    border-radius: 13px;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  .catalog-cover {
+    height: 192px;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-content,
+  .reservations-content,
+  .manage-books-content {
+    width: calc(100% - 28px);
+  }
+
+  .catalog-heading h1,
+  .catalog-detail-copy h1,
+  .reservations-heading h1,
+  .manage-books-heading h1 {
+    font-size: 36px;
+  }
+
+  .catalog-grid {
+    gap: 10px;
+  }
+
+  .catalog-cover {
+    height: 165px;
+  }
+
+  .catalog-book-info {
+    padding: 12px 10px;
   }
 }
 
@@ -2239,6 +2913,7 @@
 }
 
 .manage-book-mark {
+  position: relative;
   display: grid;
   width: 34px;
   height: 44px;
@@ -2250,6 +2925,25 @@
   color: #fff7e8;
   font-family: Georgia, serif;
   font-size: 8px;
+}
+
+.manage-book-mark img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.manage-book-mark > span {
+  position: relative;
+  z-index: 2;
+  grid-area: 1 / 1;
+}
+
+.manage-book-mark img:not([hidden]) + span {
+  visibility: hidden;
 }
 
 .manage-book-category {
@@ -2410,6 +3104,7 @@
 }
 
 .manage-book-form input,
+.manage-book-form select,
 .manage-book-form textarea {
   width: 100%;
   min-height: 39px;
@@ -2424,12 +3119,29 @@
   font-size: 12px;
 }
 
+.manage-book-form-help {
+  margin: -4px 0 5px;
+  color: #918779;
+  font-size: 10px;
+}
+
+.manage-book-cover-preview {
+  width: 96px;
+  max-height: 140px;
+  justify-self: start;
+  margin-bottom: 5px;
+  border: 1px solid #e1d8ca;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
 .manage-book-form textarea {
   min-height: 84px;
   resize: vertical;
 }
 
 .manage-book-form input:focus-visible,
+.manage-book-form select:focus-visible,
 .manage-book-form textarea:focus-visible {
   border-color: #b89143;
   box-shadow: 0 0 0 3px rgba(184, 145, 67, 0.12);
@@ -2439,6 +3151,10 @@
   display: grid;
   grid-template-columns: 1fr 160px;
   gap: 13px;
+}
+
+.manage-book-form-row-language {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr) 130px;
 }
 
 .manage-book-form-row > div {
@@ -2687,10 +3403,1867 @@
   }
 }
 
+/* Shared finish for dashboard, catalogue, reservations, and management pages */
+.dashboard-page,
+.library-page {
+  background: #eee8dc;
+  color: #281f16;
+}
+
+.dashboard-sidebar {
+  background: linear-gradient(180deg, #1b1c16 0%, #211a13 100%);
+  box-shadow: 8px 0 26px rgba(29, 22, 14, 0.08);
+}
+
+.dashboard-brand,
+.library-brand {
+  color: #f7efe0;
+}
+
+.brand-light {
+  color: #dfbd70;
+}
+
+.sidebar-link,
+.sidebar-logout {
+  border: 1px solid transparent;
+}
+
+.sidebar-link.active {
+  border-color: rgba(224, 190, 112, 0.2);
+  background: linear-gradient(100deg, #423221, #34281d);
+  color: #f0d58f;
+}
+
+.dashboard-topbar {
+  border-color: #ded5c7;
+  background: #f7f3eb;
+  color: #665c4e;
+}
+
+.dashboard-content,
+.catalog-content,
+.reservations-content,
+.manage-books-content {
+  color: #2a2118;
+}
+
+.dashboard-content h1,
+.catalog-heading h1,
+.catalog-detail-copy h1,
+.reservations-heading h1,
+.manage-books-heading h1 {
+  color: #251b12;
+  letter-spacing: -0.9px;
+}
+
+.dashboard-eyebrow,
+.catalog-category,
+.library-eyebrow {
+  color: #845c1d;
+}
+
+.dashboard-intro,
+.catalog-heading > div:first-child > p:last-child,
+.reservations-heading > div > p:last-child,
+.manage-books-heading > div > p:last-child {
+  color: #665a4a;
+}
+
+.dashboard-primary-action {
+  border: 1px solid #a87c31;
+  background: #bd9144;
+  box-shadow: 0 3px 0 #87642b;
+  color: #21180e;
+}
+
+.dashboard-primary-action:hover {
+  background: #d0aa5d;
+}
+
+.dashboard-demo-notice,
+.demo-notice,
+.reservations-demo-note,
+.manage-books-demo-note,
+.catalog-demo-note,
+.catalog-notice {
+  border-color: #d9c9a9;
+  background: #e7dcc5;
+  color: #58472f;
+}
+
+.dashboard-feature {
+  border-color: #3b3224;
+  background:
+    radial-gradient(ellipse at 86% 28%, rgba(192, 153, 79, 0.18), transparent 33%),
+    linear-gradient(115deg, #25251b, #312317);
+  box-shadow: 0 14px 30px rgba(34, 26, 17, 0.12);
+}
+
+.librarian-feature {
+  border-color: #314033;
+  background:
+    radial-gradient(ellipse at 86% 28%, rgba(192, 153, 79, 0.14), transparent 33%),
+    linear-gradient(115deg, #20271f, #253025);
+}
+
+.dashboard-card {
+  border-color: #dbd0bd;
+  border-radius: 13px;
+  box-shadow: 0 5px 16px rgba(50, 38, 24, 0.05);
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 13px 26px rgba(50, 38, 24, 0.12);
+}
+
+.dashboard-card-books {
+  --card-tint: #e7ecdf;
+  --card-accent: #60734c;
+  --card-art-bg: #d3ddc8;
+}
+
+.dashboard-card-reservations {
+  --card-tint: #f0e5cf;
+  --card-accent: #9a6e2d;
+  --card-art-bg: #e6d4ad;
+}
+
+.dashboard-card-details {
+  --card-tint: #e1e6e5;
+  --card-accent: #536d6d;
+  --card-art-bg: #cbd7d4;
+}
+
+.dashboard-card-account {
+  --card-tint: #eee0d9;
+  --card-accent: #8b5b4e;
+  --card-art-bg: #e2c9bd;
+}
+
+.dashboard-card-icon {
+  background: rgba(255, 252, 244, 0.82);
+}
+
+.dashboard-card-title,
+.dashboard-section-heading h2 {
+  color: #2c2117;
+}
+
+.dashboard-card-description {
+  color: #625748;
+}
+
+.dashboard-footer {
+  border-color: #ded5c7;
+  background: rgba(247, 243, 235, 0.55);
+  color: #776b5b;
+}
+
+.library-page-header {
+  border-color: #393023;
+  background: linear-gradient(105deg, #1b1c16, #272016);
+}
+
+.library-nav-button {
+  border-color: #746348;
+  color: #f4ebdc;
+}
+
+.library-nav-button:hover {
+  border-color: #d3b267;
+  background: #d3b267;
+  color: #21180e;
+}
+
+.catalog-count strong,
+.reservations-summary strong {
+  color: #79551f;
+}
+
+.catalog-search {
+  border-color: #d6c9b6;
+  background: #faf7f0;
+  box-shadow: 0 5px 15px rgba(46, 34, 19, 0.04);
+}
+
+.catalog-search:focus-within,
+.manage-books-search:focus-within {
+  border-color: #9c722e;
+  box-shadow: 0 0 0 3px rgba(156, 114, 46, 0.15);
+}
+
+.catalog-language-filter select {
+  border-color: #d6c9b6;
+  background: #f8f4ec;
+  color: #302417;
+}
+
+.catalog-filter {
+  border-color: #d8cbb8;
+  background: #f7f3eb;
+  color: #665a49;
+}
+
+.catalog-filter:hover {
+  border-color: #9a702c;
+  color: #4a3415;
+}
+
+.catalog-filter.active {
+  border-color: #38291a;
+  background: #38291a;
+  color: #f8f0df;
+}
+
+.catalog-grid {
+  gap: 20px;
+}
+
+.catalog-book {
+  border-color: #dcd1c0;
+  border-radius: 13px;
+  background: #faf7f0;
+  box-shadow: 0 5px 16px rgba(47, 34, 18, 0.045);
+}
+
+.catalog-book:hover {
+  box-shadow: 0 14px 28px rgba(47, 34, 18, 0.13);
+}
+
+.catalog-cover-trigger {
+  overflow: hidden;
+  background: #302719;
+}
+
+.catalog-cover {
+  transition: filter 0.2s ease, transform 0.3s ease;
+}
+
+.catalog-cover-trigger:hover .catalog-cover-image {
+  transform: scale(1.035);
+}
+
+.catalog-cover-image {
+  transition: transform 0.35s ease;
+}
+
+.catalog-book-info h2 {
+  color: #2a1e13;
+}
+
+.catalog-book-info > p,
+.catalog-detail-author {
+  color: #746758;
+}
+
+.catalog-book-footer {
+  border-color: #e2d8c8;
+}
+
+.catalog-availability.available {
+  color: #48603c;
+}
+
+.catalog-view-button {
+  color: #765219;
+}
+
+.catalog-view-button:hover {
+  color: #3d290f;
+}
+
+.catalog-empty,
+.reservation-empty,
+.manage-books-empty {
+  border-color: #cdbfa9;
+  background: rgba(249, 246, 238, 0.58);
+  color: #655948;
+}
+
+.catalog-detail-cover {
+  border: 1px solid #d7c9b4;
+  box-shadow: 0 20px 42px rgba(43, 32, 20, 0.22);
+}
+
+.book-detail-facts {
+  border-color: #d6cbb9;
+}
+
+.book-detail-facts > div {
+  border-color: #d6cbb9;
+}
+
+.book-detail-facts > div > span {
+  color: #716555;
+}
+
+.book-detail-facts strong {
+  color: #302316;
+}
+
+.reservations-summary > div,
+.reservation-item,
+.manage-books-panel {
+  border-color: #dcd1c0;
+  border-radius: 12px;
+  background: #faf7f0;
+  box-shadow: 0 6px 18px rgba(47, 34, 18, 0.045);
+}
+
+.reservations-toolbar h2,
+.manage-books-toolbar h2 {
+  color: #2c2117;
+}
+
+.reservation-filters {
+  border-color: #d9cebb;
+  background: #e7dfd1;
+}
+
+.reservation-filter {
+  color: #625646;
+}
+
+.reservation-filter.active {
+  background: #fbf8f1;
+  color: #302316;
+}
+
+.reservation-item {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.reservation-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(47, 34, 18, 0.09);
+}
+
+.reservation-status-ready-for-pickup,
+.reservation-status-reserved {
+  background: #e6ddc9;
+  color: #715421;
+}
+
+.manage-books-search {
+  border-color: #d6c9b6;
+  background: #f8f4ec;
+}
+
+.manage-books-table th {
+  background: #ece5d8;
+  color: #6c5a40;
+}
+
+.manage-books-table td {
+  border-color: #e7ddcd;
+  color: #4f4437;
+}
+
+.manage-book-title strong {
+  color: #2c2117;
+}
+
+.manage-book-title small {
+  color: #716657;
+}
+
+.manage-book-category {
+  background: #e9e0d1;
+  color: #66502d;
+}
+
+.manage-book-dialog,
+.reservation-dialog {
+  border: 1px solid #d7c9b4;
+  border-radius: 16px;
+  background: #faf7f0;
+  box-shadow: 0 26px 70px rgba(25, 19, 12, 0.32);
+}
+
+.reservation-dialog-backdrop {
+  background: rgba(27, 22, 16, 0.62);
+  backdrop-filter: blur(4px);
+}
+
+.manage-book-form input,
+.manage-book-form select,
+.manage-book-form textarea {
+  border-color: #d5c7b1;
+  background: #fffdf8;
+}
+
+.manage-book-form input:focus-visible,
+.manage-book-form select:focus-visible,
+.manage-book-form textarea:focus-visible {
+  border-color: #98702f;
+  box-shadow: 0 0 0 3px rgba(152, 112, 47, 0.15);
+}
+
+.dashboard-page button:focus-visible,
+.library-page button:focus-visible,
+.dashboard-page a:focus-visible,
+.library-page a:focus-visible {
+  outline: 3px solid rgba(169, 124, 48, 0.68);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .dashboard-sidebar {
+    background: linear-gradient(105deg, #1b1c16, #282016);
+  }
+
+  .sidebar-nav {
+    gap: 7px;
+  }
+
+  .sidebar-link {
+    border-color: rgba(230, 215, 187, 0.12);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .catalog-content,
+  .reservations-content,
+  .manage-books-content {
+    width: calc(100% - 36px);
+    padding-top: 38px;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .catalog-cover {
+    height: 190px;
+  }
+
+  .catalog-book-info {
+    padding: 13px 12px;
+  }
+
+  .reservations-summary {
+    gap: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-content,
+  .reservations-content,
+  .manage-books-content {
+    width: calc(100% - 28px);
+  }
+
+  .catalog-heading,
+  .reservations-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .catalog-count {
+    align-items: flex-start;
+  }
+
+  .catalog-grid {
+    gap: 11px;
+  }
+
+  .catalog-cover {
+    height: 165px;
+    padding: 18px 12px;
+  }
+
+  .cover-title {
+    font-size: 16px;
+  }
+
+  .catalog-book-info h2 {
+    min-height: 40px;
+    font-size: 14px;
+  }
+
+  .catalog-book-info > p {
+    font-size: 10px;
+  }
+
+  .reservations-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-item {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 11px;
+    padding: 12px;
+  }
+
+  .reservation-mini-cover {
+    width: 48px;
+    height: 66px;
+  }
+
+  .reservation-item-actions {
+    grid-column: 2;
+  }
+}
+
 @media (max-width: 480px) {
   .librarian-stats {
     grid-template-columns: 1fr;
   }
+
 }
 
+/* Dark reading-room theme for dashboards, catalogue, reservations and management */
+.dashboard-page,
+.library-page {
+  --surface: #111a15;
+  --surface-raised: #19251d;
+  --surface-card: #1c2a21;
+  --line: rgba(220, 207, 175, 0.17);
+  --text-primary: #f1ecdf;
+  --text-secondary: #bdc5b9;
+  --brass: #d3ad60;
+  background:
+    linear-gradient(rgba(12, 19, 15, 0.94), rgba(13, 21, 16, 0.97)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover fixed;
+  color: var(--text-primary);
+  color-scheme: dark;
+}
+
+.dashboard-sidebar {
+  border-right: 1px solid var(--line);
+  background: linear-gradient(180deg, #17241c, #101813);
+}
+
+.dashboard-topbar,
+.dashboard-footer {
+  border-color: var(--line);
+  background: rgba(15, 23, 18, 0.88);
+  color: var(--text-secondary);
+}
+
+.dashboard-topbar > span:first-child > span {
+  color: #829083;
+}
+
+.topbar-status {
+  color: #c5cfbf;
+}
+
+.dashboard-content h1,
+.dashboard-content h2,
+.dashboard-content h3,
+.reservations-content h1,
+.manage-books-content h1,
+.catalog-heading h1,
+.catalog-detail-copy h1,
+.library-page-content h1 {
+  color: var(--text-primary);
+}
+
+.dashboard-intro,
+.reservations-heading > div > p:last-child,
+.manage-books-heading > div > p:last-child,
+.catalog-heading > div:first-child > p:last-child,
+.library-page-content > p:not(.library-eyebrow) {
+  color: var(--text-secondary);
+}
+
+.dashboard-eyebrow,
+.catalog-category,
+.library-eyebrow {
+  color: var(--brass);
+}
+
+.dashboard-demo-notice,
+.reservations-demo-note,
+.manage-books-demo-note,
+.catalog-demo-note,
+.library-page-content .demo-notice {
+  border-color: rgba(211, 173, 96, 0.22);
+  background: rgba(211, 173, 96, 0.08);
+  color: #d5c69f;
+}
+
+.dashboard-feature {
+  border-color: rgba(211, 173, 96, 0.2);
+  background:
+    linear-gradient(95deg, rgba(20, 33, 25, 0.97), rgba(20, 33, 25, 0.78)),
+    url("../images/image.png") center 48% / cover;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+}
+
+.feature-copy h2,
+.feature-copy p {
+  color: var(--text-primary);
+}
+
+.feature-copy p {
+  color: var(--text-secondary);
+}
+
+.dashboard-primary-action {
+  background: linear-gradient(130deg, #e0c274, #bd9144);
+  color: #172017;
+}
+
+.dashboard-card,
+.reservations-summary > div,
+.reservation-item,
+.manage-books-panel {
+  border-color: var(--line);
+  background: linear-gradient(145deg, rgba(29, 43, 34, 0.97), rgba(23, 35, 28, 0.97));
+  color: var(--text-primary);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-card-title,
+.reservation-book-info h3,
+.manage-book-title strong {
+  color: var(--text-primary);
+}
+
+.dashboard-card-description,
+.reservation-book-info > p,
+.reservation-dates,
+.manage-book-title small {
+  color: var(--text-secondary);
+}
+
+.dashboard-card-link,
+.feature-link,
+.catalog-view-button {
+  color: #e0c274;
+}
+
+.dashboard-card-link:hover,
+.feature-link:hover,
+.catalog-view-button:hover {
+  color: #f1d99c;
+}
+
+.sidebar-link,
+.sidebar-logout {
+  color: #d1d7cc;
+}
+
+.sidebar-link:hover,
+.sidebar-logout:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff8e9;
+}
+
+.sidebar-link.active {
+  background: rgba(211, 173, 96, 0.16);
+  color: #ead18f;
+}
+
+.library-page-header {
+  border-color: var(--line);
+  background: rgba(13, 21, 16, 0.88);
+}
+
+.library-nav-button {
+  border-color: rgba(220, 207, 175, 0.32);
+  color: var(--text-primary);
+}
+
+.library-nav-button:hover {
+  border-color: var(--brass);
+  background: var(--brass);
+  color: #172017;
+}
+
+.catalog-count,
+.catalog-language-filter,
+.catalog-heading > div:first-child > p:last-child {
+  color: var(--text-secondary);
+}
+
+.catalog-count strong {
+  color: var(--brass);
+}
+
+.catalog-search,
+.manage-books-search {
+  border-color: var(--line);
+  background: rgba(25, 37, 29, 0.94);
+  color: #b6c0b3;
+}
+
+.catalog-search input,
+.manage-books-search input {
+  color: var(--text-primary);
+}
+
+.catalog-search input::placeholder,
+.manage-books-search input::placeholder {
+  color: #859184;
+}
+
+.catalog-language-filter select,
+.catalog-filter,
+.reservation-filter {
+  border-color: var(--line);
+  background: #19251d;
+  color: #d1d7cc;
+}
+
+.catalog-filter:hover,
+.reservation-filter:hover {
+  border-color: var(--brass);
+  color: #f1d99c;
+}
+
+.catalog-filter.active,
+.reservation-filter.active {
+  border-color: var(--brass);
+  background: #d3ad60;
+  color: #172017;
+}
+
+.catalog-book {
+  border-color: var(--line);
+  background: #1a261e;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.19);
+}
+
+.catalog-book:hover {
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34);
+}
+
+.catalog-cover.has-cover-image {
+  background: #141d17;
+}
+
+.catalog-book-info h2 {
+  color: #f0eadc;
+}
+
+.catalog-book-info > p,
+.catalog-detail-author,
+.catalog-cover-caption,
+.book-detail-facts > div > span {
+  color: var(--text-secondary);
+}
+
+.catalog-book-footer,
+.book-detail-facts,
+.book-detail-facts > div {
+  border-color: var(--line);
+}
+
+.catalog-availability.available {
+  color: #a9cc91;
+}
+
+.catalog-availability.unavailable {
+  color: #e1a197;
+}
+
+.catalog-detail-cover {
+  border-color: var(--line);
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.42);
+}
+
+.book-detail-facts strong {
+  color: var(--text-primary);
+}
+
+.catalog-empty,
+.reservation-empty,
+.manage-books-empty {
+  border-color: var(--line);
+  background: rgba(25, 37, 29, 0.82);
+  color: var(--text-secondary);
+}
+
+.reservations-summary strong,
+.reservations-toolbar h2,
+.manage-books-toolbar h2 {
+  color: var(--text-primary);
+}
+
+.reservations-summary span,
+.reservation-id {
+  color: var(--text-secondary);
+}
+
+.reservation-status-ready-for-pickup,
+.reservation-status-reserved {
+  background: rgba(211, 173, 96, 0.16);
+  color: #e6ca82;
+}
+
+.manage-books-table th {
+  background: #24352a;
+  color: #e1c47c;
+}
+
+.manage-books-table td {
+  border-color: var(--line);
+  color: #d0d7cc;
+}
+
+.manage-book-category {
+  background: rgba(211, 173, 96, 0.13);
+  color: #e3c77f;
+}
+
+.manage-book-dialog,
+.reservation-dialog {
+  border-color: var(--line);
+  background: #19251d;
+  color: var(--text-primary);
+}
+
+.manage-book-dialog h2,
+.reservation-dialog h2,
+.manage-book-dialog label,
+.reservation-dialog label {
+  color: var(--text-primary);
+}
+
+.manage-book-form input,
+.manage-book-form select,
+.manage-book-form textarea {
+  border-color: #46564a;
+  background: #111a14;
+  color: var(--text-primary);
+}
+
+.manage-book-form input::placeholder,
+.manage-book-form textarea::placeholder {
+  color: #899589;
+}
+
+.manage-book-form input:focus-visible,
+.manage-book-form select:focus-visible,
+.manage-book-form textarea:focus-visible,
+.catalog-language-filter select:focus-visible {
+  border-color: var(--brass);
+  box-shadow: 0 0 0 3px rgba(211, 173, 96, 0.18);
+}
+
+.reservation-dialog-backdrop {
+  background: rgba(3, 7, 5, 0.78);
+}
+
+.dashboard-page button:focus-visible,
+.library-page button:focus-visible,
+.dashboard-page a:focus-visible,
+.library-page a:focus-visible {
+  outline-color: rgba(224, 194, 116, 0.8);
+}
+
+@media (max-width: 720px) {
+  .dashboard-page,
+  .library-page {
+    background-attachment: scroll;
+  }
+
+  .dashboard-sidebar {
+    background: linear-gradient(105deg, #17241c, #101813);
+  }
+}
+
+}
+
+/* Forest-green and brass palette for all pages outside the welcome screen */
+.dashboard-page,
+.library-page {
+  --surface: #101914;
+  --surface-raised: #1b2b23;
+  --surface-card: #243a2f;
+  --line: rgba(233, 218, 183, 0.17);
+  --text-primary: #f5f0e5;
+  --text-secondary: #c3cabe;
+  --brass: #d3ad60;
+  background:
+    linear-gradient(rgba(12, 19, 15, 0.95), rgba(13, 21, 16, 0.97)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover fixed;
+  color: var(--text-primary);
+}
+
+.dashboard-sidebar {
+  border-color: var(--line);
+  background: linear-gradient(180deg, #1b2b23, #101914);
+}
+
+.dashboard-brand,
+.library-brand {
+  color: #f5f0e5;
+}
+
+.brand-light,
+.dashboard-eyebrow,
+.catalog-category,
+.library-eyebrow {
+  color: #dfc17a;
+}
+
+.dashboard-topbar,
+.dashboard-footer,
+.library-page-header {
+  border-color: var(--line);
+  background: rgba(15, 23, 18, 0.92);
+  color: var(--text-secondary);
+}
+
+.dashboard-content h1,
+.dashboard-content h2,
+.dashboard-content h3,
+.reservations-content h1,
+.manage-books-content h1,
+.catalog-heading h1,
+.catalog-detail-copy h1,
+.library-page-content h1,
+.reservations-toolbar h2,
+.manage-books-toolbar h2 {
+  color: var(--text-primary);
+}
+
+.dashboard-intro,
+.reservations-heading > div > p:last-child,
+.manage-books-heading > div > p:last-child,
+.catalog-heading > div:first-child > p:last-child,
+.library-page-content > p:not(.library-eyebrow) {
+  color: var(--text-secondary);
+}
+
+.dashboard-feature {
+  border-color: rgba(211, 173, 96, 0.2);
+  background:
+    linear-gradient(95deg, rgba(20, 33, 25, 0.97), rgba(20, 33, 25, 0.82)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center 48% / cover;
+}
+
+.dashboard-card,
+.reservations-summary > div,
+.reservation-item,
+.manage-books-panel {
+  border-color: var(--line);
+  background: linear-gradient(145deg, rgba(36, 54, 43, 0.98), rgba(26, 41, 32, 0.98));
+  color: var(--text-primary);
+}
+
+.dashboard-card-title,
+.reservation-book-info h3,
+.manage-book-title strong,
+.reservations-summary strong {
+  color: var(--text-primary);
+}
+
+.dashboard-card-description,
+.reservation-book-info > p,
+.reservation-dates,
+.manage-book-title small,
+.reservations-summary span {
+  color: var(--text-secondary);
+}
+
+.dashboard-card-link,
+.feature-link,
+.catalog-view-button,
+.show-btn,
+.text-action {
+  color: #e0c274;
+}
+
+.dashboard-card-link:hover,
+.feature-link:hover,
+.catalog-view-button:hover {
+  color: #f1d99c;
+}
+
+.dashboard-primary-action,
+.catalog-filter.active,
+.reservation-filter.active,
+.role-btn.active {
+  border-color: #d3ad60;
+  background: #d3ad60;
+  color: #1c2119;
+}
+
+.sidebar-link.active {
+  background: rgba(211, 173, 96, 0.16);
+  color: #ead18f;
+}
+
+.sidebar-link:hover,
+.sidebar-logout:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #f3fbfb;
+}
+
+.catalog-count strong {
+  color: #dfc17a;
+}
+
+.catalog-search,
+.manage-books-search {
+  border-color: var(--line);
+  background: rgba(25, 37, 29, 0.96);
+  color: #c3cabe;
+}
+
+.catalog-search input,
+.manage-books-search input {
+  color: var(--text-primary);
+}
+
+.catalog-search input::placeholder,
+.manage-books-search input::placeholder {
+  color: #9da99c;
+}
+
+.catalog-language-filter select,
+.catalog-filter,
+.reservation-filter {
+  border-color: var(--line);
+  background: #19251d;
+  color: #d1d7cc;
+}
+
+.catalog-filter:hover,
+.reservation-filter:hover {
+  border-color: #d3ad60;
+  color: #f1d99c;
+}
+
+.catalog-book {
+  border-color: var(--line);
+  background: #1a261e;
+}
+
+.catalog-book-info h2 {
+  color: #f0eadc;
+}
+
+.catalog-book-info > p,
+.catalog-detail-author,
+.book-detail-facts > div > span {
+  color: var(--text-secondary);
+}
+
+.catalog-book-footer,
+.book-detail-facts,
+.book-detail-facts > div,
+.manage-books-table td {
+  border-color: var(--line);
+}
+
+.book-detail-facts strong {
+  color: var(--text-primary);
+}
+
+.catalog-empty,
+.reservation-empty,
+.manage-books-empty {
+  border-color: var(--line);
+  background: rgba(25, 37, 29, 0.86);
+  color: var(--text-secondary);
+}
+
+.catalog-availability.available {
+  color: #b5d4a3;
+}
+
+.catalog-availability.unavailable {
+  color: #e2b9a7;
+}
+
+.reservation-status-ready-for-pickup,
+.reservation-status-reserved {
+  background: rgba(211, 173, 96, 0.16);
+  color: #e6ca82;
+}
+
+.manage-books-table th {
+  background: #24352a;
+  color: #e1c47b;
+}
+
+.manage-books-table td {
+  color: #d0d7cc;
+}
+
+.manage-book-category {
+  background: rgba(211, 173, 96, 0.13);
+  color: #e3c77f;
+}
+
+.manage-book-dialog,
+.reservation-dialog {
+  border-color: var(--line);
+  background: #19251d;
+  color: var(--text-primary);
+}
+
+.manage-book-dialog h2,
+.reservation-dialog h2,
+.manage-book-dialog label,
+.reservation-dialog label {
+  color: var(--text-primary);
+}
+
+.manage-book-form input,
+.manage-book-form select,
+.manage-book-form textarea {
+  border-color: #46564a;
+  background: #111a14;
+  color: var(--text-primary);
+}
+
+.manage-book-form input::placeholder,
+.manage-book-form textarea::placeholder {
+  color: #899589;
+}
+
+.manage-book-form input:focus-visible,
+.manage-book-form select:focus-visible,
+.manage-book-form textarea:focus-visible,
+.catalog-language-filter select:focus-visible {
+  border-color: #d3ad60;
+  box-shadow: 0 0 0 3px rgba(211, 173, 96, 0.18);
+}
+
+.dashboard-demo-notice,
+.reservations-demo-note,
+.manage-books-demo-note,
+.catalog-demo-note,
+.library-page-content .demo-notice {
+  border-color: rgba(211, 173, 96, 0.22);
+  background: rgba(211, 173, 96, 0.08);
+  color: #d5c69f;
+}
+
+.library-nav-button {
+  border-color: rgba(233, 218, 183, 0.28);
+  color: var(--text-primary);
+}
+
+.library-nav-button:hover {
+  border-color: #d3ad60;
+  background: #d3ad60;
+  color: #1c2119;
+}
+
+.dashboard-page button:focus-visible,
+.library-page button:focus-visible,
+.dashboard-page a:focus-visible,
+.library-page a:focus-visible {
+  outline-color: rgba(224, 194, 116, 0.82);
+}
+
+@media (max-width: 720px) {
+  .dashboard-page,
+  .library-page {
+    background-attachment: scroll;
+  }
+
+  .dashboard-sidebar {
+    background: linear-gradient(105deg, #1b2b23, #101914);
+  }
+}
+
+/* ===== Improved Book Details Page ===== */
+
+.book-detail-page {
+  padding-bottom: 80px;
+}
+
+.book-detail-page > .catalog-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 22px;
+  font-weight: 650;
+}
+
+.book-detail-heading {
+  margin-bottom: 30px;
+}
+
+.book-detail-heading .library-eyebrow {
+  margin-bottom: 9px;
+  font-size: 10px;
+}
+
+.book-detail-heading h1 {
+  margin: 0;
+  color: #1e2b22;
+  font-size: clamp(29px, 3vw, 38px);
+  font-weight: 650;
+  letter-spacing: -1px;
+}
+
+.book-detail-heading > p:last-child {
+  margin: 9px 0 0;
+  color: #687060;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.book-detail-card {
+  padding: clamp(22px, 4vw, 46px);
+  border: 1px solid #d8d0c0;
+  border-radius: 22px;
+  background: rgba(250, 248, 241, 0.92);
+  box-shadow: 0 18px 48px rgba(35, 46, 34, 0.08);
+}
+
+.book-detail-card .catalog-detail-layout {
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(28px, 5vw, 64px);
+  margin-top: 0;
+}
+
+.book-detail-art {
+  min-width: 0;
+}
+
+.book-detail-cover-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 18px;
+  border: 1px solid #e2d9c7;
+  border-radius: 17px;
+  background:
+    radial-gradient(ellipse at 50% 20%, #fffdf5, transparent 72%),
+    #eee8da;
+}
+
+.book-detail-cover-wrap .catalog-detail-cover {
+  width: 100%;
+  max-width: 255px;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  min-height: 0;
+  border-radius: 9px;
+  object-fit: cover;
+  box-shadow: 0 18px 30px rgba(35, 38, 28, 0.2);
+}
+
+.book-detail-cover-caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  margin: 15px 0 0;
+  color: #78806e;
+  font-size: 11px;
+}
+
+.book-detail-cover-caption span {
+  color: #a17b35;
+}
+
+.book-detail-information {
+  min-width: 0;
+  padding-top: 4px;
+}
+
+.book-detail-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.book-detail-category,
+.book-detail-language {
+  display: inline-flex;
+  align-items: center;
+  min-height: 29px;
+  padding: 5px 11px;
+  border: 1px solid #d8d4c4;
+  border-radius: 7px;
+  background: #eeeee2;
+  color: #46583f;
+  font-size: 10px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.book-detail-language {
+  border-color: #e1d3b3;
+  background: #f4ead4;
+  color: #79602d;
+}
+
+.catalog-detail-copy.book-detail-information h2 {
+  margin: 0;
+  color: #1e2b22;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(29px, 3.5vw, 43px);
+  font-weight: 650;
+  letter-spacing: -1.1px;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.book-detail-information .catalog-detail-author {
+  margin-top: 13px;
+  color: #697262;
+  line-height: 1.6;
+}
+
+.catalog-detail-author strong {
+  color: #364536;
+  font-weight: 650;
+}
+
+.book-detail-description-block {
+  margin-top: 27px;
+}
+
+.book-detail-description-block h3 {
+  margin: 0;
+  color: #2c3a2e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.book-detail-description-block .catalog-detail-description {
+  margin: 9px 0 0;
+  color: #60695b;
+  font-size: 13px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.book-detail-availability {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-top: 25px;
+  padding: 17px;
+  border: 1px solid #d7dfcd;
+  border-radius: 13px;
+  background: #edf2e7;
+}
+
+.book-detail-availability-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  place-items: center;
+  border-radius: 10px;
+  background: #d9e6d0;
+  color: #3d6841;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.book-detail-availability-copy {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.book-detail-availability-copy > span {
+  color: #67745f;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.book-detail-availability-copy strong {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.book-detail-availability-copy .is-available {
+  color: #38613d;
+}
+
+.book-detail-availability-copy .is-unavailable {
+  color: #98594c;
+}
+
+.book-detail-availability-copy p {
+  margin: 0;
+  color: #687060;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.book-detail-facts {
+  margin: 22px 0;
+}
+
+.book-detail-facts > div {
+  align-items: flex-start;
+  gap: 20px;
+  padding: 13px 0;
+}
+
+.book-detail-facts > div > span {
+  flex: 0 0 82px;
+}
+
+.book-detail-facts strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
+
+.book-detail-reserve {
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+  min-height: 51px;
+  font-size: 13px;
+}
+
+.book-detail-reserve > span {
+  font-size: 18px;
+  transition: transform 0.18s ease;
+}
+
+.book-detail-reserve:hover > span {
+  transform: translateX(3px);
+}
+
+.book-detail-reservation-note {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 14px 0 0;
+  color: #77806f;
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.book-detail-notice {
+  margin: 0 0 15px;
+  overflow-wrap: anywhere;
+}
+
+.book-detail-notice.success {
+  border: 1px solid #c7dcc3;
+  background: #e8f1e3;
+  color: #365c39;
+}
+
+.book-detail-notice.error {
+  border: 1px solid #e5c6bc;
+  background: #f7e9e3;
+  color: #8b4539;
+}
+
+.book-detail-reserve:focus-visible,
+.book-detail-page .catalog-back:focus-visible {
+  outline: 3px solid rgba(119, 145, 101, 0.6);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .book-detail-page {
+    padding-bottom: 48px;
+  }
+
+  .book-detail-card {
+    padding: 22px;
+    border-radius: 17px;
+  }
+
+  .book-detail-card .catalog-detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+
+  .book-detail-cover-wrap {
+    width: min(100%, 340px);
+    justify-self: center;
+    margin: 0 auto;
+  }
+
+  .book-detail-cover-wrap .catalog-detail-cover {
+    max-width: 230px;
+  }
+
+  .book-detail-information {
+    padding-top: 0;
+  }
+
+  .catalog-detail-copy.book-detail-information h2 {
+    font-size: clamp(27px, 7vw, 36px);
+  }
+
+  .book-detail-description-block {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-detail-card {
+    padding: 16px;
+  }
+
+  .book-detail-cover-wrap {
+    padding: 13px;
+  }
+
+  .book-detail-availability {
+    padding: 13px;
+  }
+
+  .book-detail-facts > div > span {
+    flex-basis: 70px;
+  }
+}
+
+/* Refined book details layout */
+.library-page.catalog-page {
+  background:
+    linear-gradient(120deg, rgba(10, 18, 13, 0.96), rgba(15, 27, 20, 0.92)),
+    url("../images/WhatsApp%20Image%202026-10-06%20at%2014.02.50.jpeg") center / cover fixed;
+}
+
+.book-detail-page {
+  width: min(1180px, calc(100% - 64px));
+  padding-top: clamp(32px, 5vw, 58px);
+  padding-bottom: clamp(52px, 7vw, 88px);
+}
+
+.book-detail-page > .catalog-back {
+  gap: 10px;
+  margin-bottom: 32px;
+  padding: 8px 0;
+  color: #d7c89f;
+  font-size: 13px;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.book-detail-page > .catalog-back:hover {
+  color: #f0d998;
+  transform: translateX(-3px);
+}
+
+.book-detail-heading {
+  position: relative;
+  margin: 0 0 26px;
+  padding-left: 19px;
+}
+
+.book-detail-heading::before {
+  position: absolute;
+  top: 2px;
+  bottom: 3px;
+  left: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(#e7c779, rgba(211, 173, 96, 0.16));
+  content: "";
+}
+
+.book-detail-heading .library-eyebrow {
+  margin-bottom: 9px;
+  color: #dfc17a;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.book-detail-heading h1 {
+  color: #f5f0e5;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 650;
+  letter-spacing: -1.6px;
+}
+
+.book-detail-heading > p:last-child {
+  margin-top: 10px;
+  color: #c3cabe;
+  font-size: 14px;
+}
+
+.book-detail-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(26px, 4vw, 52px);
+  border: 1px solid rgba(233, 218, 183, 0.2);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 2% 5%, rgba(196, 159, 87, 0.1), transparent 34%),
+    linear-gradient(135deg, rgba(29, 45, 35, 0.98), rgba(20, 33, 25, 0.98));
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.38),
+    inset 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.book-detail-card::after {
+  position: absolute;
+  top: -150px;
+  right: -100px;
+  width: 360px;
+  height: 360px;
+  border: 1px solid rgba(220, 192, 132, 0.11);
+  border-radius: 50%;
+  box-shadow: 0 0 0 30px rgba(220, 192, 132, 0.025), 0 0 0 68px rgba(220, 192, 132, 0.018);
+  content: "";
+  pointer-events: none;
+}
+
+.book-detail-card .catalog-detail-layout {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: minmax(245px, 340px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(34px, 6vw, 78px);
+}
+
+.book-detail-art {
+  position: sticky;
+  top: 28px;
+}
+
+.book-detail-cover-wrap {
+  padding: 18px;
+  border: 1px solid rgba(227, 204, 151, 0.25);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 50% 12%, rgba(255, 245, 220, 0.12), transparent 64%),
+    linear-gradient(150deg, #293a2d, #17251c);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.045);
+}
+
+.book-detail-cover-wrap .catalog-detail-cover {
+  max-width: 280px;
+  border: 1px solid rgba(255, 245, 220, 0.18);
+  border-radius: 10px;
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.42);
+}
+
+.book-detail-cover-caption {
+  margin-top: 17px;
+  color: #c3cabe;
+  font-size: 11px;
+}
+
+.book-detail-cover-caption span {
+  color: #dfc17a;
+}
+
+.book-detail-information {
+  padding-top: 7px;
+}
+
+.book-detail-badges {
+  gap: 9px;
+  margin-bottom: 19px;
+}
+
+.book-detail-category,
+.book-detail-language {
+  min-height: 31px;
+  padding: 6px 12px;
+  border-color: rgba(192, 203, 174, 0.27);
+  border-radius: 99px;
+  background: rgba(130, 155, 112, 0.12);
+  color: #d1dfc4;
+  font-size: 10px;
+  letter-spacing: 0.2px;
+}
+
+.book-detail-language {
+  border-color: rgba(211, 173, 96, 0.32);
+  background: rgba(211, 173, 96, 0.12);
+  color: #ead18f;
+}
+
+.catalog-detail-copy.book-detail-information h2 {
+  color: #f6f1e5;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 500;
+  letter-spacing: -1.25px;
+  line-height: 1.1;
+}
+
+.book-detail-information .catalog-detail-author {
+  margin-top: 14px;
+  color: #c3cabe;
+  font-size: 14px;
+}
+
+.catalog-detail-author strong {
+  color: #f0d998;
+}
+
+.book-detail-description-block {
+  margin-top: 33px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(233, 218, 183, 0.14);
+}
+
+.book-detail-description-block h3 {
+  color: #f1ecdf;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.15px;
+}
+
+.book-detail-description-block .catalog-detail-description {
+  margin-top: 10px;
+  color: #c3cabe;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.book-detail-availability {
+  align-items: center;
+  margin-top: 25px;
+  padding: 17px 18px;
+  border-color: rgba(159, 184, 145, 0.26);
+  border-radius: 14px;
+  background: linear-gradient(110deg, rgba(82, 117, 83, 0.17), rgba(82, 117, 83, 0.07));
+}
+
+.book-detail-availability-icon {
+  background: rgba(153, 183, 133, 0.18);
+  color: #c1d9a8;
+}
+
+.book-detail-availability-copy > span {
+  color: #bdc9b5;
+  font-size: 9px;
+  letter-spacing: 1.1px;
+}
+
+.book-detail-availability-copy .is-available {
+  color: #c5dda9;
+}
+
+.book-detail-availability-copy .is-unavailable {
+  color: #e2b9a7;
+}
+
+.book-detail-availability-copy p {
+  color: #c3cabe;
+}
+
+.book-detail-facts {
+  margin: 22px 0;
+  border-color: rgba(233, 218, 183, 0.15);
+}
+
+.book-detail-facts > div {
+  border-color: rgba(233, 218, 183, 0.15);
+}
+
+.book-detail-facts > div > span {
+  color: #aeb8a9;
+}
+
+.book-detail-facts strong {
+  color: #eee8d8;
+}
+
+.book-detail-reserve {
+  min-height: 54px;
+  border-radius: 10px;
+  background: linear-gradient(130deg, #e0c274, #bd9144);
+  box-shadow: 0 4px 0 #87672f, 0 12px 24px rgba(0, 0, 0, 0.18);
+  color: #1c2119;
+  font-size: 14px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.book-detail-reserve:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(130deg, #ecd28a, #cda550);
+  box-shadow: 0 6px 0 #87672f, 0 16px 28px rgba(0, 0, 0, 0.24);
+}
+
+.book-detail-reserve:disabled {
+  background: #566052;
+  box-shadow: none;
+  color: #d1d6cb;
+  opacity: 0.8;
+}
+
+.book-detail-reservation-note {
+  color: #aeb8a9;
+}
+
+.book-detail-notice.success {
+  border-color: rgba(159, 184, 145, 0.3);
+  background: rgba(82, 117, 83, 0.2);
+  color: #d3e2c4;
+}
+
+.book-detail-notice.error {
+  border-color: rgba(196, 133, 113, 0.35);
+  background: rgba(111, 54, 43, 0.24);
+  color: #f0c2ae;
+}
+
+.book-detail-reserve:focus-visible,
+.book-detail-page .catalog-back:focus-visible {
+  outline: 3px solid rgba(224, 194, 116, 0.76);
+  outline-offset: 4px;
+}
+
+@media (max-width: 760px) {
+  .book-detail-page {
+    width: calc(100% - 36px);
+    padding-top: 28px;
+  }
+
+  .book-detail-heading {
+    margin-bottom: 21px;
+  }
+
+  .book-detail-card {
+    padding: 25px;
+    border-radius: 20px;
+  }
+
+  .book-detail-card .catalog-detail-layout {
+    gap: 27px;
+  }
+
+  .book-detail-art {
+    position: static;
+  }
+
+  .book-detail-cover-wrap {
+    width: min(100%, 350px);
+  }
+}
+
+@media (max-width: 480px) {
+  .book-detail-page {
+    width: calc(100% - 28px);
+  }
+
+  .book-detail-card {
+    padding: 18px;
+    border-radius: 17px;
+  }
+
+  .book-detail-cover-wrap {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .book-detail-cover-wrap .catalog-detail-cover {
+    max-width: 225px;
+  }
+
+  .book-detail-description-block {
+    margin-top: 25px;
+    padding-top: 21px;
+  }
 }

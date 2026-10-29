@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import "./Dashboard.css";
 
@@ -8,8 +7,10 @@ const emptyBook = {
   title: "",
   author: "",
   category: "",
+  language: "English",
   copies: "1",
   description: "",
+  coverImage: "",
 };
 
 function toUiBook(book) {
@@ -30,6 +31,7 @@ function toUiBook(book) {
         .slice(0, 3)
         .toUpperCase(),
     description: book.description || "",
+    coverImage: book.coverImage || "",
   };
 }
 
@@ -46,7 +48,7 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
   const [bookToDelete, setBookToDelete] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
+  const [isImporting, setIsImporting] = useState(false);
   const displayBooks = useMemo(
     () => books.map(toUiBook),
     [books]
@@ -84,10 +86,12 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
       title: book.title || "",
       author: book.author || "",
       category: book.category || "",
+      language: book.language || "English",
       copies: String(
         book.availableCopies ?? book.copies ?? 0
       ),
       description: book.description || "",
+      coverImage: book.coverImage || "",
     });
 
     setFormError("");
@@ -106,6 +110,7 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
     const title = form.title.trim();
     const author = form.author.trim();
     const category = form.category.trim();
+    const language = form.language;
     const copies = Number(form.copies);
 
     if (!title || !author || !category) {
@@ -150,7 +155,9 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
       title,
       author,
       category,
+      language,
       description: form.description.trim(),
+      coverImage: form.coverImage.trim(),
       availableCopies: copies,
     };
 
@@ -302,6 +309,94 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
     }
   };
 
+  // Import books from a CSV file into MongoDB.
+  const handleBulkImport = async (event, updateExistingOnly = false) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    // Allow CSV files only.
+    if (!file.name.toLowerCase().endsWith(".csv")) {
+      setNotice("Please select a CSV file.");
+      event.target.value = "";
+      return;
+    }
+
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      setNotice("Please log in again before importing books.");
+      event.target.value = "";
+      return;
+    }
+
+    setIsImporting(true);
+    setNotice("");
+
+    try {
+      const csv = await file.text();
+
+      const response = await fetch(`${API_BASE}/bulk-import`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ csv, updateExistingOnly }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        const errorDetails = Array.isArray(data.errors)
+          ? ` ${data.errors.slice(0, 5).join(" ")}`
+          : "";
+
+        throw new Error(
+          (data.message || "Unable to import books.") + errorDetails
+        );
+      }
+
+      // Refresh the collection from the backend.
+      const refreshResponse = await fetch(API_BASE);
+
+      if (!refreshResponse.ok) {
+        throw new Error(
+          "Import completed, but the book list could not be refreshed. Reload the page."
+        );
+      }
+
+      const refreshedBooks = await refreshResponse.json();
+
+      if (!Array.isArray(refreshedBooks)) {
+        throw new Error(
+          "Import completed, but the returned book list is invalid."
+        );
+      }
+
+      onBooksChange(refreshedBooks);
+
+      setNotice(
+        `${data.message || "Import completed."} ` +
+          `Imported: ${data.imported ?? 0}. ` +
+          `Covers updated: ${data.coversUpdated ?? 0}. ` +
+          `Duplicates skipped: ${data.duplicatesSkipped ?? 0}. ` +
+          (updateExistingOnly
+            ? `Books not found: ${data.booksNotFound ?? 0}.`
+            : "")
+      );
+    } catch (error) {
+      setNotice(
+        error instanceof TypeError
+          ? "Unable to connect to the server. Check that the backend is running."
+          : error.message
+      );
+    } finally {
+      setIsImporting(false);
+      event.target.value = "";
+    }
+  };
+
   return (
     <section className="library-page manage-books-page">
       <header className="library-page-header">
@@ -339,13 +434,64 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
             </p>
           </div>
 
-          <button
-            type="button"
-            className="dashboard-primary-action"
-            onClick={startAdding}
-          >
-            <span aria-hidden="true">＋</span> Add a book
-          </button>
+         
+  <div
+    style={{
+      display: "flex",
+      gap: "12px",
+      flexWrap: "wrap",
+      alignItems: "center",
+    }}
+  >
+    <label
+      className="dashboard-primary-action"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: isImporting ? "wait" : "pointer",
+        opacity: isImporting ? 0.6 : 1,
+      }}
+    >
+      {isImporting ? "Importing..." : "Import CSV"}
+      <input
+        type="file"
+        accept=".csv,text/csv"
+        onChange={handleBulkImport}
+        disabled={isImporting}
+        style={{ display: "none" }}
+      />
+    </label>
+
+    <label
+      className="dashboard-primary-action"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: isImporting ? "wait" : "pointer",
+        opacity: isImporting ? 0.6 : 1,
+      }}
+    >
+      {isImporting ? "Importing..." : "Import cover images"}
+      <input
+        type="file"
+        accept=".csv,text/csv"
+        onChange={(event) => handleBulkImport(event, true)}
+        disabled={isImporting}
+        style={{ display: "none" }}
+      />
+    </label>
+
+    <button
+      type="button"
+      className="dashboard-primary-action"
+      onClick={startAdding}
+    >
+      <span aria-hidden="true">＋</span> Add a book
+    </button>
+  </div>
+
         </section>
 
         <div className="manage-books-demo-note">
@@ -393,6 +539,7 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                   <tr>
                     <th scope="col">Book</th>
                     <th scope="col">Category</th>
+                    <th scope="col">Language</th>
                     <th scope="col">Available</th>
                     <th scope="col">Status</th>
                     <th scope="col">
@@ -411,7 +558,17 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                           <span
                             className={`manage-book-mark catalog-cover-${book.palette}`}
                           >
-                            {book.mark}
+                            {book.coverImage && (
+                              <img
+                                key={book.coverImage}
+                                src={book.coverImage}
+                                alt=""
+                                onError={(event) => {
+                                  event.currentTarget.hidden = true;
+                                }}
+                              />
+                            )}
+                            <span>{book.mark}</span>
                           </span>
                           <span>
                             <strong>{book.title}</strong>
@@ -425,6 +582,8 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                           {book.category}
                         </span>
                       </td>
+
+                      <td>{book.language || "English"}</td>
 
                       <td>{book.copies}</td>
 
@@ -537,7 +696,7 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                 required
               />
 
-              <div className="manage-book-form-row">
+              <div className="manage-book-form-row manage-book-form-row-language">
                 <div>
                   <label htmlFor="manage-category">
                     Category
@@ -562,6 +721,24 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                       <option key={item} value={item} />
                     ))}
                   </datalist>
+                </div>
+
+                <div>
+                  <label htmlFor="manage-language">Language</label>
+                  <select
+                    id="manage-language"
+                    value={form.language}
+                    onChange={(event) =>
+                      setForm({
+                        ...form,
+                        language: event.target.value,
+                      })
+                    }
+                    required
+                  >
+                    <option value="English">English</option>
+                    <option value="Sinhala">Sinhala</option>
+                  </select>
                 </div>
 
                 <div>
@@ -599,6 +776,36 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                   })
                 }
               />
+
+              <label htmlFor="manage-cover-image">
+                Cover image URL <span>(optional)</span>
+              </label>
+              <input
+                id="manage-cover-image"
+                type="url"
+                value={form.coverImage}
+                onChange={(event) =>
+                  setForm({
+                    ...form,
+                    coverImage: event.target.value,
+                  })
+                }
+                placeholder="https://example.com/book-cover.jpg"
+              />
+              <p className="manage-book-form-help">
+                Paste a direct link to the book cover image.
+              </p>
+              {form.coverImage && (
+                <img
+                  key={form.coverImage}
+                  className="manage-book-cover-preview"
+                  src={form.coverImage}
+                  alt="Preview of the book cover"
+                  onError={(event) => {
+                    event.currentTarget.hidden = true;
+                  }}
+                />
+              )}
 
               {formError && (
                 <p
