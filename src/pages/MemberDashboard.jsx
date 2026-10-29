@@ -27,14 +27,6 @@ function MemberDashboard({ onNavigate, onLogout }) {
       icon: "↗",
       art: "details",
     },
-    {
-      page: "account",
-      number: "04",
-      title: "Create an account",
-      description: "Account registration information for new members.",
-      icon: "＋",
-      art: "account",
-    },
   ];
 
   return (

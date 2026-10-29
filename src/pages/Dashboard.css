@@ -805,8 +805,8 @@
 
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
   margin-top: 22px;
 }
 
@@ -1260,6 +1260,10 @@
   .dashboard-sidebar {
     width: 220px;
     flex-basis: 220px;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .dashboard-content {
@@ -1787,11 +1791,11 @@
 }
 
 .catalog-cover {
-  height: 238px;
+  height: 210px;
 }
 
 .catalog-book-info {
-  padding: 17px 17px 15px;
+  padding: 14px 14px 12px;
 }
 
 .catalog-category {
@@ -2040,6 +2044,26 @@
   .dashboard-page *::before,
   .dashboard-page *::after {
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (min-width: 721px) {
+  .catalog-grid {
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+
+  .catalog-cover {
+    height: 190px;
+  }
+
+  .catalog-book-info {
+    padding: 12px;
+  }
+
+  .catalog-book-footer {
+    margin-top: 10px;
+    padding-top: 8px;
   }
 }
 
@@ -3835,11 +3859,11 @@
   }
 
   .catalog-cover {
-    height: 190px;
+    height: 175px;
   }
 
   .catalog-book-info {
-    padding: 13px 12px;
+    padding: 11px 10px;
   }
 
   .reservations-summary {
@@ -3870,7 +3894,7 @@
   }
 
   .catalog-cover {
-    height: 165px;
+    height: 150px;
     padding: 18px 12px;
   }
 
@@ -5265,5 +5289,33 @@
   .book-detail-description-block {
     margin-top: 25px;
     padding-top: 21px;
+  }
+}
+
+.catalog-cover {
+  height: 150px;
+}
+
+.catalog-book-info {
+  padding: 10px 12px 8px;
+}
+
+.catalog-book-info h2 {
+  min-height: 34px;
+  margin-top: 4px;
+}
+
+.catalog-book-info > p {
+  margin-top: 3px;
+}
+
+.catalog-book-footer {
+  margin-top: 7px;
+  padding-top: 6px;
+}
+
+@media (max-width: 480px) {
+  .catalog-cover {
+    height: 130px;
   }
 }

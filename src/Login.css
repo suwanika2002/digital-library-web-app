@@ -1301,3 +1301,11 @@
       url("./images/login-library.jpg") center / cover;
   }
 }
+
+.login-left {
+  background-image:
+    linear-gradient(rgba(10, 17, 13, 0.3), rgba(10, 17, 13, 0.3)),
+    var(--login-image);
+  background-position: center;
+  background-size: cover;
+}

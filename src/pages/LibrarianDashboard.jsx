@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import "./Dashboard.css";
 import DashboardCardArt from "../components/DashboardCardArt";
@@ -31,14 +30,6 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
       description: "Review the library's reservation page.",
       icon: "↗",
       art: "reservations",
-    },
-    {
-      page: "account",
-      number: "03",
-      title: "Register a member",
-      description: "Open the account registration page.",
-      icon: "＋",
-      art: "account",
     },
   ];
 
@@ -251,12 +242,6 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
     margin: "24px 0",
   }}
 >
-  {statsError && (
-    <p role="alert" style={{ gridColumn: "1 / -1", color: "#a43d30" }}>
-      {statsError}
-    </p>
-  )}
-
   {[
     { label: "Total books", value: stats.totalBooks, icon: "▤" },
     { label: "Available copies", value: stats.availableCopies, icon: "📚" },
