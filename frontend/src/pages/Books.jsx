@@ -16,6 +16,7 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
   const [language, setLanguage] = useState("All languages");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All books");
+  const [sortBy, setSortBy] = useState("newest");
 
   const languageFilteredBooks = useMemo(
     () =>
@@ -49,6 +50,41 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
       return matchesCategory && matchesQuery;
     });
   }, [languageFilteredBooks, category, query]);
+
+  const sortedBooks = useMemo(() => {
+    const compareText = (first, second) =>
+      (first || "").localeCompare(second || "", undefined, {
+        numeric: true,
+        sensitivity: "base",
+      });
+
+    return [...filteredBooks].sort((first, second) => {
+      if (sortBy === "title-asc") {
+        return compareText(first.title, second.title);
+      }
+
+      if (sortBy === "title-desc") {
+        return compareText(second.title, first.title);
+      }
+
+      if (sortBy === "author-asc") {
+        return compareText(first.author, second.author);
+      }
+
+      const firstAdded = Date.parse(first.createdAt || "");
+      const secondAdded = Date.parse(second.createdAt || "");
+      const firstHasDate = Number.isFinite(firstAdded);
+      const secondHasDate = Number.isFinite(secondAdded);
+
+      if (!firstHasDate || !secondHasDate) {
+        return firstHasDate === secondHasDate ? 0 : firstHasDate ? -1 : 1;
+      }
+
+      return sortBy === "oldest"
+        ? firstAdded - secondAdded
+        : secondAdded - firstAdded;
+    });
+  }, [filteredBooks, sortBy]);
 
   return (
     <section className="library-page catalog-page">
@@ -124,6 +160,21 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
             </select>
           </label>
 
+          <label className="catalog-language-filter">
+            <span>Sort by</span>
+            <select
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}
+              aria-label="Sort books"
+            >
+              <option value="title-asc">Title (ascending)</option>
+              <option value="title-desc">Title (descending)</option>
+              <option value="author-asc">Author (ascending)</option>
+              <option value="newest">Recently added</option>
+              <option value="oldest">Added earliest</option>
+            </select>
+          </label>
+
           <div
             className="catalog-filters"
             role="group"
@@ -147,7 +198,7 @@ function Books({ books: rawBooks, onNavigate, onSelectBook }) {
 
         {filteredBooks.length > 0 ? (
           <section className="catalog-list" aria-label="Books">
-            {filteredBooks.map((book) => (
+            {sortedBooks.map((book) => (
               <article className="catalog-list-item" key={book.id}>
                 <button
                   type="button"

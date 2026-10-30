@@ -5,15 +5,57 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const router = express.Router();
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function isValidEmail(email) {
+  if (typeof email !== "string" || email.length > 254) return false;
+
+  const normalizedEmail = email.trim();
+  const [localPart, domain] = normalizedEmail.split("@");
+
+  return (
+    normalizedEmail.split("@").length === 2 &&
+    localPart.length <= 64 &&
+    !localPart.startsWith(".") &&
+    !localPart.endsWith(".") &&
+    !localPart.includes("..") &&
+    EMAIL_PATTERN.test(normalizedEmail) &&
+    domain.split(".").every(
+      (label) =>
+        label.length > 0 &&
+        label.length <= 63 &&
+        !label.startsWith("-") &&
+        !label.endsWith("-")
+    )
+  );
+}
 
 // Register a new member
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password } = req.body || {};
 
-    if (!name || !email || !password) {
+    if (typeof name !== "string" || !name.trim()) {
       return res.status(400).json({
-        message: "Name, email, and password are required.",
+        message: "Name must be a non-empty string.",
+      });
+    }
+
+    if (typeof email !== "string" || !email.trim()) {
+      return res.status(400).json({
+        message: "Email is required.",
+      });
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({
+        message: "Please provide a valid email address.",
+      });
+    }
+
+    if (typeof password !== "string" || !password.trim()) {
+      return res.status(400).json({
+        message: "Password must be a non-empty string.",
       });
     }
 
@@ -70,11 +112,23 @@ router.post("/register", async (req, res) => {
 // Log in an existing user
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
 
-    if (!email || !password) {
+    if (typeof email !== "string" || !email.trim()) {
       return res.status(400).json({
-        message: "Email and password are required.",
+        message: "Email is required.",
+      });
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({
+        message: "Please provide a valid email address.",
+      });
+    }
+
+    if (typeof password !== "string" || !password.trim()) {
+      return res.status(400).json({
+        message: "Password must be a non-empty string.",
       });
     }
 

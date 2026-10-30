@@ -7,7 +7,55 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 const BOOK_LANGUAGES = ["English", "Sinhala"];
+const MAX_DESCRIPTION_LENGTH = 5000;
+const MAX_COVER_IMAGE_LENGTH = 2048;
 const { parse } = require("csv-parse/sync");
+
+function validateOptionalText(value, field, maxLength) {
+  if (value === undefined) return null;
+
+  if (typeof value !== "string") {
+    return `${field} must be a string.`;
+  }
+
+  if (value.trim().length > maxLength) {
+    return `${field} must be ${maxLength} characters or fewer.`;
+  }
+
+  return null;
+}
+
+function isValidCoverImageUrl(value) {
+  if (!value) return true;
+
+  try {
+    const url = new URL(value);
+    return (
+      ["http:", "https:"].includes(url.protocol) &&
+      Boolean(url.hostname) &&
+      !url.username &&
+      !url.password
+    );
+  } catch {
+    return false;
+  }
+}
+
+function validateCoverImage(value) {
+  const textError = validateOptionalText(
+    value,
+    "Cover image",
+    MAX_COVER_IMAGE_LENGTH
+  );
+
+  if (textError) return textError;
+  if (value !== undefined && !isValidCoverImageUrl(value.trim())) {
+    return "Cover image must be a valid HTTP or HTTPS URL.";
+  }
+
+  return null;
+}
+
 // Only authenticated librarians can manage books.
 function librarianOnly(req, res, next) {
   if (req.user.role !== "librarian") {
@@ -100,6 +148,20 @@ router.post("/bulk-import", authMiddleware, librarianOnly, async (req, res) => {
 
       if (!title || !author || !category) {
         errors.push(`Row ${rowNumber}: title, author, and category are required.`);
+        continue;
+      }
+
+      const descriptionError = validateOptionalText(
+        description,
+        "Description",
+        MAX_DESCRIPTION_LENGTH
+      );
+      const coverImageError = validateCoverImage(coverImage);
+
+      if (descriptionError || coverImageError) {
+        errors.push(
+          `Row ${rowNumber}: ${descriptionError || coverImageError}`
+        );
         continue;
       }
 
@@ -260,6 +322,7 @@ router.get("/:id", async (req, res) => {
 // Add a book (librarian only).
 router.post("/", authMiddleware, librarianOnly, async (req, res) => {
   try {
+    const body = req.body || {};
     const {
       title,
       author,
@@ -267,8 +330,8 @@ router.post("/", authMiddleware, librarianOnly, async (req, res) => {
       language,
       description,
       coverImage,
-    } = req.body;
-    const availableCopies = Number(req.body.availableCopies);
+    } = body;
+    const availableCopies = Number(body.availableCopies);
 
     if (
       typeof title !== "string" ||
@@ -283,6 +346,19 @@ router.post("/", authMiddleware, librarianOnly, async (req, res) => {
       });
     }
 
+    const descriptionError = validateOptionalText(
+      description,
+      "Description",
+      MAX_DESCRIPTION_LENGTH
+    );
+    const coverImageError = validateCoverImage(coverImage);
+
+    if (descriptionError || coverImageError) {
+      return res.status(400).json({
+        message: descriptionError || coverImageError,
+      });
+    }
+
     if (language !== undefined && !BOOK_LANGUAGES.includes(language)) {
       return res.status(400).json({
         message: "Language must be English or Sinhala.",
@@ -290,9 +366,9 @@ router.post("/", authMiddleware, librarianOnly, async (req, res) => {
     }
 
     if (
-      req.body.availableCopies === undefined ||
-      req.body.availableCopies === null ||
-      req.body.availableCopies === "" ||
+      body.availableCopies === undefined ||
+      body.availableCopies === null ||
+      body.availableCopies === "" ||
       !Number.isSafeInteger(availableCopies) ||
       availableCopies < 0
     ) {
@@ -306,8 +382,8 @@ router.post("/", authMiddleware, librarianOnly, async (req, res) => {
       author: author.trim(),
       category: category.trim(),
       language: language || "English",
-      description: description || "",
-      coverImage: coverImage || "",
+      description: description?.trim() || "",
+      coverImage: coverImage?.trim() || "",
       totalCopies: availableCopies,
       availableCopies,
     });
@@ -317,6 +393,30 @@ router.post("/", authMiddleware, librarianOnly, async (req, res) => {
       book,
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "A book with these details already exists.",
+      });
+    }
+
+    if (error.name === "ValidationError") {
+      const validationMessages = Object.values(error.errors || {})
+        .map((validationError) => validationError.message)
+        .filter(Boolean);
+
+      return res.status(400).json({
+        message: validationMessages.length
+          ? `The book details are invalid: ${validationMessages.join(" ")}`
+          : "The book details are invalid.",
+      });
+    }
+
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "One or more book fields have an invalid value.",
+      });
+    }
+
     console.error("Error adding book:", error);
     return res.status(500).json({
       message: "Unable to add book.",
@@ -333,6 +433,7 @@ router.put("/:id", authMiddleware, librarianOnly, async (req, res) => {
       });
     }
 
+    const body = req.body || {};
     const {
       title,
       author,
@@ -340,7 +441,7 @@ router.put("/:id", authMiddleware, librarianOnly, async (req, res) => {
       language,
       description,
       coverImage,
-    } = req.body;
+    } = body;
     const updates = {};
 
     if (title !== undefined) {
@@ -379,24 +480,37 @@ router.put("/:id", authMiddleware, librarianOnly, async (req, res) => {
       updates.language = language;
     }
 
+    const descriptionError = validateOptionalText(
+      description,
+      "Description",
+      MAX_DESCRIPTION_LENGTH
+    );
+    const coverImageError = validateCoverImage(coverImage);
+
+    if (descriptionError || coverImageError) {
+      return res.status(400).json({
+        message: descriptionError || coverImageError,
+      });
+    }
+
     if (description !== undefined) {
-      updates.description = description;
+      updates.description = description.trim();
     }
 
     if (coverImage !== undefined) {
-      updates.coverImage = coverImage;
+      updates.coverImage = coverImage.trim();
     }
 
     // If the librarian changes available copies, preserve the number
     // of copies already reserved by members.
     let newAvailableCopies;
 
-    if (req.body.availableCopies !== undefined) {
-      newAvailableCopies = Number(req.body.availableCopies);
+    if (body.availableCopies !== undefined) {
+      newAvailableCopies = Number(body.availableCopies);
 
       if (
-        req.body.availableCopies === null ||
-        req.body.availableCopies === "" ||
+        body.availableCopies === null ||
+        body.availableCopies === "" ||
         !Number.isSafeInteger(newAvailableCopies) ||
         newAvailableCopies < 0
       ) {

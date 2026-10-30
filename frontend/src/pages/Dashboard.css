@@ -752,6 +752,7 @@
 
 .catalog-filter-row {
   display: grid;
+  grid-template-columns: repeat(2, max-content);
   gap: 14px;
   margin-top: 17px;
 }
@@ -781,6 +782,7 @@
 }
 
 .catalog-filters {
+  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -6056,6 +6058,33 @@
 
   .dashboard-sidebar {
     background: linear-gradient(105deg, #1d2938, #111821);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-page,
+  .manage-books-page {
+    overflow-x: clip;
+  }
+
+  .catalog-filter-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .catalog-language-filter {
+    min-width: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .catalog-language-filter select {
+    max-width: 100%;
+  }
+
+  .catalog-filters {
+    width: 100%;
+    min-width: 0;
   }
 }
 
