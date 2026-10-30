@@ -1303,11 +1303,7 @@
 }
 
 .login-left {
-  background-image:
-    linear-gradient(rgba(10, 17, 13, 0.3), rgba(10, 17, 13, 0.3)),
-    var(--login-image);
-  background-position: center;
-  background-size: cover;
+  background: #111821;
 }
 
 /* Match the image-led midnight slate and copper application theme. */

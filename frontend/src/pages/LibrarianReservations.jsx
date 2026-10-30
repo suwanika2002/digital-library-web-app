@@ -11,46 +11,67 @@ function LibrarianReservations({ onNavigate }) {
   const [filter, setFilter] = useState("all");
   const [processingId, setProcessingId] = useState("");
 
+  const requestReservations = useCallback(async () => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      throw new Error("Please log in again.");
+    }
+
+    const response = await fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Unable to load reservations.");
+    }
+
+    return data;
+  }, []);
+
+  const getLoadError = (err) =>
+    err instanceof TypeError
+      ? "Cannot connect to the server. Check that your backend is running."
+      : err.message;
+
   const loadReservations = useCallback(async () => {
     setLoading(true);
     setError("");
 
     try {
-      const token = localStorage.getItem("authToken");
-
-      if (!token) {
-        throw new Error("Please log in again.");
-      }
-
-      const response = await fetch(API_URL, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Unable to load reservations."
-        );
-      }
-
-      setReservations(data);
+      setReservations(await requestReservations());
     } catch (err) {
-      setError(
-        err instanceof TypeError
-          ? "Cannot connect to the server. Check that your backend is running."
-          : err.message
-      );
+      setError(getLoadError(err));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [requestReservations]);
 
   useEffect(() => {
-    loadReservations();
-  }, [loadReservations]);
+    let ignore = false;
+
+    const load = async () => {
+      try {
+        const data = await requestReservations();
+        if (!ignore) {
+          setError("");
+          setReservations(data);
+        }
+      } catch (err) {
+        if (!ignore) setError(getLoadError(err));
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+
+    void load();
+    return () => {
+      ignore = true;
+    };
+  }, [requestReservations]);
 
   const updateStatus = async (reservationId, status) => {
     if (processingId) return;

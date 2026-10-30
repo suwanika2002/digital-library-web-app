@@ -1,7 +1,12 @@
 import "./Dashboard.css";
 import DashboardCardArt from "../components/DashboardCardArt";
 
-function MemberDashboard({ onNavigate, onLogout }) {
+function MemberDashboard({ onNavigate, onLogout, user }) {
+  const memberName = user?.name?.trim() || "Library member";
+  const avatarLetter = memberName === "Library member"
+    ? "M"
+    : memberName.charAt(0).toUpperCase();
+
   const destinations = [
     {
       page: "books",
@@ -62,9 +67,11 @@ function MemberDashboard({ onNavigate, onLogout }) {
 
         <div className="sidebar-bottom">
           <div className="sidebar-profile">
-            <span className="profile-avatar" aria-hidden="true">M</span>
+            <span className="profile-avatar" aria-hidden="true">
+              {avatarLetter}
+            </span>
             <span className="profile-copy">
-              <strong>Library member</strong>
+              <strong>{memberName}</strong>
               <span>Reading space</span>
             </span>
           </div>
@@ -96,11 +103,6 @@ function MemberDashboard({ onNavigate, onLogout }) {
               <span aria-hidden="true">＋</span> Explore the collection
             </button>
           </section>
-
-          <div className="dashboard-demo-notice">
-            <span className="notice-dot" aria-hidden="true">i</span>
-            Demo dashboard — sign-in and library data are not connected yet.
-          </div>
 
           <section className="dashboard-feature">
             <div className="feature-copy">

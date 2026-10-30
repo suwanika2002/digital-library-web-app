@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Dashboard.css";
 
 const reservationFilters = ["Reserved books", "History"];
@@ -14,76 +14,108 @@ function MyReservations({ onNavigate }) {
   const [notifications, setNotifications] = useState([]);
   const [notificationError, setNotificationError] = useState("");
 
-  const loadReservations = async () => {
-    setLoading(true);
-    setError("");
+  const requestReservations = useCallback(async () => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      throw new Error("Please log in to view your reservations.");
+    }
+
+    const response = await fetch(
+      "http://localhost:5000/api/reservations/my",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.message || "Unable to load your reservations."
+      );
+    }
+
+    if (!Array.isArray(data)) {
+      throw new Error("The server returned an unexpected response.");
+    }
+
+    let loadedNotifications;
+    let loadedNotificationError = "";
 
     try {
-      const token = localStorage.getItem("authToken");
-
-      if (!token) {
-        throw new Error("Please log in to view your reservations.");
-      }
-
-      const response = await fetch(
-        "http://localhost:5000/api/reservations/my",
+      const notificationResponse = await fetch(
+        "http://localhost:5000/api/notifications/my",
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      const notificationData = await notificationResponse.json();
 
-      const data = await response.json();
-
-      if (!response.ok) {
+      if (!notificationResponse.ok || !Array.isArray(notificationData)) {
         throw new Error(
-          data.message || "Unable to load your reservations."
+          notificationData.message || "Unable to load notifications."
         );
       }
 
-      if (!Array.isArray(data)) {
-        throw new Error("The server returned an unexpected response.");
-      }
+      loadedNotifications = notificationData;
+    } catch (notificationLoadError) {
+      loadedNotificationError =
+        notificationLoadError instanceof TypeError
+          ? "Unable to connect to the server to load notifications."
+          : notificationLoadError.message;
+    }
 
-      setReservations(data);
+    return {
+      reservations: data,
+      notifications: loadedNotifications,
+      notificationError: loadedNotificationError,
+    };
+  }, []);
 
-      try {
-        const notificationResponse = await fetch(
-          "http://localhost:5000/api/notifications/my",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const notificationData = await notificationResponse.json();
+  const applyReservationData = (data) => {
+    setError("");
+    setReservations(data.reservations);
+    if (data.notifications) setNotifications(data.notifications);
+    setNotificationError(data.notificationError);
+  };
 
-        if (!notificationResponse.ok || !Array.isArray(notificationData)) {
-          throw new Error(
-            notificationData.message || "Unable to load notifications."
-          );
-        }
+  const loadReservations = useCallback(async () => {
+    setLoading(true);
+    setError("");
 
-        setNotifications(notificationData);
-        setNotificationError("");
-      } catch (notificationLoadError) {
-        setNotificationError(
-          notificationLoadError instanceof TypeError
-            ? "Unable to connect to the server to load notifications."
-            : notificationLoadError.message
-        );
-      }
+    try {
+      applyReservationData(await requestReservations());
     } catch (err) {
       setError(err.message || "Unable to load reservations.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [requestReservations]);
 
   useEffect(() => {
-    loadReservations();
-  }, []);
+    let ignore = false;
+
+    const load = async () => {
+      try {
+        const data = await requestReservations();
+        if (!ignore) applyReservationData(data);
+      } catch (err) {
+        if (!ignore) setError(err.message || "Unable to load reservations.");
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+
+    void load();
+    return () => {
+      ignore = true;
+    };
+  }, [requestReservations]);
 
   const markNotificationRead = async (notificationId) => {
     const token = localStorage.getItem("authToken");

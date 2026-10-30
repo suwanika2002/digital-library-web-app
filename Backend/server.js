@@ -11,10 +11,11 @@ const reservationRoutes = require("./routes/reservationRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const { startDueReminderJob } = require("./services/dueReminderJob");
 const app = express();
+
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: /^http:\/\/(localhost|127\.0\.0\.1):51[7-9]\d$/ }));
 app.use(express.json());
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/notifications", notificationRoutes);

@@ -7,17 +7,14 @@ A web application for managing and accessing digital library resources.
 - React
 - Vite
 - JavaScript
-- HTML
-- CSS
+- Express
+- MongoDB
 
 ## Features
 
-- Welcome page
-- Login page
+- Welcome and login pages
 - Book browsing and details
-- Member dashboard
-- Librarian dashboard
-- Admin dashboard
+- Member and librarian dashboards
 - Reservation management
 
 ## Getting Started
@@ -26,46 +23,67 @@ A web application for managing and accessing digital library resources.
 
 Install Node.js and npm on your computer.
 
-### Installation
+### Frontend
 
-1. Clone or download this repository.
-2. Open the project folder in a terminal.
-3. Install the dependencies:
+Open a terminal at the repository root and start Vite:
 
-   ```bash
-   npm install
-   ```
+```powershell
+Set-Location .\frontend
+npm install
+npm run dev
+```
 
-4. Start the development server:
+Open the local URL displayed in the terminal. If port 5173 is occupied, Vite
+will select another port; the backend allows Vite's localhost ports starting
+with 517.
 
-   ```bash
-   npm run dev
-   ```
+### Backend
 
-5. Open the local URL displayed in the terminal.
+Keep the frontend terminal running. Open a **second terminal** at the
+repository root and run:
+
+```powershell
+Set-Location .\Backend
+npm install
+Copy-Item .env.example .env
+```
+
+Edit `Backend\.env` and set at least `MONGODB_URI` and `JWT_SECRET`. SMTP
+settings are optional and are only used for scheduled due-date reminder emails.
+Then start the API in that same terminal:
+
+```powershell
+npm run dev
+```
+
+If your current terminal is already in `frontend`, use
+`Set-Location ..\Backend` to switch to the backend folder. Do not try to enter
+`Backend` from inside `frontend`; they are sibling folders.
 
 ## Project Structure
 
 ```text
+Backend/
+├── middleware/
+├── models/
+├── routes/
+├── services/
+├── package.json
+└── server.js
 frontend/
 ├── public/
 ├── src/
 │   ├── components/
-│   ├── pages/
+│   ├── data/
 │   ├── images/
-│   ├── App.jsx
-│   ├── App.css
-│   └── main.jsx
+│   └── pages/
 ├── index.html
 ├── package.json
 └── vite.config.js
 ```
 
-## Purpose
-
-This project aims to provide a convenient web interface for accessing digital library resources and managing library activities.
+The CSV files at the repository root contain book data and cover-image links.
 
 ## Status
 
 Under development.
-

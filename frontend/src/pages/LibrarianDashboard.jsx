@@ -192,26 +192,17 @@ function LibrarianDashboard({ onNavigate, onLogout }) {
 
         <div className="sidebar-bottom">
           <div className="sidebar-profile">
-  <span
-    className="profile-avatar librarian-avatar"
-    aria-hidden="true"
-  >
-    {(JSON.parse(localStorage.getItem("authUser") || "{}").name || "L")
-      .charAt(0)
-      .toUpperCase()}
-  </span>
-
-  <span className="profile-copy">
-    <strong>
-      {JSON.parse(localStorage.getItem("authUser") || "{}").name ||
-        "Librarian"}
-    </strong>
-    <span>
-      {JSON.parse(localStorage.getItem("authUser") || "{}").email ||
-        "Librarian space"}
-    </span>
-  </span>
-</div>
+            <span className="profile-avatar librarian-avatar" aria-hidden="true">
+              L
+            </span>
+            <span className="profile-copy">
+              <strong>Librarian</strong>
+              <span>
+                {JSON.parse(localStorage.getItem("authUser") || "{}").email ||
+                  "Librarian space"}
+              </span>
+            </span>
+          </div>
 
           <button
             type="button"

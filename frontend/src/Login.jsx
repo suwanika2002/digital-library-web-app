@@ -68,10 +68,8 @@ const handleLogin = async (e) => {
 
   return (
     <div className="login-page">
-      <div
-        className="login-left"
-        style={{ "--login-image": `url("${sideImage}")` }}
-      >
+      <div className="login-left">
+        <img src={sideImage} alt="" aria-hidden="true" />
         <div className="login-left-text">
           <h2>
             Take a book. <span>Share a book.</span>
