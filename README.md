@@ -1,31 +1,59 @@
 # Digital Library Web App
 
-A web application for managing and accessing digital library resources.
+A web application developed to manage digital library resources and provide an easy way for members and librarians to access and manage books.
 
 ## Technologies Used
 
 - React
 - Vite
 - JavaScript
-- Express
+- Node.js
+- Express.js
 - MongoDB
+- Mongoose
 
 ## Features
 
-- Welcome and login pages
-- Book browsing and details
-- Member and librarian dashboards
-- Reservation management
+### General
+- Welcome page
+- User login and registration
+- Role-based access for members and librarians
+
+### Member Features
+- Browse available books
+- View book details
+- Search and filter books
+- Manage reservations
+- View personal borrowing information
+
+### Librarian Features
+- Librarian dashboard
+- Add new books
+- Update book information
+- Delete books
+- Manage borrowing and reservations
+- View borrowing history
 
 ## Getting Started
 
 ### Prerequisites
 
-Install Node.js and npm on your computer.
+Install the following software:
 
-### Frontend
+- Node.js
+- npm
+- MongoDB Atlas account
 
-Open a terminal at the repository root and start Vite:
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/suwanika2002/digital-library-web-app.git
+cd digital-library
+```
+
+### 2. Frontend Setup
+
+Open a terminal at the project root:
 
 ```powershell
 Set-Location .\frontend
@@ -33,57 +61,88 @@ npm install
 npm run dev
 ```
 
-Open the local URL displayed in the terminal. If port 5173 is occupied, Vite
-will select another port; the backend allows Vite's localhost ports starting
-with 517.
+Open the local URL displayed in the terminal.
 
-### Backend
+### 3. Backend Setup
 
-Keep the frontend terminal running. Open a **second terminal** at the
-repository root and run:
+Open a second terminal at the project root:
 
 ```powershell
 Set-Location .\Backend
 npm install
+```
+
+Create your environment file:
+
+```powershell
 Copy-Item .env.example .env
 ```
 
-Edit `Backend\.env` and set at least `MONGODB_URI` and `JWT_SECRET`. SMTP
-settings are optional and are only used for scheduled due-date reminder emails.
-Then start the API in that same terminal:
+Configure the required environment variables in `Backend/.env`, including:
+
+- `MONGODB_URI`
+- `JWT_SECRET`
+
+Configure SMTP settings if email reminders are required.
+
+Start the backend:
 
 ```powershell
 npm run dev
 ```
 
-If your current terminal is already in `frontend`, use
-`Set-Location ..\Backend` to switch to the backend folder. Do not try to enter
-`Backend` from inside `frontend`; they are sibling folders.
+The backend runs at:
+
+```text
+http://localhost:5000
+```
+
+**Note:** Keep both frontend and backend terminals running while using the application.
 
 ## Project Structure
 
 ```text
-Backend/
-├── middleware/
-├── models/
-├── routes/
-├── services/
-├── package.json
-└── server.js
-frontend/
-├── public/
-├── src/
-│   ├── components/
-│   ├── data/
-│   ├── images/
-│   └── pages/
-├── index.html
-├── package.json
-└── vite.config.js
+digital-library/
+│
+├── Backend/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── .env.example
+│   ├── createLibrarian.js
+│   ├── resetPassword.js
+│   ├── package.json
+│   └── server.js
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── data/
+│   │   ├── images/
+│   │   └── pages/
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+├── book_cover_images.csv
+├── digital_library_books_updated.csv
+├── digital_library_books_with_covers.csv
+├── digital_library_books_with_real_cover_links.csv
+├── .gitignore
+└── README.md
 ```
 
-The CSV files at the repository root contain book data and cover-image links.
+The CSV files contain book information and cover-image data used by the project.
 
-## Status
+## Security
 
-Under development.
+- Environment variables and database credentials are stored in the local `.env` file.
+- The `.env` file is excluded from Git using `.gitignore`.
+- Use `.env.example` as a template when configuring the backend.
+
+## Project Status
+
+The application has completed its initial development and is undergoing final testing and preparation for submission.
