@@ -120,9 +120,9 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
       return;
     }
 
-    if (!Number.isInteger(copies) || copies < 0) {
+    if (!Number.isSafeInteger(copies) || copies < 0) {
       setFormError(
-        "Available copies must be a whole number of 0 or more."
+        "Available copies must be a whole number from 0 to 9,007,199,254,740,991."
       );
       return;
     }
@@ -667,8 +667,28 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
             <form
               className="manage-book-form"
               onSubmit={handleSubmit}
+              onInvalid={(event) => {
+                const field = event.target;
+
+                if (
+                  field.id === "manage-copies" &&
+                  !field.validity.valueMissing
+                ) {
+                  setFormError(
+                    "Available copies must be a whole number from 0 to 9,007,199,254,740,991."
+                  );
+                  return;
+                }
+
+                setFormError(
+                  "Please complete all required fields before saving."
+                );
+              }}
+              onChangeCapture={() => setFormError("")}
             >
-              <label htmlFor="manage-title">Title</label>
+              <label htmlFor="manage-title">
+                Title <span>(required)</span>
+              </label>
               <input
                 id="manage-title"
                 value={form.title}
@@ -679,7 +699,9 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                 autoFocus
               />
 
-              <label htmlFor="manage-author">Author</label>
+              <label htmlFor="manage-author">
+                Author <span>(required)</span>
+              </label>
               <input
                 id="manage-author"
                 value={form.author}
@@ -692,7 +714,7 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
               <div className="manage-book-form-row manage-book-form-row-language">
                 <div>
                   <label htmlFor="manage-category">
-                    Category
+                    Category <span>(required)</span>
                   </label>
                   <input
                     id="manage-category"
@@ -717,7 +739,9 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
                 </div>
 
                 <div>
-                  <label htmlFor="manage-language">Language</label>
+                  <label htmlFor="manage-language">
+                    Language <span>(required)</span>
+                  </label>
                   <select
                     id="manage-language"
                     value={form.language}
@@ -736,12 +760,13 @@ function ManageBooks({ books, onBooksChange, onNavigate }) {
 
                 <div>
                   <label htmlFor="manage-copies">
-                    Available copies
+                    Available copies <span>(required)</span>
                   </label>
                   <input
                     id="manage-copies"
                     type="number"
                     min="0"
+                    max="9007199254740991"
                     step="1"
                     value={form.copies}
                     onChange={(event) =>

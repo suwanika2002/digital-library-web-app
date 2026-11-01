@@ -6428,6 +6428,39 @@
   margin-top: 4px;
   padding-top: 9px;
   border-top: 1px solid var(--line);
+}
+
+.registration-page .registration-step {
+  color: #e7ae80;
+}
+
+.registration-page .registration-form-heading h2 {
+  color: #f3eee7;
+}
+
+.registration-page .registration-form-heading > p,
+.registration-page .registration-login-link,
+.registration-page .registration-footer {
+  color: #bec7d2;
+}
+
+.registration-page .registration-form > label,
+.registration-page .registration-password-fields label,
+.registration-page .registration-terms {
+  color: #d7dce3;
+}
+
+.registration-page .registration-form input:focus-visible {
+  border-color: #d99a68;
+  box-shadow: 0 0 0 3px rgba(217, 154, 104, 0.2);
+}
+
+.registration-page .registration-terms input {
+  accent-color: #d99a68;
+}
+
+.registration-page .registration-login-link button {
+  color: #e7ae80;
   font-size: 11px;
 }
 
